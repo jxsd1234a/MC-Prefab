@@ -5,15 +5,16 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.FluidTags;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.GlassBlock;
 import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import net.minecraft.world.level.block.SlabBlock;
+import net.minecraft.world.level.block.TransparentBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -32,7 +33,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import javax.annotation.Nullable;
 
 @SuppressWarnings("NullableProblems")
-public class BlockGlassSlab extends GlassBlock implements SimpleWaterloggedBlock {
+public class BlockGlassSlab extends TransparentBlock implements SimpleWaterloggedBlock {
 
     private static final VoxelShape BOTTOM_SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 8.0D, 16.0D);
     private static final VoxelShape TOP_SHAPE = Block.box(0.0D, 8.0D, 0.0D, 16.0D, 16.0D, 16.0D);
@@ -133,7 +134,7 @@ public class BlockGlassSlab extends GlassBlock implements SimpleWaterloggedBlock
     }
 
     @Override
-    public boolean canPlaceLiquid(BlockGetter worldIn, BlockPos pos, BlockState state, Fluid fluidIn) {
+    public boolean canPlaceLiquid(Player player, BlockGetter worldIn, BlockPos pos, BlockState state, Fluid fluidIn) {
         return state.getValue(SlabBlock.TYPE) != SlabType.DOUBLE && this.slabCanContainFluid(worldIn, pos, state, fluidIn);
     }
 
@@ -155,7 +156,7 @@ public class BlockGlassSlab extends GlassBlock implements SimpleWaterloggedBlock
     }
 
     @Override
-    public ItemStack pickupBlock(LevelAccessor worldIn, BlockPos pos, BlockState state) {
+    public ItemStack pickupBlock(Player player, LevelAccessor worldIn, BlockPos pos, BlockState state) {
         if (state.getValue(BlockStateProperties.WATERLOGGED) && state.getValue(SlabBlock.TYPE) != SlabType.DOUBLE) {
             worldIn.setBlock(pos, state.setValue(BlockStateProperties.WATERLOGGED, Boolean.FALSE), 3);
             return new ItemStack(Items.WATER_BUCKET);
@@ -180,9 +181,9 @@ public class BlockGlassSlab extends GlassBlock implements SimpleWaterloggedBlock
     }
 
     @Override
-    public boolean isPathfindable(BlockState state, BlockGetter worldIn, BlockPos pos, PathComputationType type) {
+    public boolean isPathfindable(BlockState p_60475_, PathComputationType type) {
         if (type == PathComputationType.WATER) {
-            return worldIn.getFluidState(pos).is(FluidTags.WATER);
+            return p_60475_.getFluidState().is(FluidTags.WATER);
         }
 
         return false;

@@ -14,7 +14,7 @@ import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.PlayerLoggedInEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.network.NetworkDirection;
+import net.minecraftforge.network.PacketDistributor;
 
 import java.util.ArrayList;
 
@@ -42,9 +42,10 @@ public final class ModEventHandler {
      */
     @SubscribeEvent
     public static void onPlayerLoginEvent(PlayerLoggedInEvent event) {
-        if (!event.getEntity().level.isClientSide) {
+        if (!event.getEntity().level().isClientSide) {
             CompoundTag tag = CommonProxy.proxyConfiguration.serverConfiguration.ToNBTTagCompound();
-            Prefab.network.sendTo(new ConfigSyncMessage(tag), ((ServerPlayer) event.getEntity()).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+            Prefab.network.send(new ConfigSyncMessage(tag),
+                    PacketDistributor.PLAYER.with((ServerPlayer)event.getEntity()));
 
             Prefab.LOGGER.info("Sent config to '" + event.getEntity().getDisplayName().getString() + "'.");
         }

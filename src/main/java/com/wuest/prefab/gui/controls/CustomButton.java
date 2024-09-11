@@ -1,11 +1,10 @@
 package com.wuest.prefab.gui.controls;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.wuest.prefab.Utils;
 import com.wuest.prefab.gui.GuiUtils;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiComponent;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
@@ -28,7 +27,7 @@ public class CustomButton extends ExtendedButton {
      * Draws this button to the screen.
      */
     @Override
-    public void render(PoseStack mStack, int mouseX, int mouseY, float partial) {
+    public void renderWidget(GuiGraphics guiGraphics, int mouseX, int mouseY, float partial) {
         if (this.visible) {
             Minecraft mc = Minecraft.getInstance();
             this.isHovered = mouseX >= this.getX() && mouseY >= this.getY() && mouseX < this.getX() + this.width && mouseY < this.getY() + this.height;
@@ -37,7 +36,7 @@ public class CustomButton extends ExtendedButton {
             RenderSystem.setShaderTexture(0, buttonTexture);
             RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, this.alpha);
 
-            GuiUtils.bindAndDrawScaledTexture(mStack, this.getX(), this.getY(), this.width, this.height, 90, 20, 90, 20);
+            GuiUtils.bindAndDrawScaledTexture(buttonTexture, guiGraphics, this.getX(), this.getY(), this.width, this.height, 90, 20, 90, 20);
             int color = 14737632;
 
             Component buttonText = this.getMessage();
@@ -47,7 +46,8 @@ public class CustomButton extends ExtendedButton {
             if (strWidth > width - 6 && strWidth > ellipsisWidth)
                 buttonText = Utils.createTextComponent(mc.font.substrByWidth(buttonText, width - 6 - ellipsisWidth).getString() + "...");
 
-            GuiComponent.drawCenteredString(mStack, mc.font, buttonText, this.getX() + this.width / 2, this.getY() + (this.height - 8) / 2, color);
+            guiGraphics.drawCenteredString(mc.font, buttonText, this.getX() + this.width / 2, this.getY() + (this.height - 8) / 2, color);
+            guiGraphics.flush();
         }
     }
 }

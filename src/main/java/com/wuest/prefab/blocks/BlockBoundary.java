@@ -9,7 +9,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -21,7 +21,6 @@ import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -46,10 +45,9 @@ public class BlockBoundary extends Block {
      * Initializes a new instance of the BlockBoundary class.
      */
     public BlockBoundary() {
-        super(Block.Properties.of(Prefab.SeeThroughImmovable)
+        super(Prefab.SeeThroughImmovable.get()
                 .sound(SoundType.STONE)
-                .strength(0.6F)
-                .noOcclusion());
+                .strength(0.6F));
 
         this.registerDefaultState(this.getStateDefinition().any().setValue(Powered, false));
     }
@@ -101,7 +99,7 @@ public class BlockBoundary extends Block {
      * @param pos         Block position in world
      */
     @Override
-    public void playerWillDestroy(Level world, BlockPos pos, BlockState state, Player player) {
+    public BlockState playerWillDestroy(Level world, BlockPos pos, BlockState state, Player player) {
         super.playerWillDestroy(world, pos, state, player);
 
         ModEventHandler.RedstoneAffectedBlockPositions.remove(pos);
@@ -111,6 +109,8 @@ public class BlockBoundary extends Block {
         if (poweredSide) {
             this.setNeighborGlassBlocksPoweredStatus(world, pos, false, 0, new ArrayList<>(), false);
         }
+
+        return state;
     }
 
     /**
@@ -156,8 +156,8 @@ public class BlockBoundary extends Block {
      */
     @OnlyIn(Dist.CLIENT)
     @Override
-    public void appendHoverText(ItemStack stack, @Nullable BlockGetter worldIn, List<Component> tooltip, TooltipFlag advanced) {
-        super.appendHoverText(stack, worldIn, tooltip, advanced);
+    public void appendHoverText(ItemStack stack, Item.TooltipContext tooltipContext, List<Component> tooltip, TooltipFlag advanced) {
+        super.appendHoverText(stack, tooltipContext, tooltip, advanced);
 
         boolean advancedKeyDown = Screen.hasShiftDown();
 
@@ -207,6 +207,15 @@ public class BlockBoundary extends Block {
             return Shapes.empty();
         } else {
             return Shapes.block();
+        }
+    }
+
+    @Override
+    public float getShadeBrightness(BlockState blockState, BlockGetter blockGetter, BlockPos blockPos) {
+        if (!blockState.getValue(Powered)) {
+            return 1.0F;
+        } else {
+            return 0.2F;
         }
     }
 

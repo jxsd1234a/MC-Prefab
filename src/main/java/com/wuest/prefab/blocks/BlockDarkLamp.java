@@ -12,7 +12,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.minecraft.world.level.material.Material;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.function.ToIntFunction;
@@ -33,7 +32,7 @@ public class BlockDarkLamp extends Block {
     }
 
     public BlockDarkLamp() {
-        super(Properties.of(Prefab.SeeThroughImmovable)
+        super(Prefab.SeeThroughImmovable.get()
                 .lightLevel(BlockDarkLamp.litBlockEmission(8))
                 .strength(0.3F)
                 .sound(SoundType.GLASS)

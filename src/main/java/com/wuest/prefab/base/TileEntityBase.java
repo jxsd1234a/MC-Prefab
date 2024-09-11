@@ -2,6 +2,7 @@ package com.wuest.prefab.base;
 
 import com.wuest.prefab.Prefab;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -70,7 +71,7 @@ public abstract class TileEntityBase<T extends BaseConfig> extends BlockEntity {
 	}
 
 	@Override
-	public @NotNull CompoundTag getUpdateTag() {
+	public @NotNull CompoundTag getUpdateTag(HolderLookup.Provider provider) {
 		// This is overwritten so our custom save event is done.
 		CompoundTag updateTag = new CompoundTag();
 		this.saveAdditional(updateTag);
@@ -78,8 +79,8 @@ public abstract class TileEntityBase<T extends BaseConfig> extends BlockEntity {
 	}
 
 	@Override
-	public void load(@NotNull CompoundTag compound) {
-		super.load(compound);
+	public void loadAdditional(@NotNull CompoundTag compound, HolderLookup.Provider provider) {
+		super.loadAdditional(compound, provider);
 
 		if (this.config != null) {
 			this.config.WriteToNBTCompound(compound);
@@ -87,8 +88,8 @@ public abstract class TileEntityBase<T extends BaseConfig> extends BlockEntity {
 	}
 
 	@Override
-	public void saveAdditional(@NotNull CompoundTag compound) {
-		super.saveAdditional(compound);
+	public void saveAdditional(@NotNull CompoundTag compound, HolderLookup.Provider provider) {
+		super.saveAdditional(compound, provider);
 
 		this.config = this.createConfigInstance().ReadFromCompoundTag(compound);
 	}

@@ -1,6 +1,5 @@
 package com.wuest.prefab.items;
 
-import com.wuest.prefab.ModRegistry;
 import com.wuest.prefab.Utils;
 import com.wuest.prefab.gui.GuiLangKeys;
 import net.minecraft.client.gui.screens.Screen;
@@ -17,11 +16,9 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.BushBlock;
 import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-import javax.annotation.Nullable;
 import java.util.HashSet;
 import java.util.List;
 
@@ -32,7 +29,7 @@ public class ItemSickle extends TieredItem {
 
     public ItemSickle(Tier toolMaterial) {
         super(toolMaterial, new Item.Properties());
-        this.breakRadius = 1 + toolMaterial.getLevel();
+        this.breakRadius = 1 + (int)toolMaterial.getAttackDamageBonus();
         this.toolMaterial = toolMaterial;
     }
 
@@ -45,7 +42,7 @@ public class ItemSickle extends TieredItem {
         effectiveBlocks.add(Blocks.DEAD_BUSH);
         effectiveBlocks.add(Blocks.ROSE_BUSH);
         effectiveBlocks.add(Blocks.PEONY);
-        effectiveBlocks.add(Blocks.GRASS);
+        effectiveBlocks.add(Blocks.SHORT_GRASS);
         effectiveBlocks.add(Blocks.SEAGRASS);
         effectiveBlocks.add(Blocks.TALL_SEAGRASS);
     }
@@ -54,7 +51,7 @@ public class ItemSickle extends TieredItem {
     public float getDestroySpeed(ItemStack stack, BlockState state) {
         Block block = state.getBlock();
 
-        if (!ItemSickle.effectiveBlocks.contains(block) && block != Blocks.COBWEB && state.getMaterial() != Material.LEAVES) {
+        if (!ItemSickle.effectiveBlocks.contains(block) && block != Blocks.COBWEB && state.getTags().noneMatch(blockTagKey -> blockTagKey.equals(BlockTags.LEAVES))) {
             return super.getDestroySpeed(stack, state);
         } else {
             return 15.0F;
@@ -69,10 +66,10 @@ public class ItemSickle extends TieredItem {
     public boolean mineBlock(ItemStack stack, Level worldIn, BlockState state, BlockPos pos,
                              LivingEntity entityLiving) {
         if (!worldIn.isClientSide) {
-            stack.hurtAndBreak(1, entityLiving, (livingEntity) -> livingEntity.broadcastBreakEvent(EquipmentSlot.MAINHAND));
+            stack.hurtAndBreak(1, entityLiving, EquipmentSlot.MAINHAND);
 
             if ((double) state.getDestroySpeed(worldIn, pos) != 0.0D && !(state.getBlock() instanceof LeavesBlock)) {
-                stack.hurtAndBreak(1, entityLiving, (livingEntity) -> livingEntity.broadcastBreakEvent(EquipmentSlot.MAINHAND));
+                stack.hurtAndBreak(1, entityLiving, EquipmentSlot.MAINHAND);
             } else if ((state.getBlock() instanceof BushBlock || state.getBlock() instanceof LeavesBlock)
                     && entityLiving instanceof Player) {
                 BlockPos corner1 = pos.north(this.breakRadius).east(this.breakRadius).above(this.breakRadius);
@@ -96,9 +93,9 @@ public class ItemSickle extends TieredItem {
      */
     @OnlyIn(Dist.CLIENT)
     @Override
-    public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip,
+    public void appendHoverText(ItemStack stack, Item.TooltipContext tooltipContext, List<Component> tooltip,
                                 TooltipFlag advanced) {
-        super.appendHoverText(stack, worldIn, tooltip, advanced);
+        super.appendHoverText(stack, tooltipContext, tooltip, advanced);
 
         boolean advancedKeyDown = Screen.hasShiftDown();
 

@@ -1,12 +1,10 @@
 package com.wuest.prefab.gui.controls;
 
-import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.wuest.prefab.Utils;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiComponent;
+import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
-import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 
@@ -30,47 +28,26 @@ public class ExtendedButton extends Button
         }
     }
 
-    /**
-     * Draws this button to the screen.
-     */
     @Override
-    public void render(PoseStack mStack, int mouseX, int mouseY, float partial)
-    {
-        if (this.visible) {
-            Minecraft mc = Minecraft.getInstance();
-            this.isHovered = mouseX >= this.getX() && mouseY >= this.getY() && mouseX < this.getX() + this.width && mouseY < this.getY() + this.height;
+    public void renderString(GuiGraphics guiGraphics, Font font, int i) {
+        Component buttonText = this.getMessage();
+        int strWidth = font.width(buttonText);
+        int ellipsisWidth = font.width("...");
 
-            RenderSystem.setShader(GameRenderer::getPositionTexShader);
-            RenderSystem.setShaderTexture(0, WIDGETS_LOCATION);
-            RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, this.alpha);
-
-            int i = !this.active ? 0 : (this.isHoveredOrFocused() ? 2 : 1);
-
-            RenderSystem.enableBlend();
-            RenderSystem.defaultBlendFunc();
-            RenderSystem.enableDepthTest();
-            this.blit(mStack, this.getX(), this.getY(), 0, 46 + i * 20, this.width / 2, this.height);
-            this.blit(mStack, this.getX() + this.width / 2, this.getY(), 200 - this.width / 2, 46 + i * 20, this.width / 2, this.height);
-
-            Component buttonText = this.getMessage();
-            int strWidth = mc.font.width(buttonText);
-            int ellipsisWidth = mc.font.width("...");
-
-            if (strWidth > width - 6 && strWidth > ellipsisWidth) {
-                buttonText = Utils.createTextComponent(mc.font.substrByWidth(buttonText, width - 6 - ellipsisWidth).getString() + "...");
-            }
-
-            PoseStack originalStack = new PoseStack();
-
-            originalStack.pushPose();
-            originalStack.scale(this.fontScale, this.fontScale, this.fontScale);
-
-            int xPosition = (int) ((this.getX() + this.width / 2) / this.fontScale);
-            int yPosition = (int) ((this.getY() + (this.height - (8 * this.fontScale)) / 2) / this.fontScale);
-
-            GuiComponent.drawCenteredString(originalStack, mc.font, buttonText, xPosition, yPosition, this.getFGColor());
-            originalStack.popPose();
+        if (strWidth > width - 6 && strWidth > ellipsisWidth) {
+            buttonText = Utils.createTextComponent(font.substrByWidth(buttonText, width - 6 - ellipsisWidth).getString() + "...");
         }
+
+        PoseStack originalStack = new PoseStack();
+
+        originalStack.pushPose();
+        originalStack.scale(this.fontScale, this.fontScale, this.fontScale);
+
+        int xPosition = ((this.getX() + this.width / 2));
+        int yPosition = ((this.getY() + (this.height - 8) / 2));
+
+        guiGraphics.drawCenteredString(font, buttonText, xPosition, yPosition, this.getFGColor());
+        originalStack.popPose();
     }
 
     @Override

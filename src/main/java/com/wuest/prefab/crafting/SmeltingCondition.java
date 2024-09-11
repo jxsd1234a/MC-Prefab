@@ -1,10 +1,10 @@
 package com.wuest.prefab.crafting;
 
-import com.google.gson.JsonObject;
+import com.mojang.serialization.DynamicOps;
+import com.mojang.serialization.MapCodec;
 import com.wuest.prefab.Prefab;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.crafting.conditions.ICondition;
-import net.minecraftforge.common.crafting.conditions.IConditionSerializer;
 
 /**
  * @author WuestMan
@@ -18,16 +18,6 @@ public class SmeltingCondition implements ICondition {
      */
     public SmeltingCondition(String identifier) {
         this.recipeKeyName = identifier;
-    }
-
-    @Override
-    public ResourceLocation getID() {
-        return NAME;
-    }
-
-    @Override
-    public boolean test(IContext context) {
-        return this.determineActiveRecipe();
     }
 
     /**
@@ -47,25 +37,15 @@ public class SmeltingCondition implements ICondition {
         return result;
     }
 
-    @SuppressWarnings("unused")
-    public static class Serializer implements IConditionSerializer<SmeltingCondition> {
-        public static final SmeltingCondition.Serializer INSTANCE = new SmeltingCondition.Serializer();
+    @Override
+    public boolean test(IContext iContext, DynamicOps<?> dynamicOps) {
+        return this.determineActiveRecipe();
+    }
 
-        @Override
-        public void write(JsonObject json, SmeltingCondition value) {
-            json.addProperty("recipeKey", value.recipeKeyName);
-        }
-
-        @Override
-        public SmeltingCondition read(JsonObject json) {
-            String recipeKeyName = "recipeKey";
-
-            return new SmeltingCondition(json.get(recipeKeyName).getAsString());
-        }
-
-        @Override
-        public ResourceLocation getID() {
-            return SmeltingCondition.NAME;
-        }
+    @Override
+    public MapCodec<? extends ICondition> codec() {
+        // TODO: Create conditioned recipe!!
+        // May just have to make it like the Fabric ones....
+        return null;
     }
 }

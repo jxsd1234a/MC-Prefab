@@ -8,30 +8,31 @@ import com.wuest.prefab.proxy.CommonProxy;
 import com.wuest.prefab.registries.ModRegistries;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.commands.Commands;
-import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.BlockPos;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.item.CreativeModeTabs;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.PushReaction;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
 import net.minecraftforge.client.settings.KeyConflictContext;
 import net.minecraftforge.client.settings.KeyModifier;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.CreativeModeTabEvent;
+import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.event.server.ServerAboutToStartEvent;
-import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.network.simple.SimpleChannel;
+import net.minecraftforge.network.SimpleChannel;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import java.util.function.Supplier;
 
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_B;
 
@@ -44,16 +45,21 @@ import static org.lwjgl.glfw.GLFW.GLFW_KEY_B;
 public class Prefab {
     /**
      * Simulates an air block that blocks movement and cannot be moved.
+     * Basically a GLASS block, but NOT glass.
      */
-    public static final Material SeeThroughImmovable = new Material(
-            MaterialColor.NONE,
-            false,
-            true,
-            true,
-            false,
-            false,
-            false,
-            PushReaction.IGNORE);
+    public static final Supplier<BlockBehaviour.Properties> SeeThroughImmovable = ()-> BlockBehaviour.Properties.of()
+            .noOcclusion()
+            .isViewBlocking(Prefab::never)
+            .pushReaction(PushReaction.IGNORE)
+            .sound(SoundType.STONE);
+
+    public static boolean always(BlockState p_50775_, BlockGetter p_50776_, BlockPos p_50777_) {
+        return true;
+    }
+
+    public static boolean never(BlockState p_50806_, BlockGetter p_50807_, BlockPos p_50808_) {
+        return false;
+    }
 
     /**
      * This is the ModID
@@ -63,7 +69,7 @@ public class Prefab {
     // Directly reference a log4j logger.
     public static final Logger LOGGER = LogManager.getLogger();
 
-    public static final String PROTOCOL_VERSION = Integer.toString(1);
+    public static final int PROTOCOL_VERSION = 1;
 
     /**
      * This is used to determine if the mod is currently being debugged.
@@ -150,121 +156,127 @@ public class Prefab {
             ClientEventHandler.keyBindings.add(binding);
         }
 
+        // TODO: Need to register the creative tab in the client-side mod registry.
         @SubscribeEvent
-        public static void onCreativeModeTabRegister(CreativeModeTabEvent.Register event) {
-            ModRegistry.PREFAB_GROUP = event.registerCreativeModeTab(new ResourceLocation(Prefab.MODID, "logo"),
+        public static void onCreativeModeTabRegister(BuildCreativeModeTabContentsEvent event) {
+
+            // Add to ingredients tab
+            if (event.getTabKey() == CreativeModeTabs.INGREDIENTS) {
+                event.accept(ModRegistry.CompressedStoneItem.get());
+                event.accept(ModRegistry.DoubleCompressedStoneItem.get());
+                event.accept(ModRegistry.TripleCompressedStoneItem.get());
+                event.accept(ModRegistry.CompressedDirtItem.get());
+                event.accept(ModRegistry.DoubleCompressedDirtItem.get());
+                event.accept(ModRegistry.CompressedGlowStoneItem.get());
+                event.accept(ModRegistry.DoubleCompressedGlowStoneItem.get());
+                event.accept(ModRegistry.CompressedQuartzCreteItem.get());
+                event.accept(ModRegistry.DoubleCompressedQuartzCreteItem.get());
+                event.accept(ModRegistry.CompressedObsidianItem.get());
+                event.accept(ModRegistry.DoubleCompressedObsidianItem.get());
+                event.accept(ModRegistry.GlassSlabItem.get());
+                event.accept(ModRegistry.GlassStairsItem.get());
+                event.accept(ModRegistry.PaperLanternItem.get());
+                event.accept(ModRegistry.BlockPhasingItem.get());
+                event.accept(ModRegistry.BlockBoundaryItem.get());
+                event.accept(ModRegistry.GrassSlabItem.get());
+                event.accept(ModRegistry.GrassStairsItem.get());
+                event.accept(ModRegistry.GrassWallItem.get());
+                event.accept(ModRegistry.DirtWallItem.get());
+                event.accept(ModRegistry.DirtStairsItem.get());
+                event.accept(ModRegistry.DirtSlabItem.get());
+                event.accept(ModRegistry.LightSwitchItem.get());
+                event.accept(ModRegistry.DarkLampItem.get());
+                event.accept(ModRegistry.QuartzCreteItem.get());
+                event.accept(ModRegistry.QuartzCreteWallItem.get());
+                event.accept(ModRegistry.QuartzCreteBricksItem.get());
+                event.accept(ModRegistry.ChiseledQuartzCreteItem.get());
+                event.accept(ModRegistry.QuartzCretePillarItem.get());
+                event.accept(ModRegistry.QuartzCreteStairsItem.get());
+                event.accept(ModRegistry.QuartzCreteSlabItem.get());
+                event.accept(ModRegistry.SmoothQuartzCreteItem.get());
+                event.accept(ModRegistry.SmoothQuartzCreteWallItem.get());
+                event.accept(ModRegistry.SmoothQuartzCreteStairsItem.get());
+                event.accept(ModRegistry.SmoothQuartzCreteSlabItem.get());
+
+                event.accept(ModRegistry.ItemCompressedChest.get());
+                event.accept(ModRegistry.ItemPileOfBricks.get());
+                event.accept(ModRegistry.ItemPalletOfBricks.get());
+                event.accept(ModRegistry.ItemBundleOfTimber.get());
+                event.accept(ModRegistry.ItemHeapOfTimber.get());
+                event.accept(ModRegistry.ItemTonOfTimber.get());
+                event.accept(ModRegistry.ItemStringOfLanterns.get());
+                event.accept(ModRegistry.ItemCoilOfLanterns.get());
+                event.accept(ModRegistry.WarehouseUpgrade.get());
+                event.accept(ModRegistry.SwiftBladeWood.get());
+                event.accept(ModRegistry.SwiftBladeStone.get());
+                event.accept(ModRegistry.SwiftBladeIron.get());
+                event.accept(ModRegistry.SwiftBladeDiamond.get());
+                event.accept(ModRegistry.SwiftBladeGold.get());
+                event.accept(ModRegistry.SwiftBladeCopper.get());
+                event.accept(ModRegistry.SwiftBladeOsmium.get());
+                event.accept(ModRegistry.SwiftBladeBronze.get());
+                event.accept(ModRegistry.SwiftBladeSteel.get());
+                event.accept(ModRegistry.SwiftBladeObsidian.get());
+                event.accept(ModRegistry.SwiftBladeNetherite.get());
+                event.accept(ModRegistry.SickleWood.get());
+                event.accept(ModRegistry.SickleStone.get());
+                event.accept(ModRegistry.SickleGold.get());
+                event.accept(ModRegistry.SickleIron.get());
+                event.accept(ModRegistry.SickleDiamond.get());
+                event.accept(ModRegistry.SickleNetherite.get());
+                event.accept(ModRegistry.ItemEmptyCrate.get());
+                event.accept(ModRegistry.ClutchOfEggs.get());
+                event.accept(ModRegistry.ItemCartonOfEggs.get());
+                event.accept(ModRegistry.BunchOfPotatoes.get());
+                event.accept(ModRegistry.ItemCrateOfPotatoes.get());
+                event.accept(ModRegistry.BunchOfCarrots.get());
+                event.accept(ModRegistry.ItemCrateOfCarrots.get());
+                event.accept(ModRegistry.BunchOfBeets.get());
+                event.accept(ModRegistry.ItemCrateOfBeets.get());
+
+                event.accept(ModRegistry.InstantBridge.get());
+                event.accept(ModRegistry.StartHouse.get());
+                event.accept(ModRegistry.ModerateHouse.get());
+                event.accept(ModRegistry.AdvancedHouse.get());
+                event.accept(ModRegistry.Bulldozer.get());
+                event.accept(ModRegistry.Creative_Bulldozer.get());
+                event.accept(ModRegistry.MachineryTower.get());
+                event.accept(ModRegistry.DefenseBunker.get());
+                event.accept(ModRegistry.MineshaftEntrance.get());
+                event.accept(ModRegistry.EnderGateway.get());
+                event.accept(ModRegistry.GrassyPlain.get());
+                event.accept(ModRegistry.MagicTemple.get());
+                event.accept(ModRegistry.WatchTower.get());
+                event.accept(ModRegistry.WelcomeCenter.get());
+                event.accept(ModRegistry.Jail.get());
+                event.accept(ModRegistry.Saloon.get());
+                event.accept(ModRegistry.SkiLodge.get());
+                event.accept(ModRegistry.WindMill.get());
+                event.accept(ModRegistry.TownHall.get());
+                event.accept(ModRegistry.NetherGate.get());
+                event.accept(ModRegistry.AquaBase.get());
+                event.accept(ModRegistry.AdvancedAquaBase.get());
+                event.accept(ModRegistry.WareHouse.get());
+                event.accept(ModRegistry.AdvancedWareHouse.get());
+                event.accept(ModRegistry.VillagerHouses.get());
+                event.accept(ModRegistry.ModernBuilding.get());
+                event.accept(ModRegistry.ModerateModernBuildings.get());
+                event.accept(ModRegistry.AdvancedModernBuildings.get());
+                event.accept(ModRegistry.StarterFarm.get());
+                event.accept(ModRegistry.ModerateFarm.get());
+                event.accept(ModRegistry.AdvancedFarm.get());
+
+                if (Prefab.isDebug) {
+                    event.accept(ModRegistry.StructureScannerItem.get());
+                }
+            }
+
+            /*ModRegistry.PREFAB_GROUP = event.registerCreativeModeTab(new ResourceLocation(Prefab.MODID, "logo"),
                     builder -> builder.icon(() -> new ItemStack(ModRegistry.ItemLogo.get()))
                     .title(Component.translatable("itemGroup.prefab.logo"))
                     .withLabelColor(0x00FF00)
                     .displayItems((context, entries) -> {
-                        entries.accept(ModRegistry.CompressedStoneItem.get());
-                        entries.accept(ModRegistry.DoubleCompressedStoneItem.get());
-                        entries.accept(ModRegistry.TripleCompressedStoneItem.get());
-                        entries.accept(ModRegistry.CompressedDirtItem.get());
-                        entries.accept(ModRegistry.DoubleCompressedDirtItem.get());
-                        entries.accept(ModRegistry.CompressedGlowStoneItem.get());
-                        entries.accept(ModRegistry.DoubleCompressedGlowStoneItem.get());
-                        entries.accept(ModRegistry.CompressedQuartzCreteItem.get());
-                        entries.accept(ModRegistry.DoubleCompressedQuartzCreteItem.get());
-                        entries.accept(ModRegistry.CompressedObsidianItem.get());
-                        entries.accept(ModRegistry.DoubleCompressedObsidianItem.get());
-                        entries.accept(ModRegistry.GlassSlabItem.get());
-                        entries.accept(ModRegistry.GlassStairsItem.get());
-                        entries.accept(ModRegistry.PaperLanternItem.get());
-                        entries.accept(ModRegistry.BlockPhasingItem.get());
-                        entries.accept(ModRegistry.BlockBoundaryItem.get());
-                        entries.accept(ModRegistry.GrassSlabItem.get());
-                        entries.accept(ModRegistry.GrassStairsItem.get());
-                        entries.accept(ModRegistry.GrassWallItem.get());
-                        entries.accept(ModRegistry.DirtWallItem.get());
-                        entries.accept(ModRegistry.DirtStairsItem.get());
-                        entries.accept(ModRegistry.DirtSlabItem.get());
-                        entries.accept(ModRegistry.LightSwitchItem.get());
-                        entries.accept(ModRegistry.DarkLampItem.get());
-                        entries.accept(ModRegistry.QuartzCreteItem.get());
-                        entries.accept(ModRegistry.QuartzCreteWallItem.get());
-                        entries.accept(ModRegistry.QuartzCreteBricksItem.get());
-                        entries.accept(ModRegistry.ChiseledQuartzCreteItem.get());
-                        entries.accept(ModRegistry.QuartzCretePillarItem.get());
-                        entries.accept(ModRegistry.QuartzCreteStairsItem.get());
-                        entries.accept(ModRegistry.QuartzCreteSlabItem.get());
-                        entries.accept(ModRegistry.SmoothQuartzCreteItem.get());
-                        entries.accept(ModRegistry.SmoothQuartzCreteWallItem.get());
-                        entries.accept(ModRegistry.SmoothQuartzCreteStairsItem.get());
-                        entries.accept(ModRegistry.SmoothQuartzCreteSlabItem.get());
-
-                        entries.accept(ModRegistry.ItemCompressedChest.get());
-                        entries.accept(ModRegistry.ItemPileOfBricks.get());
-                        entries.accept(ModRegistry.ItemPalletOfBricks.get());
-                        entries.accept(ModRegistry.ItemBundleOfTimber.get());
-                        entries.accept(ModRegistry.ItemHeapOfTimber.get());
-                        entries.accept(ModRegistry.ItemTonOfTimber.get());
-                        entries.accept(ModRegistry.ItemStringOfLanterns.get());
-                        entries.accept(ModRegistry.ItemCoilOfLanterns.get());
-                        entries.accept(ModRegistry.WarehouseUpgrade.get());
-                        entries.accept(ModRegistry.SwiftBladeWood.get());
-                        entries.accept(ModRegistry.SwiftBladeStone.get());
-                        entries.accept(ModRegistry.SwiftBladeIron.get());
-                        entries.accept(ModRegistry.SwiftBladeDiamond.get());
-                        entries.accept(ModRegistry.SwiftBladeGold.get());
-                        entries.accept(ModRegistry.SwiftBladeCopper.get());
-                        entries.accept(ModRegistry.SwiftBladeOsmium.get());
-                        entries.accept(ModRegistry.SwiftBladeBronze.get());
-                        entries.accept(ModRegistry.SwiftBladeSteel.get());
-                        entries.accept(ModRegistry.SwiftBladeObsidian.get());
-                        entries.accept(ModRegistry.SwiftBladeNetherite.get());
-                        entries.accept(ModRegistry.SickleWood.get());
-                        entries.accept(ModRegistry.SickleStone.get());
-                        entries.accept(ModRegistry.SickleGold.get());
-                        entries.accept(ModRegistry.SickleIron.get());
-                        entries.accept(ModRegistry.SickleDiamond.get());
-                        entries.accept(ModRegistry.SickleNetherite.get());
-                        entries.accept(ModRegistry.ItemEmptyCrate.get());
-                        entries.accept(ModRegistry.ClutchOfEggs.get());
-                        entries.accept(ModRegistry.ItemCartonOfEggs.get());
-                        entries.accept(ModRegistry.BunchOfPotatoes.get());
-                        entries.accept(ModRegistry.ItemCrateOfPotatoes.get());
-                        entries.accept(ModRegistry.BunchOfCarrots.get());
-                        entries.accept(ModRegistry.ItemCrateOfCarrots.get());
-                        entries.accept(ModRegistry.BunchOfBeets.get());
-                        entries.accept(ModRegistry.ItemCrateOfBeets.get());
-
-                        entries.accept(ModRegistry.InstantBridge.get());
-                        entries.accept(ModRegistry.StartHouse.get());
-                        entries.accept(ModRegistry.ModerateHouse.get());
-                        entries.accept(ModRegistry.AdvancedHouse.get());
-                        entries.accept(ModRegistry.Bulldozer.get());
-                        entries.accept(ModRegistry.Creative_Bulldozer.get());
-                        entries.accept(ModRegistry.MachineryTower.get());
-                        entries.accept(ModRegistry.DefenseBunker.get());
-                        entries.accept(ModRegistry.MineshaftEntrance.get());
-                        entries.accept(ModRegistry.EnderGateway.get());
-                        entries.accept(ModRegistry.GrassyPlain.get());
-                        entries.accept(ModRegistry.MagicTemple.get());
-                        entries.accept(ModRegistry.WatchTower.get());
-                        entries.accept(ModRegistry.WelcomeCenter.get());
-                        entries.accept(ModRegistry.Jail.get());
-                        entries.accept(ModRegistry.Saloon.get());
-                        entries.accept(ModRegistry.SkiLodge.get());
-                        entries.accept(ModRegistry.WindMill.get());
-                        entries.accept(ModRegistry.TownHall.get());
-                        entries.accept(ModRegistry.NetherGate.get());
-                        entries.accept(ModRegistry.AquaBase.get());
-                        entries.accept(ModRegistry.AdvancedAquaBase.get());
-                        entries.accept(ModRegistry.WareHouse.get());
-                        entries.accept(ModRegistry.AdvancedWareHouse.get());
-                        entries.accept(ModRegistry.VillagerHouses.get());
-                        entries.accept(ModRegistry.ModernBuilding.get());
-                        entries.accept(ModRegistry.ModerateModernBuildings.get());
-                        entries.accept(ModRegistry.AdvancedModernBuildings.get());
-                        entries.accept(ModRegistry.StarterFarm.get());
-                        entries.accept(ModRegistry.ModerateFarm.get());
-                        entries.accept(ModRegistry.AdvancedFarm.get());
-
-                        if (Prefab.isDebug) {
-                            entries.accept(ModRegistry.StructureScannerItem.get());
-                        }
-                    }));
+                    }));*/
         }
     }
 }

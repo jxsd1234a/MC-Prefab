@@ -1,10 +1,10 @@
 package com.wuest.prefab.crafting;
 
-import com.google.gson.JsonObject;
+import com.mojang.serialization.DynamicOps;
+import com.mojang.serialization.MapCodec;
 import com.wuest.prefab.Prefab;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.crafting.conditions.ICondition;
-import net.minecraftforge.common.crafting.conditions.IConditionSerializer;
 
 /**
  * @author WuestMan
@@ -18,16 +18,6 @@ public class RecipeCondition implements ICondition {
      */
     public RecipeCondition(String recipeKey) {
         this.recipeKey = recipeKey;
-    }
-
-    @Override
-    public ResourceLocation getID() {
-        return NAME;
-    }
-
-    @Override
-    public boolean test(IContext context) {
-        return this.determineActiveRecipe();
     }
 
     /**
@@ -47,25 +37,15 @@ public class RecipeCondition implements ICondition {
         return result;
     }
 
-    @SuppressWarnings("unused")
-    public static class Serializer implements IConditionSerializer<RecipeCondition> {
-        public static final RecipeCondition.Serializer INSTANCE = new RecipeCondition.Serializer();
+    @Override
+    public boolean test(IContext iContext, DynamicOps<?> dynamicOps) {
+        return this.determineActiveRecipe();
+    }
 
-        @Override
-        public void write(JsonObject json, RecipeCondition value) {
-            json.addProperty("recipeKey", value.recipeKey);
-        }
-
-        @Override
-        public RecipeCondition read(JsonObject json) {
-            String recipeKeyName = "recipeKey";
-
-            return new RecipeCondition(json.get(recipeKeyName).getAsString());
-        }
-
-        @Override
-        public ResourceLocation getID() {
-            return RecipeCondition.NAME;
-        }
+    @Override
+    public MapCodec<? extends ICondition> codec() {
+        // TODO: Create conditioned recipe!!
+        // May just have to make it like the Fabric ones....
+        return null;
     }
 }

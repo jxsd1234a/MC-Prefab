@@ -2,8 +2,9 @@ package com.wuest.prefab.blocks;
 
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
-import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 
 /**
  * This is the compressed Obsidian block class.
@@ -17,7 +18,7 @@ public class BlockCompressedObsidian extends Block {
      * Initializes a new instance of the BlockCompressedObsidian class.
      */
     public BlockCompressedObsidian(EnumType stoneType) {
-        super(Block.Properties.of(Material.STONE)
+        super(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE)
                 .strength(50.0f, 2000.0f)
                 .sound(SoundType.STONE)
                 .requiresCorrectToolForDrops());

@@ -1,9 +1,11 @@
 package com.wuest.prefab.items;
 
 import com.wuest.prefab.ModRegistry;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.Tier;
+import net.minecraft.world.item.Tiers;
 
 /**
  * This class is used to create a sword which has the same speed as pre-1.9
@@ -16,8 +18,11 @@ public class ItemSwiftBlade extends SwordItem {
      * Initializes a new instance of the ItemSwiftBlade class.
      */
     public ItemSwiftBlade(Tier tier, int attackDamageIn, float attackSpeedIn) {
-        super(tier, attackDamageIn, attackSpeedIn,
-                new Item.Properties().stacksTo(1).defaultDurability(tier.getUses()));
+        super(tier,
+                new Item.Properties()
+                        .attributes(SwordItem.createAttributes(tier, attackDamageIn, attackSpeedIn))
+                        .stacksTo(1)
+                        .durability(tier.getUses()));
     }
 
     /**
@@ -25,7 +30,7 @@ public class ItemSwiftBlade extends SwordItem {
      * equal to 2 damage points.
      */
     @Override
-    public float getDamage() {
+    public float getAttackDamageBonus(Player p_330411_, float p_327880_) {
         return this.getTier().getAttackDamageBonus();
     }
 

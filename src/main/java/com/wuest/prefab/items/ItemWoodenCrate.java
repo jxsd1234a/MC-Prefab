@@ -2,7 +2,6 @@ package com.wuest.prefab.items;
 
 import com.wuest.prefab.ModRegistry;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.CreativeModeTab;
 
 /**
  * @author WuestMan
@@ -21,7 +20,7 @@ public class ItemWoodenCrate extends Item {
     }
 
     public static ItemBlockWoodenCrate getRecipeRemainderForCrateType(CrateType crateType) {
-        if (crateType.isCrateOfFood) {
+        if (crateType != null && crateType.isCrateOfFood) {
             return ModRegistry.ItemEmptyCrate.get();
         }
 

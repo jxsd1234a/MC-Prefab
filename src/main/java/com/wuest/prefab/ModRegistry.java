@@ -15,7 +15,9 @@ import com.wuest.prefab.structures.messages.*;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.util.LazyLoadedValue;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -89,8 +91,8 @@ public class ModRegistry {
     public static final RegistryObject<BlockItem> BlockPhasingItem = ITEMS.register("block_phasic", () -> new BlockItem(BlockPhasing.get(), new Item.Properties()));
     public static final RegistryObject<BlockBoundary> BlockBoundary = BLOCKS.register("block_boundary", com.wuest.prefab.blocks.BlockBoundary::new);
     public static final RegistryObject<BlockPaperLantern> PaperLantern = BLOCKS.register("block_paper_lantern", BlockPaperLantern::new);
-    public static final RegistryObject<BlockGlassStairs> GlassStairs = BLOCKS.register("block_glass_stairs", () -> new BlockGlassStairs(Blocks.GLASS.defaultBlockState(), Block.Properties.copy(Blocks.GLASS)));
-    public static final RegistryObject<BlockGlassSlab> GlassSlab = BLOCKS.register("block_glass_slab", () -> new BlockGlassSlab(Block.Properties.copy(Blocks.GLASS)));
+    public static final RegistryObject<BlockGlassStairs> GlassStairs = BLOCKS.register("block_glass_stairs", () -> new BlockGlassStairs(Blocks.GLASS.defaultBlockState(), Block.Properties.ofFullCopy(Blocks.GLASS)));
+    public static final RegistryObject<BlockGlassSlab> GlassSlab = BLOCKS.register("block_glass_slab", () -> new BlockGlassSlab(Block.Properties.ofFullCopy(Blocks.GLASS)));
 
     public static final RegistryObject<BlockRotatableHorizontalShaped> PileOfBricks = BLOCKS.register("item_pile_of_bricks", () -> new BlockRotatableHorizontalShaped(BlockShaped.BlockShape.PileOfBricks, BlockBehaviour.Properties.of(Material.CLAY, MaterialColor.COLOR_RED).noOcclusion().isViewBlocking(ModRegistry::never)));
     public static final RegistryObject<BlockRotatableHorizontalShaped> PalletOfBricks = BLOCKS.register("item_pallet_of_bricks", () -> new BlockRotatableHorizontalShaped(BlockShaped.BlockShape.PalletOfBricks, BlockBehaviour.Properties.of(Material.CLAY, MaterialColor.COLOR_RED).noOcclusion().isViewBlocking(ModRegistry::never)));
@@ -325,32 +327,32 @@ public class ModRegistry {
     }
 
     public enum CustomItemTier implements Tier {
-        COPPER("Copper", Tiers.STONE.getLevel(), Tiers.STONE.getUses(), Tiers.STONE.getSpeed(),
+        COPPER("Copper", (int)Tiers.STONE.getAttackDamageBonus(), Tiers.STONE.getUses(), Tiers.STONE.getSpeed(),
                 Tiers.STONE.getAttackDamageBonus(), Tiers.STONE.getEnchantmentValue(), () -> {
             return Ingredient
                     .of(Utils.getItemStacksWithTag(new ResourceLocation("forge", "ingots/copper")).stream());
-        }),
-        OSMIUM("Osmium", Tiers.IRON.getLevel(), 500, Tiers.IRON.getSpeed(),
+        }, BlockTags.INCORRECT_FOR_STONE_TOOL),
+        OSMIUM("Osmium", (int)Tiers.IRON.getAttackDamageBonus(), 500, Tiers.IRON.getSpeed(),
                 Tiers.IRON.getAttackDamageBonus() + .5f, Tiers.IRON.getEnchantmentValue(), () -> {
             return Ingredient
                     .of(Utils.getItemStacksWithTag(new ResourceLocation("forge", "ingots/osmium")).stream());
-        }),
-        BRONZE("Bronze", Tiers.IRON.getLevel(), Tiers.IRON.getUses(), Tiers.IRON.getSpeed(),
+        }, BlockTags.INCORRECT_FOR_IRON_TOOL),
+        BRONZE("Bronze", (int)Tiers.IRON.getAttackDamageBonus(), Tiers.IRON.getUses(), Tiers.IRON.getSpeed(),
                 Tiers.IRON.getAttackDamageBonus(), Tiers.IRON.getEnchantmentValue(), () -> {
             return Ingredient
                     .of(Utils.getItemStacksWithTag(new ResourceLocation("forge", "ingots/bronze")).stream());
-        }),
-        STEEL("Steel", Tiers.DIAMOND.getLevel(), (int) (Tiers.IRON.getUses() * 1.5),
+        }, BlockTags.INCORRECT_FOR_IRON_TOOL),
+        STEEL("Steel", (int)Tiers.DIAMOND.getAttackDamageBonus(), (int) (Tiers.IRON.getUses() * 1.5),
                 Tiers.DIAMOND.getSpeed(), Tiers.DIAMOND.getAttackDamageBonus(),
                 Tiers.DIAMOND.getEnchantmentValue(), () -> {
             return Ingredient
                     .of(Utils.getItemStacksWithTag(new ResourceLocation("forge", "ingots/steel")).stream());
-        }),
-        OBSIDIAN("Obsidian", Tiers.DIAMOND.getLevel(), (int) (Tiers.DIAMOND.getUses() * 1.5),
+        }, BlockTags.INCORRECT_FOR_DIAMOND_TOOL),
+        OBSIDIAN("Obsidian", (int)Tiers.DIAMOND.getAttackDamageBonus(), (int) (Tiers.DIAMOND.getUses() * 1.5),
                 Tiers.DIAMOND.getSpeed(), Tiers.DIAMOND.getAttackDamageBonus(),
                 Tiers.DIAMOND.getEnchantmentValue(), () -> {
             return Ingredient.of(Item.byBlock(Blocks.OBSIDIAN));
-        });
+        }, BlockTags.INCORRECT_FOR_DIAMOND_TOOL);
 
         private final String name;
         private final int harvestLevel;
@@ -359,9 +361,10 @@ public class ModRegistry {
         private final float attackDamage;
         private final int enchantability;
         private final LazyLoadedValue<Ingredient> repairMaterial;
+        private final TagKey<Block> incorrectBlocksForDrops;
 
         CustomItemTier(String name, int harvestLevelIn, int maxUsesIn, float efficiencyIn, float attackDamageIn,
-                       int enchantability, Supplier<Ingredient> repairMaterialIn) {
+                       int enchantability, Supplier<Ingredient> repairMaterialIn, TagKey<Block> incorrectBlocksForDrops) {
             this.name = name;
             this.harvestLevel = harvestLevelIn;
             this.maxUses = maxUsesIn;
@@ -369,6 +372,7 @@ public class ModRegistry {
             this.attackDamage = attackDamageIn;
             this.enchantability = enchantability;
             this.repairMaterial = new LazyLoadedValue<>(repairMaterialIn);
+            this.incorrectBlocksForDrops = incorrectBlocksForDrops;
         }
 
         public static CustomItemTier getByName(String name) {
@@ -395,6 +399,11 @@ public class ModRegistry {
 
         public float getAttackDamageBonus() {
             return this.attackDamage;
+        }
+
+        @Override
+        public TagKey<Block> getIncorrectBlocksForDrops() {
+            return this.incorrectBlocksForDrops;
         }
 
         public int getLevel() {

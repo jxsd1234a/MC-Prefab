@@ -10,6 +10,5 @@ import net.minecraft.world.item.Item;
 public class ItemPalletOfBricks extends BlockItem {
     public ItemPalletOfBricks() {
         super(ModRegistry.PalletOfBricks.get(), new Item.Properties());
-
     }
 }

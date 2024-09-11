@@ -24,6 +24,7 @@ import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.network.PacketDistributor;
 
 import java.util.ArrayList;
 
@@ -102,6 +103,7 @@ public final class ClientEventHandler {
         }
     }
 
+    // Note: This event is to build a structure that a user is previewing
     @SubscribeEvent(priority = EventPriority.NORMAL)
     @OnlyIn(Dist.CLIENT)
     public static void KeyInput(InputEvent.Key event) {
@@ -127,9 +129,13 @@ public final class ClientEventHandler {
                     }
 
                     if (foundCorrectStructureItem) {
-                        Prefab.network.sendToServer(new StructureTagMessage(
+                        // Send the configuration of the previewed structure from the client (player) to the server for building.
+                        // It doesn't have to be sent to a particular player, the server just needs to handle the process.
+                        Prefab.network.send(new StructureTagMessage(
                                 StructureRenderHandler.currentConfiguration.WriteToCompoundTag(),
-                                StructureTagMessage.EnumStructureConfiguration.getByConfigurationInstance(StructureRenderHandler.currentConfiguration)));
+                                StructureTagMessage.EnumStructureConfiguration.getByConfigurationInstance(StructureRenderHandler.currentConfiguration)),
+                                PacketDistributor.SERVER.noArg()
+                        );
                     }
 
                     StructureRenderHandler.currentStructure = null;

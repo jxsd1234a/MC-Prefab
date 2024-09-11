@@ -23,8 +23,7 @@ public class BlockPaperLantern extends Block {
      * Initializes a new instance of the BlockPaperLantern class.
      */
     public BlockPaperLantern() {
-        // The "func_226896_b_" function causes the "isSolid" field on the block to be set to false.
-        super(Properties.of(Prefab.SeeThroughImmovable)
+        super(Prefab.SeeThroughImmovable.get()
                 .sound(SoundType.SNOW)
                 .strength(0.6f)
                 .lightLevel(value -> 14)
