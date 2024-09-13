@@ -13,6 +13,7 @@ import com.wuest.prefab.structures.events.StructureEventHandler;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
@@ -40,8 +41,8 @@ import net.minecraft.world.level.block.state.properties.BedPart;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraft.world.level.block.state.properties.Property;
-import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.io.StringWriter;
@@ -128,7 +129,7 @@ public class Structure {
             BlockState currentState = world.getBlockState(currentPos);
             Block currentBlock = currentState.getBlock();
 
-            if (currentState.getMaterial() == Material.WATER && excludeWater) {
+            if (currentState.getBlock() == Blocks.WATER && excludeWater) {
                 continue;
             }
 
@@ -197,7 +198,7 @@ public class Structure {
                 }
 
                 ResourceLocation resourceLocation = ForgeRegistries.BLOCK_ENTITY_TYPES.getKey(tileEntity.getType());
-                CompoundTag tagCompound = tileEntity.saveWithFullMetadata();
+                CompoundTag tagCompound = tileEntity.saveWithFullMetadata(world.registryAccess());
 
                 BuildTileEntity buildTileEntity = new BuildTileEntity();
                 assert resourceLocation != null;
@@ -216,7 +217,10 @@ public class Structure {
         int z_radiusRangeBegin = Math.min(cornerPos1.getZ(), cornerPos2.getZ());
         int z_radiusRangeEnd = Math.max(cornerPos1.getZ(), cornerPos2.getZ());
 
-        AABB axis = new AABB(cornerPos1, cornerPos2);
+        var pos1 = new Vec3(cornerPos1.getX(),cornerPos1.getY(),cornerPos1.getZ());
+        var pos2 = new Vec3(cornerPos2.getX(),cornerPos2.getY(),cornerPos2.getZ());
+
+        AABB axis = new AABB(pos1, pos2);
 
         for (Entity entity : world.getEntities(null, axis)) {
             // TODO: This was the "getPosition" method.
@@ -594,7 +598,7 @@ public class Structure {
 
         if (world.dimensionType().ultraWarm()
                 || (!isOverWorld && Prefab.proxy.getServerConfiguration().allowWaterInNonOverworldDimensions)) {
-            boolean foundWaterLikeBlock = (foundBlock instanceof LiquidBlock && blockState.getMaterial() == Material.WATER)
+            boolean foundWaterLikeBlock = (foundBlock instanceof LiquidBlock && blockState.getBlock() == Blocks.WATER)
                     || foundBlock instanceof SeagrassBlock;
 
             if (!foundWaterLikeBlock) {
@@ -685,14 +689,14 @@ public class Structure {
                     this.world.removeBlockEntity(tileEntityPos);
                 }
 
-                tileEntity = BlockEntity.loadStatic(tileEntityPos, tileBlock, buildTileEntity.getEntityDataTag());
+                tileEntity = BlockEntity.loadStatic(tileEntityPos, tileBlock, buildTileEntity.getEntityDataTag(), this.world.registryAccess());
 
                 if (tileEntity == null) {
                     continue;
                 }
 
                 this.world.removeBlockEntity(tileEntityPos);
-                tileEntity = BlockEntity.loadStatic(tileEntityPos, tileBlock, buildTileEntity.getEntityDataTag());
+                tileEntity = BlockEntity.loadStatic(tileEntityPos, tileBlock, buildTileEntity.getEntityDataTag(), this.world.registryAccess());
                 this.world.setBlockEntity(tileEntity);
                 this.world.getChunkAt(tileEntityPos).setUnsaved(true);
                 tileEntity.setChanged();

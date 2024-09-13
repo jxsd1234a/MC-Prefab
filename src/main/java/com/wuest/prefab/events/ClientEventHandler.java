@@ -19,7 +19,6 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.client.event.RenderLevelStageEvent;
 import net.minecraftforge.event.TickEvent.ClientTickEvent;
-import net.minecraftforge.event.TickEvent.Phase;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -56,7 +55,7 @@ public final class ClientEventHandler {
      *
      * @param event The event object.
      */
-    @SubscribeEvent
+/*    @SubscribeEvent
     public static void onWorldRenderLast(RenderLevelStageEvent event) {
         // TODO: Replace this with the mixin from Fabric since forge keeps on changing shit they shouldn't be.
         Minecraft mc = Minecraft.getInstance();
@@ -64,7 +63,7 @@ public final class ClientEventHandler {
         if (mc.player != null && (!mc.player.isCrouching())) {
             StructureRenderHandler.renderPlayerLook(mc.player, mc.hitResult, event.getPoseStack());
         }
-    }
+    }*/
 
     /**
      * This is used to clear out the server configuration on the client side.
@@ -88,18 +87,16 @@ public final class ClientEventHandler {
      * @param event The event object.
      */
     @SubscribeEvent
-    public static void ClientTickEnd(ClientTickEvent event) {
-        if (event.phase == Phase.END) {
-            Screen gui = Minecraft.getInstance().screen;
+    public static void ClientTickEnd(ClientTickEvent.Post event) {
+        Screen gui = Minecraft.getInstance().screen;
 
-            if (gui == null || !gui.isPauseScreen()) {
-                // Reset the ticks in game if we are getting close to the maximum value of an integer.
-                if (Integer.MAX_VALUE - 100 == ClientEventHandler.ticksInGame) {
-                    ClientEventHandler.ticksInGame = 1;
-                }
-
-                ClientEventHandler.ticksInGame++;
+        if (gui == null || !gui.isPauseScreen()) {
+            // Reset the ticks in game if we are getting close to the maximum value of an integer.
+            if (Integer.MAX_VALUE - 100 == ClientEventHandler.ticksInGame) {
+                ClientEventHandler.ticksInGame = 1;
             }
+
+            ClientEventHandler.ticksInGame++;
         }
     }
 

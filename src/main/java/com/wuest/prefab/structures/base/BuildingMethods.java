@@ -61,7 +61,7 @@ public class BuildingMethods {
             boolean foundStack = false;
 
             for (ItemStack existingStack : originalStacks) {
-                if (ItemStack.isSame(existingStack, stack)) {
+                if (ItemStack.isSameItem(existingStack, stack)) {
                     // Make sure that this combined stack is at or smaller than
                     // the max.
                     if (existingStack.getCount() + stack.getCount() <= stack.getMaxStackSize()) {
@@ -621,7 +621,7 @@ public class BuildingMethods {
             boolean foundStack = false;
 
             for (ItemStack existingStack : stacks) {
-                if (ItemStack.isSame(existingStack, tempStack)) {
+                if (ItemStack.isSameItem(existingStack, tempStack)) {
                     // Make sure that this combined stack is at or smaller than
                     // the max.
                     if (existingStack.getCount() + tempStack.getCount() <= tempStack.getMaxStackSize()) {

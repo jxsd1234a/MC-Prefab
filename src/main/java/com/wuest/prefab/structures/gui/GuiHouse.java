@@ -1,6 +1,5 @@
 package com.wuest.prefab.structures.gui;
 
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.wuest.prefab.Prefab;
 import com.wuest.prefab.Tuple;
 import com.wuest.prefab.blocks.FullDyeColor;
@@ -14,6 +13,7 @@ import com.wuest.prefab.structures.config.HouseConfiguration;
 import com.wuest.prefab.structures.messages.StructureTagMessage;
 import com.wuest.prefab.structures.predefined.StructureHouse;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractButton;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.DyeColor;
@@ -84,7 +84,7 @@ public class GuiHouse extends GuiStructure {
             }
         }
 
-        if (this.availableHouseStyles.size() == 0) {
+        if (this.availableHouseStyles.isEmpty()) {
             // There are no options. Show the no options screen.
             this.showNoOptionsScreen();
             return;
@@ -96,7 +96,7 @@ public class GuiHouse extends GuiStructure {
         int grayBoxY = adjustedXYValue.getSecond();
 
         if (!selectedStyleInListOfAvailable) {
-            this.specificConfiguration.houseStyle = this.availableHouseStyles.get(0);
+            this.specificConfiguration.houseStyle = this.availableHouseStyles.getFirst();
         }
 
         this.selectedStructure = StructureHouse.CreateInstance(this.specificConfiguration.houseStyle.getStructureLocation(), StructureHouse.class);
@@ -130,22 +130,22 @@ public class GuiHouse extends GuiStructure {
     }
 
     @Override
-    protected void preButtonRender(PoseStack matrixStack, int x, int y, int mouseX, int mouseY, float partialTicks) {
+    protected void preButtonRender(GuiGraphics guiGraphics, int x, int y, int mouseX, int mouseY, float partialTicks) {
         int imagePanelUpperLeft = x + 142;
         int imagePanelWidth = 285;
         int imagePanelMiddle = imagePanelWidth / 2;
 
-        this.renderBackground(matrixStack);
+        this.renderBackground(guiGraphics, 0, 0, 0);
 
-        this.drawControlLeftPanel(matrixStack, x + 2, y + 10, 141, 190);
-        this.drawControlRightPanel(matrixStack, imagePanelUpperLeft, y + 10, imagePanelWidth, 190);
+        this.drawControlLeftPanel(guiGraphics, x + 2, y + 10, 141, 190);
+        this.drawControlRightPanel(guiGraphics, imagePanelUpperLeft, y + 10, imagePanelWidth, 190);
 
         int middleOfImage = this.shownImageWidth / 2;
         int imageLocation = imagePanelUpperLeft + (imagePanelMiddle - middleOfImage);
 
         GuiUtils.bindAndDrawScaledTexture(
                 this.specificConfiguration.houseStyle.getHousePicture(),
-                matrixStack,
+                guiGraphics,
                 imageLocation,
                 y + 15,
                 this.shownImageWidth,
@@ -161,19 +161,19 @@ public class GuiHouse extends GuiStructure {
     }
 
     @Override
-    protected void postButtonRender(PoseStack matrixStack, int x, int y, int mouseX, int mouseY, float partialTicks) {
+    protected void postButtonRender(GuiGraphics guiGraphics, int x, int y, int mouseX, int mouseY, float partialTicks) {
         // Draw the text here.
         int yOffSet = 15;
 
         if (this.availableHouseStyles.size() > 1) {
-            this.drawString(matrixStack, GuiLangKeys.translateString(GuiLangKeys.HOUSE_STYLE), x + 8, y + yOffSet, this.textColor);
+            this.drawString(guiGraphics, GuiLangKeys.translateString(GuiLangKeys.HOUSE_STYLE), x + 8, y + yOffSet, this.textColor);
             yOffSet = yOffSet + 35;
         }
 
-        this.drawString(matrixStack, GuiLangKeys.translateString(GuiLangKeys.GUI_STRUCTURE_BED_COLOR), x + 8, y + yOffSet, this.textColor);
+        this.drawString(guiGraphics, GuiLangKeys.translateString(GuiLangKeys.GUI_STRUCTURE_BED_COLOR), x + 8, y + yOffSet, this.textColor);
         yOffSet = yOffSet + 35;
 
-        this.drawString(matrixStack, GuiLangKeys.translateString(GuiLangKeys.GUI_STRUCTURE_GLASS), x + 8, y + yOffSet, this.textColor);
+        this.drawString(guiGraphics, GuiLangKeys.translateString(GuiLangKeys.GUI_STRUCTURE_GLASS), x + 8, y + yOffSet, this.textColor);
     }
 
     /**
@@ -200,7 +200,7 @@ public class GuiHouse extends GuiStructure {
                 if (this.specificConfiguration.houseStyle.getDisplayName().equals(option.getDisplayName())) {
                     if (i == this.availableHouseStyles.size() - 1) {
                         // This is the last option, set the text to the first option.
-                        chosenOption = this.availableHouseStyles.get(0);
+                        chosenOption = this.availableHouseStyles.getFirst();
                     } else {
                         chosenOption = this.availableHouseStyles.get(i + 1);
                     }

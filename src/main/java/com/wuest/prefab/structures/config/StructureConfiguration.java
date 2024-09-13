@@ -181,10 +181,7 @@ public class StructureConfiguration {
 
         ItemStack copy = stack.copy();
 
-        stack.hurtAndBreak(1, player, (player1) ->
-        {
-            player1.broadcastBreakEvent(hand);
-        });
+        stack.hurtAndBreak(1, player, hand == InteractionHand.MAIN_HAND ? EquipmentSlot.MAINHAND : EquipmentSlot.OFFHAND);
 
         if (stack.isEmpty()) {
             net.minecraftforge.event.ForgeEventFactory.onPlayerDestroyItem(player, copy, hand);
@@ -200,7 +197,7 @@ public class StructureConfiguration {
      * Checks item, NBT, and meta if the item is not damageable
      */
     private boolean stackEqualExact(ItemStack stack1, ItemStack stack2) {
-        return stack1.getItem() == stack2.getItem() && ItemStack.tagMatches(stack1, stack2);
+        return stack1.getItem() == stack2.getItem() && ItemStack.isSameItemSameComponents(stack1, stack2);
     }
 
     /**

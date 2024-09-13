@@ -1,7 +1,5 @@
 package com.wuest.prefab.structures.config.enums;
 
-import net.minecraft.core.Direction;
-
 public class MachineryTowerOptions extends BaseOption {
     public static MachineryTowerOptions Default = new MachineryTowerOptions(
             "item.prefab.machinery.tower",

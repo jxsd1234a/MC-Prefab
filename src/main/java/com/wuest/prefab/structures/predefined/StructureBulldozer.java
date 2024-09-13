@@ -9,13 +9,14 @@ import com.wuest.prefab.structures.config.StructureConfiguration;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.decoration.HangingEntity;
-import net.minecraft.world.item.Tiers;
+import net.minecraft.world.item.DiggerItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.TierSortingRegistry;
 
 import java.util.ArrayList;
 
@@ -23,6 +24,21 @@ import java.util.ArrayList;
  * @author WuestMan
  */
 public class StructureBulldozer extends Structure {
+    protected static DiggerItem diamondPickaxe;
+    protected static DiggerItem diamondShovel;
+    protected static DiggerItem diamondAxe;
+    protected static ItemStack diamondPickaxeStack;
+    protected static ItemStack diamondShovelStack;
+    protected static ItemStack diamondAxeStack;
+
+    static {
+        StructureBulldozer.diamondAxe = (DiggerItem) Items.DIAMOND_AXE;
+        StructureBulldozer.diamondPickaxe = (DiggerItem) Items.DIAMOND_PICKAXE;
+        StructureBulldozer.diamondShovel = (DiggerItem) Items.DIAMOND_SHOVEL;
+        StructureBulldozer.diamondPickaxeStack = new ItemStack(Items.DIAMOND_PICKAXE);
+        StructureBulldozer.diamondShovelStack = new ItemStack(Items.DIAMOND_SHOVEL);
+        StructureBulldozer.diamondAxeStack = new ItemStack(Items.DIAMOND_AXE);
+    }
 
     /**
      * Initializes a new instance of the {@link StructureBulldozer} class.
@@ -45,12 +61,19 @@ public class StructureBulldozer extends Structure {
     protected Boolean BlockShouldBeClearedDuringConstruction(StructureConfiguration configuration, Level world, BlockPos originalPos, BlockPos blockPos) {
         BlockState state = world.getBlockState(blockPos);
         BulldozerConfiguration specificConfiguration = (BulldozerConfiguration) configuration;
-        boolean correctHarvestLevel = TierSortingRegistry.isCorrectTierForDrops(Tiers.DIAMOND, state);
+
+        boolean pickAxeEffective = StructureBulldozer.diamondPickaxe.isCorrectToolForDrops(StructureBulldozer.diamondPickaxeStack, state);
+        boolean axeEffective = StructureBulldozer.diamondAxe.isCorrectToolForDrops(StructureBulldozer.diamondAxeStack, state);
+        boolean shovelEffective = StructureBulldozer.diamondShovel.isCorrectToolForDrops(StructureBulldozer.diamondShovelStack, state);
+
         float destroySpeed = state.getDestroySpeed(world, blockPos);
 
         // Only harvest up to diamond level and non-indestructible blocks.
-        if (!specificConfiguration.creativeMode && Prefab.proxy.getServerConfiguration().allowBulldozerToCreateDrops
-                && correctHarvestLevel && destroySpeed >= 0.0f) {
+        if (!specificConfiguration.creativeMode
+                && Prefab.proxy.getServerConfiguration().allowBulldozerToCreateDrops
+                && ((state.requiresCorrectToolForDrops() && pickAxeEffective || axeEffective || shovelEffective)
+                || !state.requiresCorrectToolForDrops())
+                && destroySpeed >= 0.0f) {
             Block.dropResources(state, world, blockPos);
         }
 

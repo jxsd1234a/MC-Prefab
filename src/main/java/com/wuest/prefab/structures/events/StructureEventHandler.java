@@ -31,16 +31,15 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraft.world.level.chunk.ChunkAccess;
-import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.shapes.Shapes;
-import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.TickEvent.ServerTickEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.PlayerLoggedInEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.network.NetworkDirection;
+import net.minecraftforge.network.PacketDistributor;
 
 import java.util.*;
 import java.util.Map.Entry;
@@ -69,7 +68,7 @@ public final class StructureEventHandler {
      */
     @SubscribeEvent
     public static void PlayerLoggedIn(PlayerLoggedInEvent event) {
-        if (!event.getEntity().level.isClientSide() && event.getEntity() instanceof ServerPlayer) {
+        if (!event.getEntity().level().isClientSide() && event.getEntity() instanceof ServerPlayer) {
             ServerPlayer player = (ServerPlayer) event.getEntity();
             EntityPlayerConfiguration playerConfig = EntityPlayerConfiguration.loadFromEntityData(player);
 
@@ -104,10 +103,7 @@ public final class StructureEventHandler {
             }
 
             // Send the tag to the client.
-            Prefab.network.sendTo(
-                    new PlayerEntityTagMessage(playerConfig.getModIsPlayerNewTag(player)),
-                    ((ServerPlayer) event.getEntity()).connection.connection,
-                    NetworkDirection.PLAY_TO_CLIENT);
+            Prefab.network.send(new PlayerEntityTagMessage(playerConfig.getModIsPlayerNewTag(player)), PacketDistributor.PLAYER.with(player));
         }
     }
 
@@ -117,77 +113,75 @@ public final class StructureEventHandler {
      * @param event The event object.
      */
     @SubscribeEvent
-    public static void onServerTick(ServerTickEvent event) {
-        if (event.phase == TickEvent.Phase.START) {
-            ArrayList<Player> playersToRemove = new ArrayList<>();
+    public static void onServerTick(ServerTickEvent.Pre event) {
+        ArrayList<Player> playersToRemove = new ArrayList<>();
 
-            if (StructureEventHandler.entitiesToGenerate.size() > 0) {
-                StructureEventHandler.ticksSinceLastEntitiesGenerated++;
+        if (!StructureEventHandler.entitiesToGenerate.isEmpty()) {
+            StructureEventHandler.ticksSinceLastEntitiesGenerated++;
 
-                if (StructureEventHandler.ticksSinceLastEntitiesGenerated > 40) {
-                    // Process any entities.
-                    StructureEventHandler.processStructureEntities();
+            if (StructureEventHandler.ticksSinceLastEntitiesGenerated > 40) {
+                // Process any entities.
+                StructureEventHandler.processStructureEntities();
 
-                    StructureEventHandler.ticksSinceLastEntitiesGenerated = 0;
-                }
+                StructureEventHandler.ticksSinceLastEntitiesGenerated = 0;
             }
+        }
 
-            if (StructureEventHandler.structuresToBuild.size() > 0) {
-                for (Entry<Player, ArrayList<Structure>> entry : StructureEventHandler.structuresToBuild.entrySet()) {
-                    ArrayList<Structure> structuresToRemove = new ArrayList<>();
+        if (!StructureEventHandler.structuresToBuild.isEmpty()) {
+            for (Entry<Player, ArrayList<Structure>> entry : StructureEventHandler.structuresToBuild.entrySet()) {
+                ArrayList<Structure> structuresToRemove = new ArrayList<>();
 
-                    // Build the first 100 blocks of each structure for this player.
-                    for (Structure structure : entry.getValue()) {
-                        if (!structure.entitiesRemoved) {
-                            // Go through each block and find any entities there. If there are any; kill them if they aren't players.
-                            // If there is a player there...they will probably die anyways.....
-                            for (BlockPos clearedPos : structure.clearedBlockPos) {
-                                AABB axisPos = Shapes.block().bounds().move(clearedPos);
+                // Build the first 100 blocks of each structure for this player.
+                for (Structure structure : entry.getValue()) {
+                    if (!structure.entitiesRemoved) {
+                        // Go through each block and find any entities there. If there are any; kill them if they aren't players.
+                        // If there is a player there...they will probably die anyways.....
+                        for (BlockPos clearedPos : structure.clearedBlockPos) {
+                            AABB axisPos = Shapes.block().bounds().move(clearedPos);
 
-                                List<Entity> list = structure.world.getEntities(null, axisPos);
+                            List<Entity> list = structure.world.getEntities(null, axisPos);
 
-                                if (!list.isEmpty()) {
-                                    for (Entity entity : list) {
-                                        // Don't kill living entities.
-                                        if (!(entity instanceof LivingEntity)) {
-                                            if (entity instanceof HangingEntity) {
-                                                structure.BeforeHangingEntityRemoved((HangingEntity) entity);
-                                            }
-
-                                            entity.setRemoved(Entity.RemovalReason.DISCARDED);
+                            if (!list.isEmpty()) {
+                                for (Entity entity : list) {
+                                    // Don't kill living entities.
+                                    if (!(entity instanceof LivingEntity)) {
+                                        if (entity instanceof HangingEntity) {
+                                            structure.BeforeHangingEntityRemoved((HangingEntity) entity);
                                         }
+
+                                        entity.setRemoved(Entity.RemovalReason.DISCARDED);
                                     }
                                 }
                             }
-
-                            structure.entitiesRemoved = true;
                         }
 
-                        if (structure.airBlocks.size() > 0) {
-                            structure.hasAirBlocks = true;
-                        }
-
-                        for (int i = 0; i < 10; i++) {
-                            i = StructureEventHandler.setBlock(i, structure, structuresToRemove);
-                        }
-
-                        // After building the blocks for this tick, find waterlogged blocks and remove them.
-                        StructureEventHandler.removeWaterLogging(structure);
+                        structure.entitiesRemoved = true;
                     }
 
-                    // Update the list of structures to remove this structure since it's done building.
-                    StructureEventHandler.removeStructuresFromList(structuresToRemove, entry);
-
-                    if (entry.getValue().size() == 0) {
-                        playersToRemove.add(entry.getKey());
+                    if (structure.airBlocks.size() > 0) {
+                        structure.hasAirBlocks = true;
                     }
+
+                    for (int i = 0; i < 10; i++) {
+                        i = StructureEventHandler.setBlock(i, structure, structuresToRemove);
+                    }
+
+                    // After building the blocks for this tick, find waterlogged blocks and remove them.
+                    StructureEventHandler.removeWaterLogging(structure);
+                }
+
+                // Update the list of structures to remove this structure since it's done building.
+                StructureEventHandler.removeStructuresFromList(structuresToRemove, entry);
+
+                if (entry.getValue().size() == 0) {
+                    playersToRemove.add(entry.getKey());
                 }
             }
+        }
 
-            // Remove each player that has their structure's built.
-            for (Player player : playersToRemove) {
-                StructureEventHandler.structuresToBuild.remove(player);
-            }
+        // Remove each player that has their structure's built.
+        for (Player player : playersToRemove) {
+            StructureEventHandler.structuresToBuild.remove(player);
         }
     }
 
@@ -213,10 +207,9 @@ public final class StructureEventHandler {
                     newPlayerTag.put(EntityPlayerConfiguration.PLAYER_ENTITY_TAG, originalTag.get(EntityPlayerConfiguration.PLAYER_ENTITY_TAG));
 
                     // Send the persist tag to the client.
-                    Prefab.network.sendTo(
+                    Prefab.network.send(
                             new PlayerEntityTagMessage(originalTag.getCompound(EntityPlayerConfiguration.PLAYER_ENTITY_TAG)),
-                            ((ServerPlayer) event.getEntity()).connection.connection,
-                            NetworkDirection.PLAY_TO_CLIENT);
+                            PacketDistributor.PLAYER.with((ServerPlayer)event.getEntity()));
                 }
             }
         }
@@ -235,7 +228,7 @@ public final class StructureEventHandler {
             // If this block is not specifically air then set it to air.
             // This will also break other mod's logic blocks but they would probably be broken due to structure
             // generation anyways.
-            if (clearBlockState.getMaterial() != Material.AIR) {
+            if (clearBlockState.getBlock() != Blocks.AIR) {
                 structure.BeforeClearSpaceBlockReplaced(currentPos);
 
                 for (Direction adjacentBlock : Direction.values()) {
@@ -410,7 +403,7 @@ public final class StructureEventHandler {
                     // This is a water loggable block and there were air blocks, make sure that it's no longer water logged.
                     currentState = currentState.setValue((BlockStateProperties.WATERLOGGED), false);
                     structure.world.setBlock(currentPos, currentState, 3);
-                } else if (currentState.getMaterial() == Material.WATER) {
+                } else if (currentState.getBlock() == Blocks.WATER) {
                     structure.world.setBlock(currentPos, Blocks.AIR.defaultBlockState(), 3);
                 }
             }

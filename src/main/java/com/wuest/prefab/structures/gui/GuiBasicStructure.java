@@ -1,6 +1,5 @@
 package com.wuest.prefab.structures.gui;
 
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.wuest.prefab.Prefab;
 import com.wuest.prefab.Tuple;
 import com.wuest.prefab.blocks.FullDyeColor;
@@ -14,6 +13,7 @@ import com.wuest.prefab.structures.config.enums.BaseOption;
 import com.wuest.prefab.structures.items.ItemBasicStructure;
 import com.wuest.prefab.structures.messages.StructureTagMessage.EnumStructureConfiguration;
 import com.wuest.prefab.structures.predefined.StructureBasic;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractButton;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.DyeColor;
@@ -73,7 +73,7 @@ public class GuiBasicStructure extends GuiStructure {
             }
         }
 
-        if (this.availableOptions.size() == 0) {
+        if (this.availableOptions.isEmpty()) {
             this.showNoOptionsScreen();
             return;
         }
@@ -90,7 +90,7 @@ public class GuiBasicStructure extends GuiStructure {
         }
 
         if (!foundPreviouslySelectedOption) {
-            this.specificConfiguration.chosenOption = this.availableOptions.get(0);
+            this.specificConfiguration.chosenOption = this.availableOptions.getFirst();
         }
 
         this.structureImageLocation = this.specificConfiguration.chosenOption.getPictureLocation();
@@ -99,15 +99,13 @@ public class GuiBasicStructure extends GuiStructure {
         this.configuration.houseFacing = this.houseFacing;
         this.selectedStructure = StructureBasic.CreateInstance(this.specificConfiguration.chosenOption.getAssetLocation(), StructureBasic.class);
 
-        this.updatedRenderedStructure();
-
         if (this.availableOptions.size() > 1 || this.specificConfiguration.basicStructureName.shouldShowConfigurationOptions()) {
             this.showConfigurationOptions = true;
         }
 
         if (this.availableOptions.size() == 1 && this.showConfigurationOptions) {
             // Make sure that the only available option still needs settings to show.
-            BaseOption option = this.availableOptions.get(0);
+            BaseOption option = this.availableOptions.getFirst();
 
             if (!option.getHasBedColor() && !option.getHasGlassColor()) {
                 this.showConfigurationOptions = false;
@@ -152,18 +150,18 @@ public class GuiBasicStructure extends GuiStructure {
     }
 
     @Override
-    protected void preButtonRender(PoseStack matrixStack, int x, int y, int mouseX, int mouseY, float partialTicks) {
+    protected void preButtonRender(GuiGraphics guiGraphics, int x, int y, int mouseX, int mouseY, float partialTicks) {
         if (!this.showConfigurationOptions) {
-            super.preButtonRender(matrixStack, x, y, mouseX, mouseY, partialTicks);
+            super.preButtonRender(guiGraphics, x, y, mouseX, mouseY, partialTicks);
         } else {
             // Draw the control background.
             int imagePanelUpperLeft = x + 136;
             int imagePanelMiddle = this.imagePanelWidth / 2;
 
-            this.renderBackground(matrixStack);
+            this.renderBackground(guiGraphics, 0, 0, 0);
 
-            this.drawControlLeftPanel(matrixStack, x + 2, y + 10, 185, 190);
-            this.drawControlRightPanel(matrixStack, imagePanelUpperLeft, y + 10, this.imagePanelWidth, 190);
+            this.drawControlLeftPanel(guiGraphics, x + 2, y + 10, 185, 190);
+            this.drawControlRightPanel(guiGraphics, imagePanelUpperLeft, y + 10, this.imagePanelWidth, 190);
 
             // TODO: Remove this when structure is generated in GUI instead of showing a picture.
             int middleOfImage = this.shownImageWidth / 2;
@@ -172,7 +170,7 @@ public class GuiBasicStructure extends GuiStructure {
             // Draw the picture.
             GuiUtils.bindAndDrawScaledTexture(
                     this.structureImageLocation,
-                    matrixStack,
+                    guiGraphics,
                     imageLocation,
                     y + 15,
                     this.shownImageWidth,
@@ -199,37 +197,37 @@ public class GuiBasicStructure extends GuiStructure {
 
         if (this.specificConfiguration.chosenOption.getHasBedColor()) {
             this.btnBedColor.visible = true;
-            this.btnBedColor.m_253211_(yValue);
+            this.btnBedColor.setY(yValue);
 
             yValue = yValue + 45;
         }
 
         if (this.specificConfiguration.chosenOption.getHasGlassColor()) {
             this.btnGlassColor.visible = true;
-            this.btnGlassColor.m_253211_(yValue);
+            this.btnGlassColor.setY(yValue);
         }
     }
 
     @Override
-    protected void postButtonRender(PoseStack matrixStack, int x, int y, int mouseX, int mouseY, float partialTicks) {
+    protected void postButtonRender(GuiGraphics guiGraphics, int x, int y, int mouseX, int mouseY, float partialTicks) {
         if (this.showConfigurationOptions) {
-            this.drawSplitString(matrixStack, GuiLangKeys.translateString(this.specificConfiguration.basicStructureName.getItemTranslationString()), x + 8, y + 17, 128);
+            this.drawSplitString(guiGraphics, GuiLangKeys.translateString(this.specificConfiguration.basicStructureName.getItemTranslationString()), x + 8, y + 17, 128);
 
             int yValue = y + 35;
 
             if (this.availableOptions.size() > 1) {
-                this.drawString(matrixStack, GuiLangKeys.translateString(GuiLangKeys.BUILDING_OPTIONS), x + 8, yValue, this.textColor);
+                this.drawString(guiGraphics, GuiLangKeys.translateString(GuiLangKeys.BUILDING_OPTIONS), x + 8, yValue, this.textColor);
                 yValue += 45;
             }
 
             // Draw the text here.
             if (this.specificConfiguration.chosenOption.getHasBedColor()) {
-                this.drawString(matrixStack, GuiLangKeys.translateString(GuiLangKeys.GUI_STRUCTURE_BED_COLOR), x + 8, yValue, this.textColor);
+                this.drawString(guiGraphics, GuiLangKeys.translateString(GuiLangKeys.GUI_STRUCTURE_BED_COLOR), x + 8, yValue, this.textColor);
                 yValue += 45;
             }
 
             if (this.specificConfiguration.chosenOption.getHasGlassColor()) {
-                this.drawString(matrixStack, GuiLangKeys.translateString(GuiLangKeys.GUI_STRUCTURE_GLASS), x + 8, yValue, this.textColor);
+                this.drawString(guiGraphics, GuiLangKeys.translateString(GuiLangKeys.GUI_STRUCTURE_GLASS), x + 8, yValue, this.textColor);
                 yValue += 45;
             }
         }
@@ -247,8 +245,6 @@ public class GuiBasicStructure extends GuiStructure {
         } else if (button == this.btnGlassColor) {
             this.specificConfiguration.glassColor = FullDyeColor.ById(this.specificConfiguration.glassColor.getId() + 1);
             GuiUtils.setButtonText(this.btnGlassColor, GuiLangKeys.translateFullDye(this.specificConfiguration.glassColor));
-
-            this.updatedRenderedStructure();
         } else if (button == this.btnStructureOptions) {
             for (int i = 0; i < this.availableOptions.size(); i++) {
                 BaseOption option = this.availableOptions.get(i);
@@ -257,7 +253,7 @@ public class GuiBasicStructure extends GuiStructure {
                 if (this.specificConfiguration.chosenOption.getTranslationString().equals(option.getTranslationString())) {
                     if (i == this.availableOptions.size() - 1) {
                         // This is the last option, set the text to the first option.
-                        chosenOption = this.availableOptions.get(0);
+                        chosenOption = this.availableOptions.getFirst();
                     } else {
                         chosenOption = this.availableOptions.get(i + 1);
                     }
@@ -268,7 +264,6 @@ public class GuiBasicStructure extends GuiStructure {
                     this.specificConfiguration.chosenOption = chosenOption;
                     this.structureImageLocation = this.specificConfiguration.chosenOption.getPictureLocation();
                     GuiUtils.setButtonText(btnStructureOptions, GuiLangKeys.translateString(chosenOption.getTranslationString()));
-                    this.updatedRenderedStructure();
                     break;
                 }
             }

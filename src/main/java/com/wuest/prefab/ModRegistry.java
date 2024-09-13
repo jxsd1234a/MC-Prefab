@@ -16,7 +16,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.LazyLoadedValue;
 import net.minecraft.world.item.*;
@@ -26,10 +25,7 @@ import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.material.MaterialColor;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraft.world.level.material.MapColor;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -94,16 +90,16 @@ public class ModRegistry {
     public static final RegistryObject<BlockGlassStairs> GlassStairs = BLOCKS.register("block_glass_stairs", () -> new BlockGlassStairs(Blocks.GLASS.defaultBlockState(), Block.Properties.ofFullCopy(Blocks.GLASS)));
     public static final RegistryObject<BlockGlassSlab> GlassSlab = BLOCKS.register("block_glass_slab", () -> new BlockGlassSlab(Block.Properties.ofFullCopy(Blocks.GLASS)));
 
-    public static final RegistryObject<BlockRotatableHorizontalShaped> PileOfBricks = BLOCKS.register("item_pile_of_bricks", () -> new BlockRotatableHorizontalShaped(BlockShaped.BlockShape.PileOfBricks, BlockBehaviour.Properties.of(Material.CLAY, MaterialColor.COLOR_RED).noOcclusion().isViewBlocking(ModRegistry::never)));
-    public static final RegistryObject<BlockRotatableHorizontalShaped> PalletOfBricks = BLOCKS.register("item_pallet_of_bricks", () -> new BlockRotatableHorizontalShaped(BlockShaped.BlockShape.PalletOfBricks, BlockBehaviour.Properties.of(Material.CLAY, MaterialColor.COLOR_RED).noOcclusion().isViewBlocking(ModRegistry::never)));
-    public static final RegistryObject<BlockRotatableHorizontalShaped> BundleOfTimber = BLOCKS.register("item_bundle_of_timber", () -> new BlockRotatableHorizontalShaped(BlockShaped.BlockShape.BundleOfTimber, BlockBehaviour.Properties.of(Material.WOOD, MaterialColor.COLOR_BROWN).sound(SoundType.WOOD).noOcclusion().isViewBlocking(ModRegistry::never)));
-    public static final RegistryObject<BlockRotatableHorizontalShaped> HeapOfTimber = BLOCKS.register("item_heap_of_timber", () -> new BlockRotatableHorizontalShaped(BlockShaped.BlockShape.HeapOfTimber, BlockBehaviour.Properties.of(Material.WOOD, MaterialColor.COLOR_BROWN).sound(SoundType.WOOD).noOcclusion().isViewBlocking(ModRegistry::never)));
-    public static final RegistryObject<BlockRotatableHorizontalShaped> TonOfTimber = BLOCKS.register("item_ton_of_timber", () -> new BlockRotatableHorizontalShaped(BlockShaped.BlockShape.TonOfTimber, BlockBehaviour.Properties.of(Material.WOOD, MaterialColor.COLOR_BROWN).sound(SoundType.WOOD).noOcclusion().isViewBlocking(ModRegistry::never)));
-    public static final RegistryObject<BlockRotatable> EmptyCrate = BLOCKS.register("item_wooden_crate", () -> new BlockRotatable(BlockBehaviour.Properties.of(Material.WOOD).sound(SoundType.WOOD)));
-    public static final RegistryObject<BlockRotatable> CartonOfEggs = BLOCKS.register("item_carton_of_eggs", () -> new BlockRotatable(BlockBehaviour.Properties.of(Material.WOOD).sound(SoundType.WOOD)));
-    public static final RegistryObject<BlockRotatable> CrateOfPotatoes = BLOCKS.register("item_crate_of_potatoes", () -> new BlockRotatable(BlockBehaviour.Properties.of(Material.WOOD).sound(SoundType.WOOD)));
-    public static final RegistryObject<BlockRotatable> CrateOfCarrots = BLOCKS.register("item_crate_of_carrots", () -> new BlockRotatable(BlockBehaviour.Properties.of(Material.WOOD).sound(SoundType.WOOD)));
-    public static final RegistryObject<BlockRotatable> CrateOfBeets = BLOCKS.register("item_crate_of_beets", () -> new BlockRotatable(BlockBehaviour.Properties.of(Material.WOOD).sound(SoundType.WOOD)));
+    public static final RegistryObject<BlockRotatableHorizontalShaped> PileOfBricks = BLOCKS.register("item_pile_of_bricks", () -> new BlockRotatableHorizontalShaped(BlockShaped.BlockShape.PileOfBricks, BlockBehaviour.Properties.ofFullCopy(BRICKS).mapColor(MapColor.COLOR_RED).noOcclusion().isViewBlocking(ModRegistry::never)));
+    public static final RegistryObject<BlockRotatableHorizontalShaped> PalletOfBricks = BLOCKS.register("item_pallet_of_bricks", () -> new BlockRotatableHorizontalShaped(BlockShaped.BlockShape.PalletOfBricks, BlockBehaviour.Properties.ofFullCopy(BRICKS).mapColor(MapColor.COLOR_RED).noOcclusion().isViewBlocking(ModRegistry::never)));
+    public static final RegistryObject<BlockRotatableHorizontalShaped> BundleOfTimber = BLOCKS.register("item_bundle_of_timber", () -> new BlockRotatableHorizontalShaped(BlockShaped.BlockShape.BundleOfTimber, BlockBehaviour.Properties.ofFullCopy(OAK_WOOD).sound(SoundType.WOOD).noOcclusion().isViewBlocking(ModRegistry::never)));
+    public static final RegistryObject<BlockRotatableHorizontalShaped> HeapOfTimber = BLOCKS.register("item_heap_of_timber", () -> new BlockRotatableHorizontalShaped(BlockShaped.BlockShape.HeapOfTimber, BlockBehaviour.Properties.ofFullCopy(OAK_WOOD).mapColor(MapColor.COLOR_BROWN).sound(SoundType.WOOD).noOcclusion().isViewBlocking(ModRegistry::never)));
+    public static final RegistryObject<BlockRotatableHorizontalShaped> TonOfTimber = BLOCKS.register("item_ton_of_timber", () -> new BlockRotatableHorizontalShaped(BlockShaped.BlockShape.TonOfTimber, BlockBehaviour.Properties.ofFullCopy(OAK_WOOD).mapColor(MapColor.COLOR_BROWN).sound(SoundType.WOOD).noOcclusion().isViewBlocking(ModRegistry::never)));
+    public static final RegistryObject<BlockRotatable> EmptyCrate = BLOCKS.register("item_wooden_crate", () -> new BlockRotatable(BlockBehaviour.Properties.ofFullCopy(OAK_LOG)));
+    public static final RegistryObject<BlockRotatable> CartonOfEggs = BLOCKS.register("item_carton_of_eggs", () -> new BlockRotatable(BlockBehaviour.Properties.ofFullCopy(OAK_LOG)));
+    public static final RegistryObject<BlockRotatable> CrateOfPotatoes = BLOCKS.register("item_crate_of_potatoes", () -> new BlockRotatable(BlockBehaviour.Properties.ofFullCopy(OAK_LOG)));
+    public static final RegistryObject<BlockRotatable> CrateOfCarrots = BLOCKS.register("item_crate_of_carrots", () -> new BlockRotatable(BlockBehaviour.Properties.ofFullCopy(OAK_LOG)));
+    public static final RegistryObject<BlockRotatable> CrateOfBeets = BLOCKS.register("item_crate_of_beets", () -> new BlockRotatable(BlockBehaviour.Properties.ofFullCopy(OAK_LOG)));
 
     public static final RegistryObject<BlockCustomWall> DirtWall = BLOCKS.register("block_dirt_wall", () -> new BlockCustomWall(Blocks.DIRT, BlockCustomWall.EnumType.DIRT));
     public static final RegistryObject<BlockCustomWall> GrassWall = BLOCKS.register("block_grass_wall", () -> new BlockCustomWall(Blocks.GRASS_BLOCK, BlockCustomWall.EnumType.GRASS));
@@ -116,17 +112,17 @@ public class ModRegistry {
     public static RegistryObject<BlockLightSwitch> LightSwitch = BLOCKS.register("block_light_switch", BlockLightSwitch::new);
     public static RegistryObject<BlockDarkLamp> DarkLamp = BLOCKS.register("block_dark_lamp", BlockDarkLamp::new);
 
-    public static final RegistryObject<Block> QuartzCrete =  BLOCKS.register("block_quartz_crete", () -> new Block(BlockBehaviour.Properties.copy(QUARTZ_BLOCK)));
-    public static final RegistryObject<WallBlock> QuartzCreteWall =  BLOCKS.register("block_quartz_crete_wall", () -> new WallBlock(BlockBehaviour.Properties.copy(ModRegistry.QuartzCrete.get())));
-    public static final RegistryObject<Block> QuartzCreteBricks =  BLOCKS.register("block_quartz_crete_bricks", () -> new Block(BlockBehaviour.Properties.copy(ModRegistry.QuartzCrete.get())));
-    public static final RegistryObject<Block> ChiseledQuartzCrete =  BLOCKS.register("block_quartz_crete_chiseled", () -> new Block(BlockBehaviour.Properties.copy(CHISELED_QUARTZ_BLOCK)));
-    public static final RegistryObject<RotatedPillarBlock> QuartzCretePillar =  BLOCKS.register("block_quartz_crete_pillar", () -> new RotatedPillarBlock(BlockBehaviour.Properties.copy(QUARTZ_PILLAR)));
-    public static final RegistryObject<BlockCustomStairs> QuartzCreteStairs =  BLOCKS.register("block_quartz_crete_stairs", () -> new BlockCustomStairs(ModRegistry.QuartzCrete.get().defaultBlockState(), BlockBehaviour.Properties.copy(ModRegistry.QuartzCrete.get())));
-    public static final RegistryObject<SlabBlock> QuartzCreteSlab =  BLOCKS.register("block_quartz_crete_slab", () -> new SlabBlock(BlockBehaviour.Properties.copy(ModRegistry.QuartzCrete.get())));
-    public static final RegistryObject<Block> SmoothQuartzCrete =  BLOCKS.register("block_quartz_crete_smooth", () -> new Block(BlockBehaviour.Properties.copy(ModRegistry.QuartzCrete.get())));
-    public static final RegistryObject<WallBlock> SmoothQuartzCreteWall =  BLOCKS.register("block_quartz_crete_smooth_wall", () -> new WallBlock(BlockBehaviour.Properties.copy(ModRegistry.SmoothQuartzCrete.get())));
-    public static final RegistryObject<BlockCustomStairs> SmoothQuartzCreteStairs =  BLOCKS.register("block_quartz_crete_smooth_stairs", () -> new BlockCustomStairs(ModRegistry.SmoothQuartzCrete.get().defaultBlockState(), BlockBehaviour.Properties.copy(ModRegistry.SmoothQuartzCrete.get())));
-    public static final RegistryObject<SlabBlock> SmoothQuartzCreteSlab =  BLOCKS.register("block_quartz_crete_smooth_slab", () -> new SlabBlock(BlockBehaviour.Properties.copy(ModRegistry.SmoothQuartzCrete.get())));
+    public static final RegistryObject<Block> QuartzCrete =  BLOCKS.register("block_quartz_crete", () -> new Block(BlockBehaviour.Properties.ofFullCopy(QUARTZ_BLOCK)));
+    public static final RegistryObject<WallBlock> QuartzCreteWall =  BLOCKS.register("block_quartz_crete_wall", () -> new WallBlock(BlockBehaviour.Properties.ofFullCopy(ModRegistry.QuartzCrete.get())));
+    public static final RegistryObject<Block> QuartzCreteBricks =  BLOCKS.register("block_quartz_crete_bricks", () -> new Block(BlockBehaviour.Properties.ofFullCopy(ModRegistry.QuartzCrete.get())));
+    public static final RegistryObject<Block> ChiseledQuartzCrete =  BLOCKS.register("block_quartz_crete_chiseled", () -> new Block(BlockBehaviour.Properties.ofFullCopy(CHISELED_QUARTZ_BLOCK)));
+    public static final RegistryObject<RotatedPillarBlock> QuartzCretePillar =  BLOCKS.register("block_quartz_crete_pillar", () -> new RotatedPillarBlock(BlockBehaviour.Properties.ofFullCopy(QUARTZ_PILLAR)));
+    public static final RegistryObject<BlockCustomStairs> QuartzCreteStairs =  BLOCKS.register("block_quartz_crete_stairs", () -> new BlockCustomStairs(ModRegistry.QuartzCrete.get().defaultBlockState(), BlockBehaviour.Properties.ofFullCopy(ModRegistry.QuartzCrete.get())));
+    public static final RegistryObject<SlabBlock> QuartzCreteSlab =  BLOCKS.register("block_quartz_crete_slab", () -> new SlabBlock(BlockBehaviour.Properties.ofFullCopy(ModRegistry.QuartzCrete.get())));
+    public static final RegistryObject<Block> SmoothQuartzCrete =  BLOCKS.register("block_quartz_crete_smooth", () -> new Block(BlockBehaviour.Properties.ofFullCopy(ModRegistry.QuartzCrete.get())));
+    public static final RegistryObject<WallBlock> SmoothQuartzCreteWall =  BLOCKS.register("block_quartz_crete_smooth_wall", () -> new WallBlock(BlockBehaviour.Properties.ofFullCopy(ModRegistry.SmoothQuartzCrete.get())));
+    public static final RegistryObject<BlockCustomStairs> SmoothQuartzCreteStairs =  BLOCKS.register("block_quartz_crete_smooth_stairs", () -> new BlockCustomStairs(ModRegistry.SmoothQuartzCrete.get().defaultBlockState(), BlockBehaviour.Properties.ofFullCopy(ModRegistry.SmoothQuartzCrete.get())));
+    public static final RegistryObject<SlabBlock> SmoothQuartzCreteSlab =  BLOCKS.register("block_quartz_crete_smooth_slab", () -> new SlabBlock(BlockBehaviour.Properties.ofFullCopy(ModRegistry.SmoothQuartzCrete.get())));
     
     /* *********************************** Item Blocks *********************************** */
     public static final RegistryObject<BlockItem> CompressedStoneItem = ITEMS.register(BlockCompressedStone.EnumType.COMPRESSED_STONE.getUnlocalizedName(), () -> new BlockItem(CompressedStone.get(), new Item.Properties()));

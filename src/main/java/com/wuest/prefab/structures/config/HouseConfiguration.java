@@ -6,7 +6,9 @@ import com.wuest.prefab.blocks.FullDyeColor;
 import com.wuest.prefab.config.EntityPlayerConfiguration;
 import com.wuest.prefab.gui.GuiLangKeys;
 import com.wuest.prefab.proxy.messages.PlayerEntityTagMessage;
+import com.wuest.prefab.structures.messages.StructureTagMessage;
 import com.wuest.prefab.structures.predefined.StructureHouse;
+import com.wuest.prefab.structures.render.StructureRenderHandler;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -16,6 +18,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.DyeColor;
 import net.minecraftforge.network.NetworkDirection;
+import net.minecraftforge.network.PacketDistributor;
 
 /**
  * This class is used to determine the configuration for a particular house.
@@ -184,8 +187,7 @@ public class HouseConfiguration extends StructureConfiguration {
 
             // Make sure to send a message to the client to sync up the server player information and the client player
             // information.
-            Prefab.network.sendTo(new PlayerEntityTagMessage(playerConfig.getModIsPlayerNewTag(player)), ((ServerPlayer) player).connection.connection,
-                    NetworkDirection.PLAY_TO_CLIENT);
+            Prefab.network.send(new PlayerEntityTagMessage(playerConfig.getModIsPlayerNewTag(player)), PacketDistributor.PLAYER.with((ServerPlayer)player));
         }
     }
 

@@ -6,15 +6,17 @@ import com.wuest.prefab.gui.GuiLangKeys;
 import com.wuest.prefab.structures.gui.GuiBulldozer;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.Direction;
+import net.minecraft.core.component.DataComponentType;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
@@ -79,8 +81,8 @@ public class ItemBulldozer extends StructureItem {
      */
     @OnlyIn(Dist.CLIENT)
     @Override
-    public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
-        super.appendHoverText(stack, worldIn, tooltip, flagIn);
+    public void appendHoverText(ItemStack stack, Item.TooltipContext tooltipContext, List<Component> tooltip, TooltipFlag flagIn) {
+        super.appendHoverText(stack, tooltipContext, tooltip, flagIn);
 
         boolean advancedKeyDown = Screen.hasShiftDown();
 
@@ -108,25 +110,6 @@ public class ItemBulldozer extends StructureItem {
         return this.getPoweredValue(stack) || super.isFoil(stack);
     }
 
-    /**
-     * Override this method to change the NBT data being sent to the client. You should ONLY override this when you have
-     * no other choice, as this might change behavior client side!
-     *
-     * @param stack The stack to send the NBT tag for
-     * @return The NBT tag
-     */
-    @Override
-    public CompoundTag getShareTag(ItemStack stack) {
-        if (stack.getTag() == null
-                || stack.getTag().isEmpty()) {
-            // Make sure to serialize the NBT for this stack so the information is pushed to the client and the
-            // appropriate Icon is displayed for this stack.
-            stack.setTag(stack.serializeNBT());
-        }
-
-        return stack.getTag();
-    }
-
     private boolean getPoweredValue(Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
 
@@ -139,17 +122,27 @@ public class ItemBulldozer extends StructureItem {
         }
 
         if (stack.getItem() == ModRegistry.Bulldozer.get()) {
-            if (stack.getTag() == null
-                    || stack.getTag().isEmpty()) {
-                stack.setTag(stack.serializeNBT());
+            if (stack.getComponents() == null
+                    || stack.getComponents().isEmpty()) {
+                CompoundTag baseTag = new CompoundTag();
+                CompoundTag prefabTag = new CompoundTag();
+                baseTag.put("prefab", prefabTag);
+                prefabTag.putBoolean("powered", false);
+
+                CustomData customData = CustomData.of(baseTag);
+                stack.set(DataComponents.CUSTOM_DATA, customData);
             } else {
-                CompoundTag tag = stack.getTag();
+                CustomData customData = stack.getComponents().get(DataComponents.CUSTOM_DATA);
 
-                if (tag.contains("prefab")) {
-                    CompoundTag prefabTag = tag.getCompound("prefab");
+                if (customData != null) {
+                    CompoundTag tag = customData.copyTag();
 
-                    if (prefabTag.contains("powered")) {
-                        return prefabTag.getBoolean("powered");
+                    if (tag.contains("prefab")) {
+                        CompoundTag prefabTag = tag.getCompound("prefab");
+
+                        if (prefabTag.contains("powered")) {
+                            return prefabTag.getBoolean("powered");
+                        }
                     }
                 }
             }
@@ -159,13 +152,23 @@ public class ItemBulldozer extends StructureItem {
     }
 
     public void setPoweredValue(ItemStack stack, boolean value) {
-        if (stack.getTag() == null
-                || stack.getTag().isEmpty()) {
-            stack.setTag(stack.serializeNBT());
+        CompoundTag baseTag = null;
+        CompoundTag prefabTag = null;
+        CustomData customData = null;
+
+        // TODO: Re-think how this should work!
+        if (stack.getComponents() == null
+                || stack.getComponents().isEmpty()) {
+            baseTag = new CompoundTag();
+            customData = CustomData.of(baseTag);
+        } else {
+            customData = stack.getComponents().get(DataComponents.CUSTOM_DATA);
         }
 
-        CompoundTag prefabTag = new CompoundTag();
+
+        prefabTag = new CompoundTag();
+        baseTag.put("prefab", prefabTag);
         prefabTag.putBoolean("powered", value);
-        stack.getTag().put(Prefab.MODID, prefabTag);
+        stack.set(DataComponents.CUSTOM_DATA, customData);
     }
 }

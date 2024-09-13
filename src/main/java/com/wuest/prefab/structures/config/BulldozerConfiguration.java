@@ -3,10 +3,10 @@ package com.wuest.prefab.structures.config;
 import com.wuest.prefab.ModRegistry;
 import com.wuest.prefab.structures.predefined.StructureBulldozer;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 
@@ -70,14 +70,14 @@ public class BulldozerConfiguration extends StructureConfiguration {
 
             // Only damage the item if this is the regular bulldozer.
             if (stack.getItem() == ModRegistry.Bulldozer.get()) {
-                InteractionHand hand1 = hand;
-                stack.hurtAndBreak(1, player, (player1) ->
-                {
-                    player1.broadcastBreakEvent(hand1);
-                });
+                stack.hurtAndBreak(
+                        1,
+                        player,
+                        hand == InteractionHand.MAIN_HAND ? EquipmentSlot.MAINHAND
+                                : EquipmentSlot.OFFHAND);
+
                 player.containerMenu.broadcastChanges();
             }
         }
     }
-
 }

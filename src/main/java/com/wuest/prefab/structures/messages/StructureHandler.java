@@ -2,9 +2,7 @@ package com.wuest.prefab.structures.messages;
 
 import com.wuest.prefab.structures.config.StructureConfiguration;
 import com.wuest.prefab.structures.messages.StructureTagMessage.EnumStructureConfiguration;
-import net.minecraftforge.network.NetworkEvent;
-
-import java.util.function.Supplier;
+import net.minecraftforge.event.network.CustomPayloadEvent;
 
 /**
  * @author WuestMan
@@ -17,15 +15,13 @@ public class StructureHandler {
     public StructureHandler() {
     }
 
-    public static void handle(final StructureTagMessage message, Supplier<NetworkEvent.Context> ctx) {
-        NetworkEvent.Context context = ctx.get();
-
+    public static void handle(final StructureTagMessage message, CustomPayloadEvent.Context context) {
         context.enqueueWork(() -> {
             // This is server side. Build the structure.
             EnumStructureConfiguration structureConfig = message.getStructureConfig();
 
             StructureConfiguration configuration = structureConfig.structureConfig.ReadFromCompoundTag(message.getMessageTag());
-            configuration.BuildStructure(context.getSender(), context.getSender().getLevel());
+            configuration.BuildStructure(context.getSender(), context.getSender().serverLevel());
         });
 
         context.setPacketHandled(true);

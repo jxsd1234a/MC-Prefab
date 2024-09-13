@@ -74,7 +74,7 @@ public abstract class TileEntityBase<T extends BaseConfig> extends BlockEntity {
 	public @NotNull CompoundTag getUpdateTag(HolderLookup.Provider provider) {
 		// This is overwritten so our custom save event is done.
 		CompoundTag updateTag = new CompoundTag();
-		this.saveAdditional(updateTag);
+		this.saveAdditional(updateTag, provider);
 		return updateTag;
 	}
 

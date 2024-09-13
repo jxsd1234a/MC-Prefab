@@ -12,10 +12,14 @@ import com.wuest.prefab.gui.controls.ExtendedButton;
 import com.wuest.prefab.gui.controls.GuiTextBox;
 import com.wuest.prefab.structures.messages.StructureScannerActionMessage;
 import com.wuest.prefab.structures.messages.StructureScannerSyncMessage;
+import com.wuest.prefab.structures.messages.StructureTagMessage;
+import com.wuest.prefab.structures.render.StructureRenderHandler;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractButton;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.network.PacketDistributor;
 
 import java.awt.*;
 
@@ -103,19 +107,19 @@ public class GuiStructureScanner extends GuiBase {
     }
 
     @Override
-    protected void preButtonRender(PoseStack matrixStack, int x, int y, int mouseX, int mouseY, float partialTicks) {
-        this.drawControlBackground(matrixStack, x, y + 15, 350, 250);
+    protected void preButtonRender(GuiGraphics guiGraphics, int x, int y, int mouseX, int mouseY, float partialTicks) {
+        this.drawControlBackground(guiGraphics, x, y + 15, 350, 250);
     }
 
     @Override
-    protected void postButtonRender(PoseStack matrixStack, int x, int y, int mouseX, int mouseY, float partialTicks) {
-        this.drawString(matrixStack, "Starting Position", x + 15, y + 20, this.textColor);
-        this.drawString(matrixStack, "Left: " + this.config.blocksToTheLeft + " Down: " + -this.config.blocksDown, x + 15, y + 35, this.textColor);
-        this.drawString(matrixStack, "Length: " + this.config.blocksLong, x + 120, y + 20, this.textColor);
-        this.drawString(matrixStack, "Width: " + this.config.blocksWide, x + 200, y + 20, this.textColor);
-        this.drawString(matrixStack, "Height: " + this.config.blocksTall, x + 270, y + 20, this.textColor);
+    protected void postButtonRender(GuiGraphics guiGraphics, int x, int y, int mouseX, int mouseY, float partialTicks) {
+        this.drawString(guiGraphics, "Starting Position", x + 15, y + 20, this.textColor);
+        this.drawString(guiGraphics, "Left: " + this.config.blocksToTheLeft + " Down: " + -this.config.blocksDown, x + 15, y + 35, this.textColor);
+        this.drawString(guiGraphics, "Length: " + this.config.blocksLong, x + 120, y + 20, this.textColor);
+        this.drawString(guiGraphics, "Width: " + this.config.blocksWide, x + 200, y + 20, this.textColor);
+        this.drawString(guiGraphics, "Height: " + this.config.blocksTall, x + 270, y + 20, this.textColor);
 
-        this.drawString(matrixStack, "Name", x + 120, y + 60, this.textColor);
+        this.drawString(guiGraphics, "Name", x + 120, y + 60, this.textColor);
     }
 
     @Override
@@ -180,12 +184,13 @@ public class GuiStructureScanner extends GuiBase {
 
     private void sendUpdatePacket() {
         StructureScannerSyncMessage messagePacket = Utils.createGenericMessage(this.config.GetCompoundTag(), StructureScannerSyncMessage.class);
-        Prefab.network.sendToServer(messagePacket);
+
+        Prefab.network.send(messagePacket, PacketDistributor.SERVER.noArg());
     }
 
     private void sendScanPacket() {
         StructureScannerActionMessage messagePacket = Utils.createGenericMessage(this.config.GetCompoundTag(), StructureScannerActionMessage.class);
-       Prefab.network.sendToServer(messagePacket);
+        Prefab.network.send(messagePacket, PacketDistributor.SERVER.noArg());
     }
 
     private StructureScannerConfig findExistingConfig(StructureScannerConfig config) {

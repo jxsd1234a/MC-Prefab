@@ -6,8 +6,6 @@ import com.wuest.prefab.proxy.ClientProxy;
 import com.wuest.prefab.proxy.messages.ConfigSyncMessage;
 import net.minecraftforge.event.network.CustomPayloadEvent;
 
-import java.util.function.Supplier;
-
 /**
  * @author WuestMan
  */

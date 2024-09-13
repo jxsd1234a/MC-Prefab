@@ -1,7 +1,5 @@
 package com.wuest.prefab.structures.config.enums;
 
-import net.minecraft.core.Direction;
-
 public class TownHallOptions extends BaseOption {
     public static TownHallOptions Default = new TownHallOptions(
             "item.prefab.town_hall",

@@ -1,7 +1,5 @@
 package com.wuest.prefab.structures.config.enums;
 
-import net.minecraft.core.Direction;
-
 public class WindMillOptions extends BaseOption {
     public static WindMillOptions Default = new WindMillOptions(
             "item.prefab.wind_mill",

@@ -1,9 +1,6 @@
 package com.wuest.prefab.structures.config.enums;
 
 import com.wuest.prefab.Prefab;
-import com.wuest.prefab.structures.base.BuildShape;
-import com.wuest.prefab.structures.base.PositionOffset;
-import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import java.util.ArrayList;
 import java.util.HashMap;
