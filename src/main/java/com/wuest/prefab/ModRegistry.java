@@ -13,7 +13,6 @@ import com.wuest.prefab.structures.config.BasicStructureConfiguration.EnumBasicS
 import com.wuest.prefab.structures.items.*;
 import com.wuest.prefab.structures.messages.*;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.tags.BlockTags;
@@ -21,6 +20,7 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.util.LazyLoadedValue;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -70,6 +70,8 @@ public class ModRegistry {
      * Deferred registry for sounds.
      */
     public static final DeferredRegister<SoundEvent> SOUNDS = DeferredRegister.create(ForgeRegistries.SOUND_EVENTS, Prefab.MODID);
+
+    public static final DeferredRegister<RecipeSerializer<?>> RECIPES = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, Prefab.MODID);
 
     public static CreativeModeTab PREFAB_GROUP;
 

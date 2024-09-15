@@ -8,8 +8,13 @@ import com.wuest.prefab.config.ServerModConfiguration;
 import com.wuest.prefab.config.StructureScannerConfig;
 import com.wuest.prefab.crafting.RecipeCondition;
 import com.wuest.prefab.crafting.SmeltingCondition;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.ForgeConfigSpec;
@@ -19,6 +24,7 @@ import net.minecraftforge.fml.loading.FMLPaths;
 import net.minecraftforge.network.Channel;
 import net.minecraftforge.network.ChannelBuilder;
 import net.minecraftforge.network.NetworkRegistry;
+import net.minecraftforge.registries.RegisterEvent;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.nio.file.Path;
@@ -50,6 +56,32 @@ public class CommonProxy {
 
         this.isClient = false;
         this.structureScanners = new ArrayList<>();
+    }
+
+    public static void creativeModeTabRegister(RegisterEvent event) {
+        event.register(Registries.CREATIVE_MODE_TAB, helper -> {
+            helper.register(Prefab.CREATIVE_TAB_KEY, CreativeModeTab.builder().icon(() -> new ItemStack(ModRegistry.ItemLogo.get()))
+                    .title(Component.translatable("itemGroup.prefab.logo"))
+                    .withLabelColor(0x00FF00)
+                    .displayItems((params, output) -> {
+                        ModRegistry.ITEMS.getEntries().forEach((reg) ->
+                        {
+                            Item currentItem = reg.get();
+
+                            // Only accept the structure scanner in the creative menu when this is in debug mode.
+                            if (currentItem == ModRegistry.StructureScannerItem.get()) {
+                                if (Prefab.isDebug) {
+                                    output.accept(reg.get());
+                                }
+
+                                return;
+                            }
+
+                            output.accept(new ItemStack(reg.get()));
+                        });
+                    })
+                    .build());
+        });
     }
 
     /*
