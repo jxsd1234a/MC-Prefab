@@ -14,7 +14,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.OptionInstance;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractButton;
-import net.minecraft.client.gui.components.OptionsList;
 import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.screens.Screen;
@@ -37,11 +36,6 @@ public class GuiPrefab extends GuiBase {
     private static final int OPTIONS_LIST_TOP_HEIGHT = 55;
 
     /**
-     * Distance from bottom of the screen to the options row list's bottom
-     */
-    private static final int OPTIONS_LIST_BOTTOM_OFFSET = 32;
-
-    /**
      * Height of each item in the options row list
      */
     private static final int OPTIONS_LIST_ITEM_HEIGHT = 25;
@@ -50,6 +44,8 @@ public class GuiPrefab extends GuiBase {
      * Distance from bottom of the screen to the "Done" button's top
      */
     private static final int DONE_BUTTON_TOP_OFFSET = 26;
+
+    private static final int BOTTOM_SECTION_HEIGHT = 32;
 
     private final Screen parentScreen;
     private ExtendedButton doneButton;
@@ -99,12 +95,14 @@ public class GuiPrefab extends GuiBase {
 
         this.generalGroupButton = this.createAndAddButton(this.width / 2, 30, 120, 20, "General", false);
 
+        int calculatedListHeight = this.height - OPTIONS_LIST_TOP_HEIGHT - BOTTOM_SECTION_HEIGHT;
+
         for (ConfigCategory category : ConfigCategory.values()) {
             CustomOptionsList nextOptions = new CustomOptionsList(
                     this.getMinecraft(),
                     this.width,
-                    this.height,
-                    OPTIONS_LIST_BOTTOM_OFFSET,
+                    calculatedListHeight,
+                    OPTIONS_LIST_TOP_HEIGHT,
                     OPTIONS_LIST_ITEM_HEIGHT,
                     this
             );
@@ -116,8 +114,8 @@ public class GuiPrefab extends GuiBase {
                 currentOptions = new CustomOptionsList(
                         this.getMinecraft(),
                         this.width,
-                        this.height,
-                        OPTIONS_LIST_BOTTOM_OFFSET,
+                        calculatedListHeight,
+                        OPTIONS_LIST_TOP_HEIGHT,
                         OPTIONS_LIST_ITEM_HEIGHT,
                         this
                 );

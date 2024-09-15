@@ -15,9 +15,7 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.InputEvent;
-import net.minecraftforge.client.event.RenderLevelStageEvent;
 import net.minecraftforge.event.TickEvent.ClientTickEvent;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
@@ -102,7 +100,6 @@ public final class ClientEventHandler {
 
     // Note: This event is to build a structure that a user is previewing
     @SubscribeEvent(priority = EventPriority.NORMAL)
-    @OnlyIn(Dist.CLIENT)
     public static void KeyInput(InputEvent.Key event) {
         for (KeyMapping binding : ClientEventHandler.keyBindings) {
             if (binding.isDown()) {
