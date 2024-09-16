@@ -1,11 +1,6 @@
 {
-  "conditions": [
-    {
-      "type": "prefab:config_recipe",
-      "recipeKey": "Watch Tower"
-    }
-  ],
-  "type": "minecraft:crafting_shaped",
+  "type": "prefab:condition_crafting_shaped",
+  "configName": "Watch Tower",
   "group": "Watch Tower",
   "pattern": [
     "bbb",
@@ -27,7 +22,7 @@
     }
   },
   "result": {
-    "item": "prefab:item_watch_tower",
+    "id": "prefab:item_watch_tower",
     "count": 1
   }
 }

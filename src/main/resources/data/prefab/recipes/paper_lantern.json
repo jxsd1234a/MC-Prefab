@@ -1,25 +1,20 @@
 {
-  "conditions": [
-    {
-      "type": "prefab:config_recipe",
-      "recipeKey": "Paper Lantern"
-    }
-  ],
-  "type": "minecraft:crafting_shapeless",
+  "type": "prefab:condition_crafting_shapeless",
+  "configName": "Paper Lantern",
   "group": "Paper Lantern",
   "ingredients": [
     {
       "item": "minecraft:paper"
     },
     {
-      "tag": "forge:rods/wooden"
+      "item": "minecraft:stick"
     },
     {
       "item": "minecraft:torch"
     }
   ],
   "result": {
-    "item": "prefab:block_paper_lantern",
+    "id": "prefab:block_paper_lantern",
     "count": 1
   }
 }

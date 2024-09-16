@@ -1,11 +1,6 @@
 {
-  "conditions": [
-    {
-      "type": "prefab:config_recipe",
-      "recipeKey": "Grassy Plains"
-    }
-  ],
-  "type": "minecraft:crafting_shaped",
+  "type": "prefab:condition_crafting_shaped",
+  "configName": "Grassy Plains",
   "group": "Grassy Plains",
   "pattern": [
     "aaa",
@@ -14,7 +9,7 @@
   ],
   "key": {
     "a": {
-      "item": "minecraft:grass",
+      "item": "minecraft:short_grass",
       "data": 1
     },
     "b": {
@@ -25,7 +20,7 @@
     }
   },
   "result": {
-    "item": "prefab:item_grassy_plain",
+    "id": "prefab:item_grassy_plain",
     "count": 1
   }
 }

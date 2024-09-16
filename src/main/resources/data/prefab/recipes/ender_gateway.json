@@ -1,11 +1,6 @@
 {
-  "conditions": [
-    {
-      "type": "prefab:config_recipe",
-      "recipeKey": "Ender Gateway"
-    }
-  ],
-  "type": "minecraft:crafting_shaped",
+  "type": "prefab:condition_crafting_shaped",
+  "configName": "Ender Gateway",
   "group": "Ender Gateway",
   "pattern": [
     "aba",
@@ -27,7 +22,7 @@
     }
   },
   "result": {
-    "item": "prefab:item_ender_gateway",
+    "id": "prefab:item_ender_gateway",
     "count": 1
   }
 }

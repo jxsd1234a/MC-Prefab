@@ -282,9 +282,9 @@ public class ModRegistry {
     /* *********************************** Sounds *********************************** */
     public static final RegistryObject<SoundEvent> BuildingBlueprint = SOUNDS.register("building_blueprint", () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(Prefab.MODID, "building_blueprint")));
 
-    public static final RegistryObject<RecipeSerializer<ConditionedShapedRecipe>> ConditionedShapedRecipeSeriaizer = RECIPES.register("prefab.shaped", ConditionedShapedRecipe.Serializer::new);
-    public static final RegistryObject<RecipeSerializer<ConditionedShapelessRecipe>> ConditionedShapelessRecipeSeriaizer = RECIPES.register("prefab.shapeless", ConditionedShapelessRecipe.Serializer::new);
-    public static final RegistryObject<RecipeSerializer<ConditionedSmeltingRecipe>> ConditionedSmeltingRecipeSeriaizer = RECIPES.register("prefab.smelting", ConditionedSmeltingRecipe.Serializer::new);
+    public static final RegistryObject<RecipeSerializer<ConditionedShapedRecipe>> ConditionedShapedRecipeSeriaizer = RECIPES.register("condition_crafting_shaped", ConditionedShapedRecipe.Serializer::new);
+    public static final RegistryObject<RecipeSerializer<ConditionedShapelessRecipe>> ConditionedShapelessRecipeSeriaizer = RECIPES.register("condition_crafting_shapeless", ConditionedShapelessRecipe.Serializer::new);
+    public static final RegistryObject<RecipeSerializer<ConditionedSmeltingRecipe>> ConditionedSmeltingRecipeSeriaizer = RECIPES.register("condition_smelting", ConditionedSmeltingRecipe.Serializer::new);
 
     static {
         if (Prefab.isDebug) {

@@ -72,6 +72,8 @@ public class CommonProxy {
                                 }
 
                                 return;
+                            } else if (currentItem == ModRegistry.ItemLogo.get()) {
+                                return;
                             }
 
                             output.accept(new ItemStack(reg.get()));

@@ -1,14 +1,9 @@
 {
-  "conditions": [
-    {
-      "type": "prefab:config_recipe",
-      "recipeKey": "Compressed Dirt"
-    }
-  ],
   "_comment": [
     "Compressed dirt to normal dirt"
   ],
-  "type": "minecraft:crafting_shapeless",
+  "type": "prefab:condition_crafting_shapeless",
+  "configName": "Compressed Dirt",
   "group": "Compressed Dirt",
   "ingredients": [
     {
@@ -16,7 +11,7 @@
     }
   ],
   "result": {
-    "item": "minecraft:dirt",
+    "id": "minecraft:dirt",
     "count": 9
   }
 }

@@ -1,11 +1,6 @@
 {
-  "conditions": [
-    {
-      "type": "prefab:config_recipe",
-      "recipeKey": "Defense Bunker"
-    }
-  ],
-  "type": "minecraft:crafting_shaped",
+  "type": "prefab:condition_crafting_shaped",
+  "configName": "Defense Bunker",
   "group": "Defense Bunker",
   "pattern": [
     "aba",
@@ -27,7 +22,7 @@
     }
   },
   "result": {
-    "item": "prefab:item_defense_bunker",
+    "id": "prefab:item_defense_bunker",
     "count": 1
   }
 }

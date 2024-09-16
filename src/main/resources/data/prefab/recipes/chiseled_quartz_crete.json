@@ -1,11 +1,6 @@
 {
-  "conditions": [
-    {
-      "type": "prefab:config_recipe",
-      "recipeKey": "Quartz-Crete"
-    }
-  ],
-  "type": "minecraft:crafting_shaped",
+  "type": "prefab:condition_crafting_shaped",
+  "configName": "Quartz-Crete",
   "group": "Quartz-Crete",
   "pattern": [
     "a",
@@ -17,7 +12,7 @@
     }
   },
   "result": {
-    "item": "prefab:block_quartz_crete_chiseled",
+    "id": "prefab:block_quartz_crete_chiseled",
     "count": 1
   }
 }

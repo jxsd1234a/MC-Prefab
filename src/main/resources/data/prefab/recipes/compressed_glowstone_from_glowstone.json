@@ -1,14 +1,9 @@
 {
-  "conditions": [
-    {
-      "type": "prefab:config_recipe",
-      "recipeKey": "Compressed Glowstone"
-    }
-  ],
   "_comment": [
     "Glowstone to Compressed Glowstone"
   ],
-  "type": "minecraft:crafting_shaped",
+  "type": "prefab:condition_crafting_shaped",
+  "configName": "Compressed Glowstone",
   "group": "Compressed Glowstone",
   "pattern": [
     "###",
@@ -16,14 +11,12 @@
     "###"
   ],
   "key": {
-    "#": [
-      {
-        "item": "minecraft:glowstone"
-      }
-    ]
+    "#": {
+      "item": "minecraft:glowstone"
+    }
   },
   "result": {
-    "item": "prefab:block_compressed_glowstone",
+    "id": "prefab:block_compressed_glowstone",
     "count": 1
   }
 }

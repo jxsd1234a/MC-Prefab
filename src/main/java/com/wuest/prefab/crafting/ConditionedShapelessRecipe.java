@@ -40,6 +40,7 @@ public class ConditionedShapelessRecipe extends ShapelessRecipe {
         this.output = output;
         this.ingredients = ingredients;
         this.configName = configName;
+        this.category = craftingBookCategory;
     }
 
     @Override

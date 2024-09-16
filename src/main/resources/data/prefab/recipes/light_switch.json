@@ -1,11 +1,6 @@
 {
-  "conditions": [
-    {
-      "type": "prefab:config_recipe",
-      "recipeKey": "Light Switch"
-    }
-  ],
-  "type": "minecraft:crafting_shapeless",
+  "type": "prefab:condition_crafting_shapeless",
+  "configName": "Light Switch",
   "group": "Light Switch",
   "ingredients": [
     {
@@ -22,7 +17,7 @@
     }
   ],
   "result": {
-    "item": "prefab:block_light_switch",
+    "id": "prefab:block_light_switch",
     "count": 1
   }
 }

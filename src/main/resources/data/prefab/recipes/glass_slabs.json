@@ -1,25 +1,18 @@
 {
-  "conditions": [
-    {
-      "type": "prefab:config_recipe",
-      "recipeKey": "Glass Slabs"
-    }
-  ],
-  "type": "minecraft:crafting_shaped",
+  "type": "prefab:condition_crafting_shaped",
+  "configName": "Glass Slabs",
   "group": "Glass Slabs",
   "pattern": [
     "#",
     "#"
   ],
   "key": {
-    "#": [
-      {
-        "tag": "forge:glass"
-      }
-    ]
+    "#": {
+      "tag": "forge:glass"
+    }
   },
   "result": {
-    "item": "prefab:block_glass_slab",
+    "id": "prefab:block_glass_slab",
     "count": 2
   }
 }

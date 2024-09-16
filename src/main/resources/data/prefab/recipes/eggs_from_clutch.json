@@ -1,11 +1,6 @@
 {
-  "conditions": [
-    {
-      "type": "prefab:config_recipe",
-      "recipeKey": "Bunch of Eggs"
-    }
-  ],
-  "type": "minecraft:crafting_shapeless",
+  "type": "prefab:condition_crafting_shapeless",
+  "configName": "Bunch of Eggs",
   "group": "Bunch of Eggs",
   "ingredients": [
     {
@@ -14,7 +9,7 @@
     }
   ],
   "result": {
-    "item": "minecraft:egg",
+    "id": "minecraft:egg",
     "count": 8
   }
 }

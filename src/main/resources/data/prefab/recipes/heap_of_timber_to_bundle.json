@@ -1,14 +1,9 @@
 {
-  "conditions": [
-    {
-      "type": "prefab:config_recipe",
-      "recipeKey": "Heap of Timber"
-    }
-  ],
   "_comment": [
     "Heap of timber to bundle of timber"
   ],
-  "type": "minecraft:crafting_shapeless",
+  "type": "prefab:condition_crafting_shapeless",
+  "configName": "Heap of Timber",
   "group": "Heap of Timber",
   "ingredients": [
     {
@@ -16,7 +11,7 @@
     }
   ],
   "result": {
-    "item": "prefab:item_bundle_of_timber",
+    "id": "prefab:item_bundle_of_timber",
     "count": 9
   }
 }

@@ -1,11 +1,6 @@
 {
-  "conditions": [
-    {
-      "type": "prefab:config_recipe",
-      "recipeKey": "Paper Lantern"
-    }
-  ],
-  "type": "minecraft:crafting_shapeless",
+  "type": "prefab:condition_crafting_shapeless",
+  "configName": "Paper Lantern",
   "group": "Paper Lantern",
   "ingredients": [
     {
@@ -13,7 +8,7 @@
     }
   ],
   "result": {
-    "item": "prefab:item_string_of_lanterns",
+    "id": "prefab:item_string_of_lanterns",
     "count": 9
   }
 }

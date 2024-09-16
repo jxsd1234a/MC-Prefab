@@ -1,11 +1,6 @@
 {
-  "conditions": [
-    {
-      "type": "prefab:config_recipe",
-      "recipeKey": "Nether Gate"
-    }
-  ],
-  "type": "minecraft:crafting_shaped",
+  "type": "prefab:condition_crafting_shaped",
+  "configName": "Nether Gate",
   "group": "Nether Gate",
   "pattern": [
     "aba",
@@ -24,7 +19,7 @@
     }
   },
   "result": {
-    "item": "prefab:item_nether_gate",
+    "id": "prefab:item_nether_gate",
     "count": 1
   }
 }

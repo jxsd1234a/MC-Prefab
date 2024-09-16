@@ -1,11 +1,6 @@
 {
-  "conditions": [
-    {
-      "type": "prefab:config_recipe",
-      "recipeKey": "Upgrade"
-    }
-  ],
-  "type": "minecraft:crafting_shaped",
+  "type": "prefab:condition_crafting_shaped",
+  "configName": "Upgrade",
   "group": "Upgrade",
   "pattern": [
     "aba",
@@ -27,7 +22,7 @@
     }
   },
   "result": {
-    "item": "prefab:item_upgrade",
+    "id": "prefab:item_upgrade",
     "count": 1
   }
 }

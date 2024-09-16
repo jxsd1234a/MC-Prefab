@@ -1,11 +1,6 @@
 {
-  "conditions": [
-    {
-      "type": "prefab:config_recipe",
-      "recipeKey": "Bundle of Timber"
-    }
-  ],
-  "type": "minecraft:crafting_shapeless",
+  "type": "prefab:condition_crafting_shapeless",
+  "configName": "Bundle of Timber",
   "group": "Bundle of Timber",
   "ingredients": [
     {
@@ -13,7 +8,7 @@
     }
   ],
   "result": {
-    "item": "minecraft:oak_log",
+    "id": "minecraft:oak_log",
     "count": 9
   }
 }

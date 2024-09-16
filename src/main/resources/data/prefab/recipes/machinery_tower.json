@@ -1,11 +1,6 @@
 {
-  "conditions": [
-    {
-      "type": "prefab:config_recipe",
-      "recipeKey": "Machinery Tower"
-    }
-  ],
-  "type": "minecraft:crafting_shaped",
+  "type": "prefab:condition_crafting_shaped",
+  "configName": "Machinery Tower",
   "group": "Machinery Tower",
   "pattern": [
     "aaa",
@@ -24,7 +19,7 @@
     }
   },
   "result": {
-    "item": "prefab:item_machinery_tower",
+    "id": "prefab:item_machinery_tower",
     "count": 1
   }
 }

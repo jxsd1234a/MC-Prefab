@@ -1,11 +1,6 @@
 {
-  "conditions": [
-    {
-      "type": "prefab:config_recipe",
-      "recipeKey": "Instant Bridge"
-    }
-  ],
-  "type": "minecraft:crafting_shaped",
+  "type": "prefab:condition_crafting_shaped",
+  "configName": "Instant Bridge",
   "group": "Instant Bridge",
   "pattern": [
     "aba",
@@ -21,7 +16,7 @@
     }
   },
   "result": {
-    "item": "prefab:item_instant_bridge",
+    "id": "prefab:item_instant_bridge",
     "count": 1
   }
 }

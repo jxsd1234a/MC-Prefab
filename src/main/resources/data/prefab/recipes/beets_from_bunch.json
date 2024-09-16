@@ -1,11 +1,6 @@
 {
-  "conditions": [
-    {
-      "type": "prefab:config_recipe",
-      "recipeKey": "Bunch of Beets"
-    }
-  ],
-  "type": "minecraft:crafting_shapeless",
+  "type": "prefab:condition_crafting_shapeless",
+  "configName": "Bunch of Beets",
   "group": "Bunch of Beets",
   "ingredients": [
     {
@@ -14,7 +9,7 @@
     }
   ],
   "result": {
-    "item": "minecraft:beetroot",
+    "id": "minecraft:beetroot",
     "count": 8
   }
 }

@@ -1,11 +1,6 @@
 {
-  "conditions": [
-    {
-      "type": "prefab:config_recipe",
-      "recipeKey": "Saloon"
-    }
-  ],
-  "type": "minecraft:crafting_shaped",
+  "type": "prefab:condition_crafting_shaped",
+  "configName": "Saloon",
   "group": "Saloon",
   "pattern": [
     "aaa",
@@ -27,7 +22,7 @@
     }
   },
   "result": {
-    "item": "prefab:item_saloon",
+    "id": "prefab:item_saloon",
     "count": 1
   }
 }

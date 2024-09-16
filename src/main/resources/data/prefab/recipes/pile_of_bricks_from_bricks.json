@@ -1,11 +1,6 @@
 {
-  "conditions": [
-    {
-      "type": "prefab:config_recipe",
-      "recipeKey": "Pile of Bricks"
-    }
-  ],
-  "type": "minecraft:crafting_shaped",
+  "type": "prefab:condition_crafting_shaped",
+  "configName": "Pile of Bricks",
   "group": "Pile of Bricks",
   "pattern": [
     "###",
@@ -18,7 +13,7 @@
     }
   },
   "result": {
-    "item": "prefab:item_pile_of_bricks",
+    "id": "prefab:item_pile_of_bricks",
     "count": 1
   }
 }

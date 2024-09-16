@@ -1,11 +1,6 @@
 {
-  "conditions": [
-    {
-      "type": "prefab:config_recipe",
-      "recipeKey": "Bundle of Timber"
-    }
-  ],
-  "type": "minecraft:crafting_shaped",
+  "type": "prefab:condition_crafting_shaped",
+  "configName": "Bundle of Timber",
   "group": "Bundle of Timber",
   "pattern": [
     "###",
@@ -13,14 +8,12 @@
     "###"
   ],
   "key": {
-    "#": [
-      {
-        "tag": "minecraft:logs"
-      }
-    ]
+    "#": {
+      "tag": "minecraft:logs"
+    }
   },
   "result": {
-    "item": "prefab:item_bundle_of_timber",
+    "id": "prefab:item_bundle_of_timber",
     "count": 1
   }
 }

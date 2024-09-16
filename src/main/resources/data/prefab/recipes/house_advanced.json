@@ -1,11 +1,6 @@
 {
-  "conditions": [
-    {
-      "type": "prefab:config_recipe",
-      "recipeKey": "Advanced House"
-    }
-  ],
-  "type": "minecraft:crafting_shapeless",
+  "type": "prefab:condition_crafting_shapeless",
+  "configName": "Advanced House",
   "group": "Advanced House",
   "ingredients": [
     {
@@ -25,7 +20,7 @@
     }
   ],
   "result": {
-    "item": "prefab:item_house_advanced",
+    "id": "prefab:item_house_advanced",
     "count": 1
   }
 }

@@ -1,11 +1,6 @@
 {
-  "conditions": [
-    {
-      "type": "prefab:config_recipe",
-      "recipeKey": "Advanced Farm"
-    }
-  ],
-  "type": "minecraft:crafting_shaped",
+  "type": "prefab:condition_crafting_shaped",
+  "configName": "Advanced Farm",
   "group": "Advanced Farm",
   "pattern": [
     "abc",
@@ -33,7 +28,7 @@
     }
   },
   "result": {
-    "item": "prefab:item_farm_advanced",
+    "id": "prefab:item_farm_advanced",
     "count": 1
   }
 }

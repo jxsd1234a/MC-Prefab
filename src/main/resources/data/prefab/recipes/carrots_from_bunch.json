@@ -1,11 +1,6 @@
 {
-  "conditions": [
-    {
-      "type": "prefab:config_recipe",
-      "recipeKey": "Bunch of Carrots"
-    }
-  ],
-  "type": "minecraft:crafting_shapeless",
+  "type": "prefab:condition_crafting_shapeless",
+  "configName": "Bunch of Carrots",
   "group": "Bunch of Carrots",
   "ingredients": [
     {
@@ -14,7 +9,7 @@
     }
   ],
   "result": {
-    "item": "minecraft:carrot",
+    "id": "minecraft:carrot",
     "count": 8
   }
 }

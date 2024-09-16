@@ -1,11 +1,9 @@
 {
-  "conditions": [
-    {
-      "type": "prefab:config_recipe",
-      "recipeKey": "Quartz-Crete"
-    }
+  "_comment": [
+    "Compressed dirt to normal dirt"
   ],
-  "type": "minecraft:crafting_shapeless",
+  "type": "prefab:condition_crafting_shapeless",
+  "configName": "Quartz-Crete",
   "group": "Quartz-Crete",
   "ingredients": [
     {
@@ -13,7 +11,7 @@
     }
   ],
   "result": {
-    "item": "prefab:block_quartz_crete",
+    "id": "prefab:block_quartz_crete",
     "count": 9
   }
 }

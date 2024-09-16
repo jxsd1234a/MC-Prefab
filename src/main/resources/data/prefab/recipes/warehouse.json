@@ -1,11 +1,6 @@
 {
-  "conditions": [
-    {
-      "type": "prefab:config_recipe",
-      "recipeKey": "Warehouse"
-    }
-  ],
-  "type": "minecraft:crafting_shaped",
+  "type": "prefab:condition_crafting_shaped",
+  "configName": "Warehouse",
   "group": "Warehouse",
   "pattern": [
     "a a",
@@ -27,7 +22,7 @@
     }
   },
   "result": {
-    "item": "prefab:item_warehouse",
+    "id": "prefab:item_warehouse",
     "count": 1
   }
 }

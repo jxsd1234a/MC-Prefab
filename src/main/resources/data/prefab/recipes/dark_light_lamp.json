@@ -1,11 +1,6 @@
 {
-  "conditions": [
-    {
-      "type": "prefab:config_recipe",
-      "recipeKey": "Dark Light Lamp"
-    }
-  ],
-  "type": "minecraft:crafting_shapeless",
+  "type": "prefab:condition_crafting_shapeless",
+  "configName": "Dark Light Lamp",
   "group": "Dark Light Lamp",
   "ingredients": [
     {
@@ -18,7 +13,7 @@
     }
   ],
   "result": {
-    "item": "prefab:block_dark_lamp",
+    "id": "prefab:block_dark_lamp",
     "count": 1
   }
 }

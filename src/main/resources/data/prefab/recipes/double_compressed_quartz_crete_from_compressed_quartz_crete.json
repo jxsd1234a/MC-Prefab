@@ -1,11 +1,9 @@
 {
-  "conditions": [
-    {
-      "type": "prefab:config_recipe",
-      "recipeKey": "Quartz-Crete"
-    }
+  "_comment": [
+    "Compressed Dirt from dirt"
   ],
-  "type": "minecraft:crafting_shaped",
+  "type": "prefab:condition_crafting_shaped",
+  "configName": "Quartz-Crete",
   "group": "Quartz-Crete",
   "pattern": [
     "###",
@@ -13,14 +11,12 @@
     "###"
   ],
   "key": {
-    "#": [
-      {
-        "item": "prefab:block_compressed_quartz_crete"
-      }
-    ]
+    "#": {
+      "item": "prefab:block_compressed_quartz_crete"
+    }
   },
   "result": {
-    "item": "prefab:block_double_compressed_quartz_crete",
+    "id": "prefab:block_double_compressed_quartz_crete",
     "count": 1
   }
 }

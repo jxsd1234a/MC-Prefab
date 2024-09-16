@@ -1,31 +1,22 @@
 {
-    "conditions": [
-        {
-            "type": "prefab:config_recipe",
-            "recipeKey": "Sickle"
-        }
-    ],
-    "type": "minecraft:crafting_shaped",
-    "group": "Sickle",
-    "pattern": [
-        " a ",
-        "  a",
-        "ba "
-    ],
-    "key": {
-        "a": [
-            {
-                "item": "minecraft:diamond"
-            }
-        ],
-        "b" : [
-            {
-                "item": "minecraft:stick"
-            }
-        ]
+  "type": "prefab:condition_crafting_shaped",
+  "configName": "Sickle",
+  "group": "Sickle",
+  "pattern": [
+    " a ",
+    "  a",
+    "ba "
+  ],
+  "key": {
+    "a": {
+      "item": "minecraft:diamond"
     },
-    "result": {
-        "item": "prefab:item_sickle_diamond",
-        "count": 1
+    "b": {
+      "item": "minecraft:stick"
     }
+  },
+  "result": {
+    "id": "prefab:item_sickle_diamond",
+    "count": 1
+  }
 }

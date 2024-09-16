@@ -1,11 +1,6 @@
 {
-  "conditions": [
-    {
-      "type": "prefab:config_recipe",
-      "recipeKey": "Improved Warehouse"
-    }
-  ],
-  "type": "minecraft:crafting_shaped",
+  "type": "prefab:condition_crafting_shaped",
+  "configName": "Improved Warehouse",
   "group": "Improved Warehouse",
   "pattern": [
     "aba",
@@ -30,7 +25,7 @@
     }
   },
   "result": {
-    "item": "prefab:item_warehouse_improved",
+    "id": "prefab:item_warehouse_improved",
     "count": 1
   }
 }

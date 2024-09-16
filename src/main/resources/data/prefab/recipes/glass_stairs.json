@@ -1,11 +1,6 @@
 {
-  "conditions": [
-    {
-      "type": "prefab:config_recipe",
-      "recipeKey": "Glass Stairs"
-    }
-  ],
-  "type": "minecraft:crafting_shaped",
+  "type": "prefab:condition_crafting_shaped",
+  "configName": "Glass Stairs",
   "group": "Glass Stairs",
   "pattern": [
     "#  ",
@@ -13,14 +8,12 @@
     "###"
   ],
   "key": {
-    "#": [
-      {
-        "tag": "forge:glass"
-      }
-    ]
+    "#": {
+      "tag": "forge:glass"
+    }
   },
   "result": {
-    "item": "prefab:block_glass_stairs",
+    "id": "prefab:block_glass_stairs",
     "count": 4
   }
 }

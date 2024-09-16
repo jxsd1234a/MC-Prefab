@@ -1,11 +1,6 @@
 {
-  "conditions": [
-    {
-      "type": "prefab:config_recipe",
-      "recipeKey": "Aqua Base"
-    }
-  ],
-  "type": "minecraft:crafting_shaped",
+  "type": "prefab:condition_crafting_shaped",
+  "configName": "Aqua Base",
   "group": "Aqua Base",
   "pattern": [
     "aaa",
@@ -30,7 +25,7 @@
     }
   },
   "result": {
-    "item": "prefab:item_aqua_base_improved",
+    "id": "prefab:item_aqua_base_improved",
     "count": 1
   }
 }

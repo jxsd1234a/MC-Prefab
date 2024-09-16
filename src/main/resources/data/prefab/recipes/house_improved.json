@@ -1,11 +1,6 @@
 {
-  "conditions": [
-    {
-      "type": "prefab:config_recipe",
-      "recipeKey": "Improved House"
-    }
-  ],
-  "type": "minecraft:crafting_shapeless",
+  "type": "prefab:condition_crafting_shapeless",
+  "configName": "Improved House",
   "group": "Improved House",
   "ingredients": [
     {
@@ -19,7 +14,7 @@
     }
   ],
   "result": {
-    "item": "prefab:item_house_improved",
+    "id": "prefab:item_house_improved",
     "count": 1
   }
 }
