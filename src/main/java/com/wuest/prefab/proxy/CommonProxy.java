@@ -6,8 +6,6 @@ import com.wuest.prefab.base.BaseConfig;
 import com.wuest.prefab.config.ModConfiguration;
 import com.wuest.prefab.config.ServerModConfiguration;
 import com.wuest.prefab.config.StructureScannerConfig;
-import com.wuest.prefab.crafting.RecipeCondition;
-import com.wuest.prefab.crafting.SmeltingCondition;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -23,7 +21,6 @@ import net.minecraftforge.fml.event.lifecycle.ParallelDispatchEvent;
 import net.minecraftforge.fml.loading.FMLPaths;
 import net.minecraftforge.network.Channel;
 import net.minecraftforge.network.ChannelBuilder;
-import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.registries.RegisterEvent;
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -94,10 +91,6 @@ public class CommonProxy {
     }
 
     public void preInit(ParallelDispatchEvent event) {
-        // TODO: Need to register these serializers.....
-        //CraftingHelper.register(new RecipeCondition.Serializer());
-        //CraftingHelper.register(new SmeltingCondition.Serializer());
-
         this.createNetworkInstance();
 
         // Register messages.

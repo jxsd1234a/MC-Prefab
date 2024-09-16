@@ -3,6 +3,9 @@ package com.wuest.prefab;
 import com.wuest.prefab.blocks.*;
 import com.wuest.prefab.blocks.entities.LightSwitchBlockEntity;
 import com.wuest.prefab.blocks.entities.StructureScannerBlockEntity;
+import com.wuest.prefab.crafting.ConditionedShapedRecipe;
+import com.wuest.prefab.crafting.ConditionedShapelessRecipe;
+import com.wuest.prefab.crafting.ConditionedSmeltingRecipe;
 import com.wuest.prefab.items.*;
 import com.wuest.prefab.proxy.messages.ConfigSyncMessage;
 import com.wuest.prefab.proxy.messages.PlayerEntityTagMessage;
@@ -278,6 +281,10 @@ public class ModRegistry {
 
     /* *********************************** Sounds *********************************** */
     public static final RegistryObject<SoundEvent> BuildingBlueprint = SOUNDS.register("building_blueprint", () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(Prefab.MODID, "building_blueprint")));
+
+    public static final RegistryObject<RecipeSerializer<ConditionedShapedRecipe>> ConditionedShapedRecipeSeriaizer = RECIPES.register("prefab.shaped", ConditionedShapedRecipe.Serializer::new);
+    public static final RegistryObject<RecipeSerializer<ConditionedShapelessRecipe>> ConditionedShapelessRecipeSeriaizer = RECIPES.register("prefab.shapeless", ConditionedShapelessRecipe.Serializer::new);
+    public static final RegistryObject<RecipeSerializer<ConditionedSmeltingRecipe>> ConditionedSmeltingRecipeSeriaizer = RECIPES.register("prefab.smelting", ConditionedSmeltingRecipe.Serializer::new);
 
     static {
         if (Prefab.isDebug) {
