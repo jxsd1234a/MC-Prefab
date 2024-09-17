@@ -1,5 +1,8 @@
 package com.wuest.prefab.proxy;
 
+import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.DefaultVertexFormat;
+import com.mojang.blaze3d.vertex.VertexFormat;
 import com.wuest.prefab.ModRegistry;
 import com.wuest.prefab.Prefab;
 import com.wuest.prefab.base.BaseConfig;
@@ -16,6 +19,8 @@ import com.wuest.prefab.structures.items.StructureItem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.BiomeColors;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.Sheets;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -47,6 +52,8 @@ public class ClientProxy extends CommonProxy {
     public static HashMap<StructureItem, GuiStructure> ModGuis = new HashMap<>();
 
     public ServerModConfiguration serverConfiguration = null;
+
+    public static final RenderType PREVIEW_LAYER = new PreviewLayer();
 
     public ClientProxy() {
         super();
@@ -178,5 +185,18 @@ public class ClientProxy extends CommonProxy {
 
     @Override
     public void clientSetup(FMLClientSetupEvent clientSetupEvent) {
+    }
+
+    private static class PreviewLayer extends RenderType {
+        public PreviewLayer() {
+            super(Prefab.MODID + ".preview", DefaultVertexFormat.NEW_ENTITY, VertexFormat.Mode.QUADS, 256, true, true,
+                    () -> {
+                        Sheets.translucentCullBlockSheet().setupRenderState();
+                        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 0.4F);
+                    }, () -> {
+                        Sheets.translucentCullBlockSheet().clearRenderState();
+                        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+                    });
+        }
     }
 }
