@@ -2,65 +2,46 @@ package com.wuest.prefab.structures.render;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
-import com.mojang.text2speech.Narrator;
 import com.wuest.prefab.Prefab;
 import com.wuest.prefab.blocks.BlockStructureScanner;
 import com.wuest.prefab.config.StructureScannerConfig;
-import com.wuest.prefab.gui.GuiLangKeys;
 import com.wuest.prefab.proxy.CommonProxy;
 import com.wuest.prefab.structures.base.BuildBlock;
 import com.wuest.prefab.structures.base.Structure;
 import com.wuest.prefab.structures.config.StructureConfiguration;
-import net.minecraft.ChatFormatting;
-import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GameRenderer;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.Sheets;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.BlockRenderDispatcher;
-import net.minecraft.client.renderer.culling.Frustum;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.Registry;
-import net.minecraft.core.Vec3i;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.network.chat.*;
-import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.Shapes;
-import org.jetbrains.annotations.NotNull;
-import org.joml.Matrix4f;
-import java.util.List;
+import net.minecraftforge.client.model.data.ModelData;
 
 /**
  * @author WuestMan
- * This class was derived from Botania's MultiBlockRenderer.
+ * This class was derived from Botania's AstrolabePreviewHandler.
  * Most changes are for extra comments for myself as well as to use my blocks class structure.
- * http://botaniamod.net/license.php
+ * <a href="http://botaniamod.net/license.php">...</a>
  */
 @SuppressWarnings({"WeakerAccess", "ConstantConditions"})
 public class StructureRenderHandler {
     // player's overlapping on structures and other things.
     public static StructureConfiguration currentConfiguration;
     public static Structure currentStructure;
-    public static boolean rendering = false;
     public static boolean showedMessage = false;
     private static int dimension;
-    private static int overlay = OverlayTexture.pack(5, 10);
 
     /**
      * Resets the structure to show in the world.
@@ -81,8 +62,6 @@ public class StructureRenderHandler {
     }
 
     public static void renderClickedBlock(
-            Level worldIn,
-            PoseStack matrixStack,
             double cameraX,
             double cameraY,
             double cameraZ) {
@@ -97,7 +76,6 @@ public class StructureRenderHandler {
             double blockStartYOffset = originalPos.getY();
 
             StructureRenderHandler.drawBox(
-                    matrixStack,
                     blockXOffset,
                     blockZOffset,
                     blockStartYOffset,
@@ -111,7 +89,6 @@ public class StructureRenderHandler {
     }
 
     private static void drawBox(
-            PoseStack matrixStack,
             double blockXOffset,
             double blockZOffset,
             double blockStartYOffset,
@@ -193,11 +170,10 @@ public class StructureRenderHandler {
         RenderSystem.enableBlend();
     }
 
-    public static void renderScanningBoxes(PoseStack matrixStack,
-                                           double cameraX,
+    public static void renderScanningBoxes(double cameraX,
                                            double cameraY,
                                            double cameraZ) {
-        if (Prefab.proxy.structureScanners.size() == 0) {
+        if (Prefab.proxy.structureScanners.isEmpty()) {
             return;
         }
 
@@ -263,7 +239,6 @@ public class StructureRenderHandler {
             }
 
             StructureRenderHandler.drawBox(
-                    matrixStack,
                     startingPosition.getX(),
                     startingPosition.getZ(),
                     startingPosition.getY(),
@@ -394,7 +369,7 @@ public class StructureRenderHandler {
             float b = (float) (color & 255) / 255.0F;
 
             // Always use entity translucent layer so blending is turned on
-            brd.getModelRenderer().renderModel(ms.last(), buffer, state, model, r, g, b, 0xF000F0, OverlayTexture.NO_OVERLAY);
+            brd.getModelRenderer().renderModel(ms.last(), buffer, state, model, r, g, b, 0xF000F0, OverlayTexture.NO_OVERLAY, ModelData.EMPTY, (RenderType)null);
 
             ms.popPose();
         }
