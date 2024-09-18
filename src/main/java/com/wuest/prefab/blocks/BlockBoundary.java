@@ -4,7 +4,6 @@ import com.wuest.prefab.Prefab;
 import com.wuest.prefab.events.ModEventHandler;
 import com.wuest.prefab.gui.GuiLangKeys;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -27,7 +26,6 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,17 +48,6 @@ public class BlockBoundary extends Block {
                 .strength(0.6F));
 
         this.registerDefaultState(this.getStateDefinition().any().setValue(Powered, false));
-    }
-
-    /**
-     * Queries if this block should render in a given layer.
-     */
-    public static boolean canRenderInLayer(RenderType layer) {
-        // NOTE: This code is in a partial state. Need to find out how to get block state to determine if the block should be rendered this pass.
-        boolean powered = false;// state.get(Powered);
-
-        // first part is translucent, second is for solid.
-        return (layer == RenderType.translucent() && !powered) || (layer == RenderType.solid() && powered);
     }
 
     @Override
