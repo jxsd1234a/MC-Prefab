@@ -3,5 +3,5 @@
   "textures": {
     "all": "prefab:block/block_phasic_base"
   },
-  "render_type": "translucent"
+  "render_type": "cutout"
 }
