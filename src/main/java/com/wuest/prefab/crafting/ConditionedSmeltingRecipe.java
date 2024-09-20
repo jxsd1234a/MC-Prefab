@@ -39,7 +39,7 @@ public class ConditionedSmeltingRecipe extends SmeltingRecipe {
                         ItemStack.CODEC.fieldOf("result").forGetter((o) -> o.result),
                         Codec.FLOAT.optionalFieldOf("experience", 0.1f).forGetter((o) -> o.experience),
                         Codec.INT.optionalFieldOf("cookingtime", 200).forGetter((o) -> o.cookingTime),
-                        Codec.STRING.optionalFieldOf("config", "").forGetter((o) -> o.configName)
+                        Codec.STRING.optionalFieldOf("configName", "").forGetter((o) -> o.configName)
 
                 ).apply(instance, ConditionedSmeltingRecipe::new)
         );
