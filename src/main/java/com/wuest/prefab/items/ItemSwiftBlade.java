@@ -35,13 +35,6 @@ public class ItemSwiftBlade extends SwordItem {
     }
 
     /**
-     * Return the name for this tool's material.
-     */
-    public String getToolMaterialName() {
-        return this.getTier().toString();
-    }
-
-    /**
      * Return the enchantability factor of the item, most of the time is based on
      * material.
      */
