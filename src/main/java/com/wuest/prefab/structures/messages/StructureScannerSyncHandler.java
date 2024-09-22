@@ -10,7 +10,7 @@ public class StructureScannerSyncHandler {
         context.enqueueWork(() -> {
             StructureScannerConfig config = (new StructureScannerConfig()).ReadFromCompoundTag(message.getMessageTag());
 
-            BlockEntity blockEntity = context.getSender().serverLevel().getBlockEntity(config.blockPos);
+            BlockEntity blockEntity = context.getSender().serverLevel().getBlockEntity(config.blockPos.above());
 
             if (blockEntity instanceof StructureScannerBlockEntity) {
                 StructureScannerBlockEntity actualEntity = (StructureScannerBlockEntity) blockEntity;

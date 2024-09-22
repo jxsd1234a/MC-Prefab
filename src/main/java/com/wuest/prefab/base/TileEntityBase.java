@@ -74,6 +74,8 @@ public abstract class TileEntityBase<T extends BaseConfig> extends BlockEntity {
 	public @NotNull CompoundTag getUpdateTag(HolderLookup.Provider provider) {
 		// This is overwritten so our custom save event is done.
 		CompoundTag updateTag = new CompoundTag();
+
+		// Save the configuration data to the new tag.
 		this.saveAdditional(updateTag, provider);
 		return updateTag;
 	}
@@ -82,16 +84,16 @@ public abstract class TileEntityBase<T extends BaseConfig> extends BlockEntity {
 	public void loadAdditional(@NotNull CompoundTag compound, HolderLookup.Provider provider) {
 		super.loadAdditional(compound, provider);
 
-		if (this.config != null) {
-			this.config.WriteToNBTCompound(compound);
-		}
+		this.config = this.createConfigInstance().ReadFromCompoundTag(compound);
 	}
 
 	@Override
 	public void saveAdditional(@NotNull CompoundTag compound, HolderLookup.Provider provider) {
 		super.saveAdditional(compound, provider);
 
-		this.config = this.createConfigInstance().ReadFromCompoundTag(compound);
+		if (this.config != null) {
+			this.config.WriteToNBTCompound(compound);
+		}
 	}
 
 	public T createConfigInstance() {

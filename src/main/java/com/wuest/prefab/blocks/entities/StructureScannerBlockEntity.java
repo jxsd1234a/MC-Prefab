@@ -10,6 +10,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class StructureScannerBlockEntity extends TileEntityBase<StructureScannerConfig> {
@@ -74,5 +75,12 @@ public class StructureScannerBlockEntity extends TileEntityBase<StructureScanner
                 playerFacing,
                 false,
                 false);
+
+        BlockEntity blockEntity = serverWorld.getBlockEntity(config.blockPos);
+
+        if (blockEntity != null && blockEntity.getClass() == StructureScannerBlockEntity.class) {
+            StructureScannerBlockEntity structureScannerBlockEntity = (StructureScannerBlockEntity) blockEntity;
+            structureScannerBlockEntity.setConfig(config);
+        }
     }
 }

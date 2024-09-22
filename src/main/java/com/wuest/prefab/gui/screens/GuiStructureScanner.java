@@ -1,6 +1,7 @@
 package com.wuest.prefab.gui.screens;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.wuest.prefab.ModRegistry;
 import com.wuest.prefab.Prefab;
 import com.wuest.prefab.Tuple;
 import com.wuest.prefab.Utils;
@@ -12,8 +13,6 @@ import com.wuest.prefab.gui.controls.ExtendedButton;
 import com.wuest.prefab.gui.controls.GuiTextBox;
 import com.wuest.prefab.structures.messages.StructureScannerActionMessage;
 import com.wuest.prefab.structures.messages.StructureScannerSyncMessage;
-import com.wuest.prefab.structures.messages.StructureTagMessage;
-import com.wuest.prefab.structures.render.StructureRenderHandler;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractButton;
 import net.minecraft.core.BlockPos;
@@ -136,6 +135,26 @@ public class GuiStructureScanner extends GuiBase {
             this.sendScanPacket();
             this.closeScreen();
         } else if (button == this.btnSet) {
+            // Look through the list of scanners to see if it's already there, if so don't do anything.
+            // Otherwise; add it to the list of scanners.
+            StructureScannerConfig existingConfig = null;
+
+            for (StructureScannerConfig config : Prefab.proxy.structureScanners) {
+                if (config.blockPos.getX() == this.config.blockPos.getX()
+                        && config.blockPos.getZ() == this.config.blockPos.getZ()
+                        && config.blockPos.getY() == this.config.blockPos.getY()) {
+                    existingConfig = config;
+                    break;
+                }
+            }
+
+            // The config can get re-initialized so make sure to remove and re-add the instance.
+            // This generally happens when leaving and re-joining the world.
+            if (existingConfig != null) {
+                Prefab.proxy.structureScanners.remove(existingConfig);
+                Prefab.proxy.structureScanners.add(this.config);
+            }
+
             this.closeScreen();
         } else {
             if (button == this.btnStartingPositionMoveLeft) {
