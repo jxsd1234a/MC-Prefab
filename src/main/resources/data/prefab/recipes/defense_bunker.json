@@ -12,7 +12,7 @@
       "tag": "forge:storage_blocks/iron"
     },
     "b": {
-      "item": "forge:storage_blocks/double_compressed_lights"
+      "tag": "forge:storage_blocks/double_compressed_lights"
     },
     "c": {
       "tag": "forge:storage_blocks/triple_compressed_stone"

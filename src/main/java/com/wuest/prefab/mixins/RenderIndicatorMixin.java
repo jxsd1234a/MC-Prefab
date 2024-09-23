@@ -20,7 +20,6 @@ public class RenderIndicatorMixin {
         Minecraft prefabIndicatorMinecraft = Minecraft.getInstance();
 
         if (prefabIndicatorMinecraft.player != null && (!prefabIndicatorMinecraft.player.isCrouching())) {
-
             StructureRenderHandler.renderClickedBlock(cameraX, cameraY, cameraZ);
 
             VertexConsumer prefabBuffer = vertexConsumers.getBuffer(ClientProxy.PREVIEW_LAYER);

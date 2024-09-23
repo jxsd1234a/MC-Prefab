@@ -66,12 +66,8 @@ public class CommonProxy {
                             Item currentItem = reg.get();
 
                             // Only accept the structure scanner in the creative menu when this is in debug mode.
-                            if (currentItem == ModRegistry.StructureScannerItem.get()) {
-                                if (Prefab.isDebug) {
-                                    output.accept(reg.get());
-                                }
-
-                                return;
+                            if (Prefab.isDebug && currentItem == ModRegistry.StructureScannerItem.get()) {
+                                output.accept(reg.get());
                             } else if (currentItem == ModRegistry.ItemLogo.get()) {
                                 return;
                             }
