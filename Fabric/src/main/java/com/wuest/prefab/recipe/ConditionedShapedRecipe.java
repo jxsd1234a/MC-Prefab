@@ -91,7 +91,7 @@ public class ConditionedShapedRecipe extends ShapedRecipe {
     }
 
     @Override
-    public boolean matches(CraftingContainer craftingInventory, Level level) {
+    public boolean matches(CraftingInput craftingInventory, Level level) {
         // Make sure to re-load any ingredients associated with tags.
         // This is necessary due to changes in how tags are loaded and how we use configurable recipes.
         if (this.recipeHasTags && !this.reloadedTags) {
@@ -99,8 +99,8 @@ public class ConditionedShapedRecipe extends ShapedRecipe {
             this.reloadedTags = true;
         }
 
-        for (int i = 0; i <= craftingInventory.getWidth() - this.width; ++i) {
-            for (int j = 0; j <= craftingInventory.getHeight() - this.height; ++j) {
+        for (int i = 0; i <= craftingInventory.width() - this.width; ++i) {
+            for (int j = 0; j <= craftingInventory.height() - this.height; ++j) {
                 if (this.matches(craftingInventory, i, j, true)) {
                     return true;
                 }
@@ -115,7 +115,7 @@ public class ConditionedShapedRecipe extends ShapedRecipe {
     }
 
     @Override
-    public ItemStack assemble(CraftingContainer craftingContainer, HolderLookup.Provider registryAccess) {
+    public ItemStack assemble(CraftingInput craftingContainer, HolderLookup.Provider registryAccess) {
         return this.getResultItem(registryAccess).copy();
     }
 
@@ -129,9 +129,9 @@ public class ConditionedShapedRecipe extends ShapedRecipe {
         return this.height;
     }
 
-    private boolean matches(CraftingContainer inv, int offsetX, int offsetY, boolean bl) {
-        for (int i = 0; i < inv.getWidth(); ++i) {
-            for (int j = 0; j < inv.getHeight(); ++j) {
+    private boolean matches(CraftingInput inv, int offsetX, int offsetY, boolean bl) {
+        for (int i = 0; i < inv.width(); ++i) {
+            for (int j = 0; j < inv.height(); ++j) {
                 int k = i - offsetX;
                 int l = j - offsetY;
                 Ingredient ingredient = Ingredient.EMPTY;
@@ -143,7 +143,7 @@ public class ConditionedShapedRecipe extends ShapedRecipe {
                     }
                 }
 
-                if (!ingredient.test(inv.getItem(i + j * inv.getWidth()))) {
+                if (!ingredient.test(inv.getItem(i + j * inv.width()))) {
                     return false;
                 }
             }

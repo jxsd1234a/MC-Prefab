@@ -469,7 +469,7 @@ public class BuildBlock {
     }
 
     public ResourceLocation getResourceLocation() {
-        return new ResourceLocation(this.blockDomain, this.blockName);
+        return ResourceLocation.tryBuild(this.blockDomain, this.blockName);
     }
 
     public PositionOffset getStartingPosition() {

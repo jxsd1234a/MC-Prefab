@@ -2,6 +2,7 @@ package com.wuest.prefab.gui.controls;
 
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.wuest.prefab.Prefab;
 import com.wuest.prefab.Utils;
 import com.wuest.prefab.gui.GuiUtils;
 import net.fabricmc.api.EnvType;
@@ -22,10 +23,10 @@ import java.awt.*;
  */
 @SuppressWarnings({"UnusedReturnValue", "unused"})
 public class GuiCheckBox extends AbstractButton {
-    private static final ResourceLocation buttonTexture = new ResourceLocation("prefab", "textures/gui/prefab_checkbox.png");
-    private static final ResourceLocation buttonTexturePressed = new ResourceLocation("prefab", "textures/gui/prefab_checkbox_selected.png");
-    private static final ResourceLocation buttonTextureHover = new ResourceLocation("prefab", "textures/gui/prefab_checkbox_hover.png");
-    private static final ResourceLocation buttonTextureHoverSelected = new ResourceLocation("prefab", "textures/gui/prefab_checkbox_hover_selected.png");
+    private static final ResourceLocation buttonTexture = ResourceLocation.tryBuild(Prefab.MODID, "textures/gui/prefab_checkbox.png");
+    private static final ResourceLocation buttonTexturePressed = ResourceLocation.tryBuild(Prefab.MODID, "textures/gui/prefab_checkbox_selected.png");
+    private static final ResourceLocation buttonTextureHover = ResourceLocation.tryBuild(Prefab.MODID, "textures/gui/prefab_checkbox_hover.png");
+    private static final ResourceLocation buttonTextureHoverSelected = ResourceLocation.tryBuild(Prefab.MODID, "textures/gui/prefab_checkbox_hover_selected.png");
 
     protected int boxWidth;
     protected int boxHeight;

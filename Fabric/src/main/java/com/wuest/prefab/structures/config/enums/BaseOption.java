@@ -25,7 +25,7 @@ public class BaseOption {
             boolean hasGlassColor) {
         this.translationString = translationString;
         this.assetLocation = assetLocation;
-        this.pictureLocation = new ResourceLocation(Prefab.MODID, pictureLocation);
+        this.pictureLocation = ResourceLocation.tryBuild(Prefab.MODID, pictureLocation);
         this.hasBedColor = hasBedColor;
         this.hasGlassColor = hasGlassColor;
 

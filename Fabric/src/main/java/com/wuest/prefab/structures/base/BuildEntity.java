@@ -60,7 +60,7 @@ public class BuildEntity {
 	}
 
 	public ResourceLocation getEntityResource() {
-		return new ResourceLocation(this.entityResourceLocation);
+		return ResourceLocation.parse(this.entityResourceLocation);
 	}
 
 	public PositionOffset getStartingPosition() {

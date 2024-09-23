@@ -1,6 +1,7 @@
 package com.wuest.prefab.structures.gui;
 
 import com.wuest.prefab.ClientModRegistry;
+import com.wuest.prefab.Prefab;
 import com.wuest.prefab.Tuple;
 import com.wuest.prefab.gui.GuiLangKeys;
 import com.wuest.prefab.gui.GuiUtils;
@@ -19,7 +20,7 @@ import net.minecraft.resources.ResourceLocation;
 
 @SuppressWarnings("SpellCheckingInspection")
 public class GuiInstantBridge extends GuiStructure {
-    private static final ResourceLocation structureTopDown = new ResourceLocation("prefab", "textures/gui/instant_bridge.png");
+    private static final ResourceLocation structureTopDown = ResourceLocation.tryBuild(Prefab.MODID, "textures/gui/instant_bridge.png");
     protected InstantBridgeConfiguration specificConfiguration;
     private ExtendedButton btnMaterialType;
     private GuiSlider sldrBridgeLength;

@@ -11,7 +11,7 @@ public class StructurePayload implements CustomPacketPayload {
     private final StructureTagMessage structureTagMessage;
 
     public static final CustomPacketPayload.Type<StructurePayload> PACKET_TYPE = new CustomPacketPayload.Type<>(
-            new ResourceLocation(Prefab.MODID, "structure_payload"));
+            ResourceLocation.tryBuild(Prefab.MODID, "structure_payload"));
 
     public static final StreamCodec<FriendlyByteBuf, StructurePayload> STREAM_CODEC = CustomPacketPayload.codec(
             StructurePayload::write,

@@ -149,13 +149,12 @@ public class GuiUtils {
         final float vScale = 1f / 0x100;
 
         Tesselator tessellator = Tesselator.getInstance();
-        BufferBuilder wr = tessellator.getBuilder();
-        wr.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
-        wr.vertex(x, y + height, zLevel).uv(u * uScale, ((v + height) * vScale)).endVertex();
-        wr.vertex(x + width, y + height, zLevel).uv((u + width) * uScale, ((v + height) * vScale)).endVertex();
-        wr.vertex(x + width, y, zLevel).uv((u + width) * uScale, (v * vScale)).endVertex();
-        wr.vertex(x, y, zLevel).uv(u * uScale, (v * vScale)).endVertex();
-        tessellator.end();
+        BufferBuilder wr = tessellator.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
+        wr.addVertex(x, y + height, zLevel).setUv(u * uScale, ((v + height) * vScale));
+        wr.addVertex(x + width, y + height, zLevel).setUv((u + width) * uScale, ((v + height) * vScale));
+        wr.addVertex(x + width, y, zLevel).setUv((u + width) * uScale, (v * vScale));
+        wr.addVertex(x, y, zLevel).setUv(u * uScale, (v * vScale));
+        BufferUploader.drawWithShader(wr.buildOrThrow());
     }
 
     public static void bindAndDrawTexture(ResourceLocation resourceLocation, GuiGraphics guiGraphics, int x, int y, int z, int width, int height, int textureWidth, int textureHeight) {

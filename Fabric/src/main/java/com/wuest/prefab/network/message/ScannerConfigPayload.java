@@ -11,7 +11,7 @@ public class ScannerConfigPayload implements CustomPacketPayload {
     private final ScannerInfo scannerInfo;
 
     public static final CustomPacketPayload.Type<ScannerConfigPayload> PACKET_TYPE = new CustomPacketPayload.Type<>(
-            new ResourceLocation(Prefab.MODID, "structure_scanner_config"));
+            ResourceLocation.tryBuild(Prefab.MODID, "structure_scanner_config"));
 
     public static final StreamCodec<FriendlyByteBuf, ScannerConfigPayload> STREAM_CODEC = CustomPacketPayload.codec(
             ScannerConfigPayload::write,

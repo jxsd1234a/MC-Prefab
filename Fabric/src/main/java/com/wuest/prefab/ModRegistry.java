@@ -226,7 +226,7 @@ public class ModRegistry {
     public static final RecipeSerializer<ConditionedSmeltingRecipe> ConditionedSmeltingRecipeSeriaizer = new ConditionedSmeltingRecipe.Serializer();
 
     /* *********************************** Sounds *********************************** */
-    public static final SoundEvent BuildingBlueprint = SoundEvent.createVariableRangeEvent(new ResourceLocation(Prefab.MODID, "building_blueprint"));
+    public static final SoundEvent BuildingBlueprint = SoundEvent.createVariableRangeEvent(ResourceLocation.tryBuild(Prefab.MODID, "building_blueprint"));
 
     /* *********************************** Block Entities Types *********************************** */
     public static BlockEntityType<StructureScannerBlockEntity> StructureScannerEntityType;
@@ -250,7 +250,7 @@ public class ModRegistry {
             .build();
 
     // This variable may not be used, but the registration is still needed.
-    public static final CreativeModeTab creativeModeTab = Registry.register(BuiltInRegistries.CREATIVE_MODE_TAB, new ResourceLocation(Prefab.MODID, "logo"), ITEM_GROUP);
+    public static final CreativeModeTab creativeModeTab = Registry.register(BuiltInRegistries.CREATIVE_MODE_TAB, ResourceLocation.tryBuild(Prefab.MODID, "logo"), ITEM_GROUP);
 
     public static void registerModComponents() {
         ModRegistry.registerSounds();
@@ -273,7 +273,7 @@ public class ModRegistry {
     }
 
     private static void registerSounds() {
-        Registry.register(BuiltInRegistries.SOUND_EVENT, new ResourceLocation(Prefab.MODID, "building_blueprint"), ModRegistry.BuildingBlueprint);
+        Registry.register(BuiltInRegistries.SOUND_EVENT, ResourceLocation.tryBuild(Prefab.MODID, "building_blueprint"), ModRegistry.BuildingBlueprint);
     }
 
     private static void registerBlockEntities() {
@@ -486,17 +486,17 @@ public class ModRegistry {
     }
 
     private static void RegisterRecipeSerializers() {
-        Registry.register(BuiltInRegistries.RECIPE_SERIALIZER, new ResourceLocation(Prefab.MODID, "condition_crafting_shaped"), ModRegistry.ConditionedShapedRecipeSeriaizer);
-        Registry.register(BuiltInRegistries.RECIPE_SERIALIZER, new ResourceLocation(Prefab.MODID, "condition_crafting_shapeless"), ModRegistry.ConditionedShapelessRecipeSeriaizer);
-        Registry.register(BuiltInRegistries.RECIPE_SERIALIZER, new ResourceLocation(Prefab.MODID, "condition_smelting"), ModRegistry.ConditionedSmeltingRecipeSeriaizer);
+        Registry.register(BuiltInRegistries.RECIPE_SERIALIZER, ResourceLocation.tryBuild(Prefab.MODID, "condition_crafting_shaped"), ModRegistry.ConditionedShapedRecipeSeriaizer);
+        Registry.register(BuiltInRegistries.RECIPE_SERIALIZER, ResourceLocation.tryBuild(Prefab.MODID, "condition_crafting_shapeless"), ModRegistry.ConditionedShapelessRecipeSeriaizer);
+        Registry.register(BuiltInRegistries.RECIPE_SERIALIZER, ResourceLocation.tryBuild(Prefab.MODID, "condition_smelting"), ModRegistry.ConditionedSmeltingRecipeSeriaizer);
     }
 
     private static void registerBlock(String registryName, Block block) {
-        Registry.register(BuiltInRegistries.BLOCK, new ResourceLocation(Prefab.MODID, registryName), block);
+        Registry.register(BuiltInRegistries.BLOCK, ResourceLocation.tryBuild(Prefab.MODID, registryName), block);
     }
 
     private static void registerItem(String registryName, Item item) {
-        Registry.register(BuiltInRegistries.ITEM, new ResourceLocation(Prefab.MODID, registryName), item);
+        Registry.register(BuiltInRegistries.ITEM, ResourceLocation.tryBuild(Prefab.MODID, registryName), item);
         ModRegistry.ModItems.add(item);
     }
 
@@ -563,23 +563,23 @@ public class ModRegistry {
         COPPER("Copper", (int)Tiers.STONE.getAttackDamageBonus(), Tiers.STONE.getUses(), Tiers.STONE.getSpeed(),
                 Tiers.STONE.getAttackDamageBonus(), Tiers.STONE.getEnchantmentValue(), () -> {
             return Ingredient
-                    .of(Utils.getItemStacksWithTag(new ResourceLocation("c", "copper_ingots")).stream());
+                    .of(Utils.getItemStacksWithTag(ResourceLocation.tryBuild("c", "copper_ingots")).stream());
         }, BlockTags.INCORRECT_FOR_STONE_TOOL),
         OSMIUM("Osmium", (int)Tiers.IRON.getAttackDamageBonus(), 500, Tiers.IRON.getSpeed(),
                 Tiers.IRON.getAttackDamageBonus() + .5f, Tiers.IRON.getEnchantmentValue(), () -> {
             return Ingredient
-                    .of(Utils.getItemStacksWithTag(new ResourceLocation("c", "osmium_ingots")).stream());
+                    .of(Utils.getItemStacksWithTag(ResourceLocation.tryBuild("c", "osmium_ingots")).stream());
         }, BlockTags.INCORRECT_FOR_IRON_TOOL),
         BRONZE("Bronze", (int)Tiers.IRON.getAttackDamageBonus(), Tiers.IRON.getUses(), Tiers.IRON.getSpeed(),
                 Tiers.IRON.getAttackDamageBonus(), Tiers.IRON.getEnchantmentValue(), () -> {
             return Ingredient
-                    .of(Utils.getItemStacksWithTag(new ResourceLocation("c", "bronze_ingots")).stream());
+                    .of(Utils.getItemStacksWithTag(ResourceLocation.tryBuild("c", "bronze_ingots")).stream());
         }, BlockTags.INCORRECT_FOR_IRON_TOOL),
         STEEL("Steel", (int)Tiers.DIAMOND.getAttackDamageBonus(), (int) (Tiers.IRON.getUses() * 1.5),
                 Tiers.DIAMOND.getSpeed(), Tiers.DIAMOND.getAttackDamageBonus(),
                 Tiers.DIAMOND.getEnchantmentValue(), () -> {
             return Ingredient
-                    .of(Utils.getItemStacksWithTag(new ResourceLocation("c", "steel_ingots")).stream());
+                    .of(Utils.getItemStacksWithTag(ResourceLocation.tryBuild("c", "steel_ingots")).stream());
         }, BlockTags.INCORRECT_FOR_DIAMOND_TOOL),
         OBSIDIAN("Obsidian", (int)Tiers.DIAMOND.getAttackDamageBonus(), (int) (Tiers.DIAMOND.getUses() * 1.5),
                 Tiers.DIAMOND.getSpeed(), Tiers.DIAMOND.getAttackDamageBonus(),

@@ -11,7 +11,7 @@ public class ScanShapePayload implements CustomPacketPayload {
     private final ScannerInfo scannerInfo;
 
     public static final Type<ScanShapePayload> PACKET_TYPE = new Type<>(
-            new ResourceLocation(Prefab.MODID, "structure_scanner_action"));
+            ResourceLocation.tryBuild(Prefab.MODID, "structure_scanner_action"));
 
     public static final StreamCodec<FriendlyByteBuf, ScanShapePayload> STREAM_CODEC = CustomPacketPayload.codec(
             ScanShapePayload::write,

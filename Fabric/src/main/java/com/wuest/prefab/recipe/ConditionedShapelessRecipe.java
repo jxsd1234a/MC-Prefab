@@ -16,10 +16,7 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.entity.player.StackedContents;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.CraftingBookCategory;
-import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraft.world.item.crafting.ShapelessRecipe;
+import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 
 public class ConditionedShapelessRecipe extends ShapelessRecipe {
@@ -67,11 +64,11 @@ public class ConditionedShapelessRecipe extends ShapelessRecipe {
     }
 
     @Override
-    public boolean matches(CraftingContainer craftingInventory, Level world) {
+    public boolean matches(CraftingInput craftingInventory, Level world) {
         StackedContents stackedContents = new StackedContents();
         int i = 0;
 
-        for (int j = 0; j < craftingInventory.getContainerSize(); ++j) {
+        for (int j = 0; j < craftingInventory.size(); ++j) {
             ItemStack itemStack = craftingInventory.getItem(j);
 
             if (!itemStack.isEmpty()) {
@@ -84,7 +81,7 @@ public class ConditionedShapelessRecipe extends ShapelessRecipe {
     }
 
     @Override
-    public ItemStack assemble(CraftingContainer craftingContainer, HolderLookup.Provider registryAccess) {
+    public ItemStack assemble(CraftingInput craftingContainer, HolderLookup.Provider registryAccess) {
         return this.output.copy();
     }
 

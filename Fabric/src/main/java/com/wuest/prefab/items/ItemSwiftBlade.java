@@ -1,5 +1,7 @@
 package com.wuest.prefab.items;
 
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.SwordItem;
@@ -28,7 +30,7 @@ public class ItemSwiftBlade extends SwordItem {
      * equal to 2 damage points.
      */
     @Override
-    public float getAttackDamageBonus(Player player, float p_327880_) {
+    public float getAttackDamageBonus(Entity entity, float f, DamageSource damageSource) {
         return this.getTier().getAttackDamageBonus();
     }
 

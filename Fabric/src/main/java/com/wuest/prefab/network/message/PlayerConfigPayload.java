@@ -11,7 +11,7 @@ public class PlayerConfigPayload implements CustomPacketPayload {
     private final TagMessage tagMessage;
 
     public static final Type<PlayerConfigPayload> PACKET_TYPE = new Type<>(
-            new ResourceLocation(Prefab.MODID, "payer_config_payload"));
+            ResourceLocation.tryBuild(Prefab.MODID, "payer_config_payload"));
 
     public static final StreamCodec<FriendlyByteBuf, PlayerConfigPayload> STREAM_CODEC = CustomPacketPayload.codec(
             PlayerConfigPayload::write,

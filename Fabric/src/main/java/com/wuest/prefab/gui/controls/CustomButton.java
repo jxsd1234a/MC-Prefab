@@ -1,6 +1,7 @@
 package com.wuest.prefab.gui.controls;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.wuest.prefab.Prefab;
 import com.wuest.prefab.Utils;
 import com.wuest.prefab.gui.GuiUtils;
 import net.minecraft.client.Minecraft;
@@ -10,9 +11,9 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 
 public class CustomButton extends ExtendedButton {
-    private final ResourceLocation buttonTexture = new ResourceLocation("prefab", "textures/gui/prefab_button.png");
-    private final ResourceLocation buttonTexturePressed = new ResourceLocation("prefab", "textures/gui/prefab_button_pressed.png");
-    private final ResourceLocation buttonTextureHover = new ResourceLocation("prefab", "textures/gui/prefab_button_highlight.png");
+    private final ResourceLocation buttonTexture = ResourceLocation.tryBuild(Prefab.MODID, "textures/gui/prefab_button.png");
+    private final ResourceLocation buttonTexturePressed = ResourceLocation.tryBuild(Prefab.MODID, "textures/gui/prefab_button_pressed.png");
+    private final ResourceLocation buttonTextureHover = ResourceLocation.tryBuild(Prefab.MODID, "textures/gui/prefab_button_highlight.png");
 
     public CustomButton(int xPos, int yPos, Component displayString, OnPress handler) {
         super(xPos, yPos, 200, 90, displayString, handler, null);

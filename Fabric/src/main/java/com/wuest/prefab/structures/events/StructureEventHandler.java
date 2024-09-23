@@ -435,8 +435,8 @@ public final class StructureEventHandler {
             facing = facing.getCounterClockWise();
         }
 
-        int paintingBlockWidth = entity.getWidth() / 16;
-        int paintingBlockHeight = entity.getHeight() / 16;
+        int paintingBlockWidth = (int) (entity.getBbWidth() / 16);
+        int paintingBlockHeight = (int) (entity.getBbHeight() / 16);
 
         if ((paintingBlockHeight > paintingBlockWidth || paintingBlockHeight > 1)
                 && !(paintingBlockWidth == 4 && paintingBlockHeight == 3)) {
@@ -549,8 +549,8 @@ public final class StructureEventHandler {
         double d1 = (double) entity.getPos().getY() + 0.5D;
         double d2 = (double) entity.getPos().getZ() + 0.5D;
         double d3 = 0.46875D;
-        double d4 = entity.getWidth() % 32 == 0 ? 0.5D : 0.0D;
-        double d5 = entity.getHeight() % 32 == 0 ? 0.5D : 0.0D;
+        double d4 = entity.getBbWidth() % 32 == 0 ? 0.5D : 0.0D;
+        double d5 = entity.getBbHeight() % 32 == 0 ? 0.5D : 0.0D;
         Direction horizontal = entity.getDirection();
         d0 = d0 - (double) horizontal.getStepX() * 0.46875D;
         d2 = d2 - (double) horizontal.getStepZ() * 0.46875D;
@@ -562,9 +562,9 @@ public final class StructureEventHandler {
         // The function call below set the following fields from the "entity" class. posX, posY, posZ.
         // This will probably have to change when the mappings get updated.
         entity.setPosRaw(d0, d1, d2);
-        double d6 = entity.getWidth();
-        double d7 = entity.getHeight();
-        double d8 = entity.getWidth();
+        double d6 = entity.getBbWidth();
+        double d7 = entity.getBbHeight();
+        double d8 = entity.getBbWidth();
 
         if (horizontal.getAxis() == Direction.Axis.Z) {
             d8 = 1.0D;

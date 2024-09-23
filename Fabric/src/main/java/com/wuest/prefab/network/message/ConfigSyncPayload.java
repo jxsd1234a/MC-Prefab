@@ -11,7 +11,7 @@ public class ConfigSyncPayload implements CustomPacketPayload {
     private final TagMessage tagMessage;
 
     public static final CustomPacketPayload.Type<ConfigSyncPayload> PACKET_TYPE = new CustomPacketPayload.Type<>(
-            new ResourceLocation(Prefab.MODID, "config_sync"));
+            ResourceLocation.tryBuild(Prefab.MODID, "config_sync"));
 
     public static final StreamCodec<FriendlyByteBuf, ConfigSyncPayload> STREAM_CODEC = CustomPacketPayload.codec(
             ConfigSyncPayload::write,

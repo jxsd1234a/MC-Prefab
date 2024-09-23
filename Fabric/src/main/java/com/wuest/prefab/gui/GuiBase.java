@@ -1,5 +1,6 @@
 package com.wuest.prefab.gui;
 
+import com.wuest.prefab.Prefab;
 import com.wuest.prefab.Tuple;
 import com.wuest.prefab.Utils;
 import com.wuest.prefab.blocks.FullDyeColor;
@@ -27,11 +28,11 @@ import java.util.List;
 
 public abstract class GuiBase extends Screen {
 
-    private final ResourceLocation backgroundTextures = new ResourceLocation("prefab", "textures/gui/default_background.png");
-    private final ResourceLocation narrowPanelTexture = new ResourceLocation("prefab", "textures/gui/custom_background.png");
-    private final ResourceLocation leftPanelTexture = new ResourceLocation("prefab", "textures/gui/custom_left_panel.png");
-    private final ResourceLocation middlePanelTexture = new ResourceLocation("prefab", "textures/gui/custom_middle_panel.png");
-    private final ResourceLocation rightPanelTexture = new ResourceLocation("prefab", "textures/gui/custom_right_panel.png");
+    private final ResourceLocation backgroundTextures = ResourceLocation.tryBuild(Prefab.MODID, "textures/gui/default_background.png");
+    private final ResourceLocation narrowPanelTexture = ResourceLocation.tryBuild(Prefab.MODID, "textures/gui/custom_background.png");
+    private final ResourceLocation leftPanelTexture = ResourceLocation.tryBuild(Prefab.MODID, "textures/gui/custom_left_panel.png");
+    private final ResourceLocation middlePanelTexture = ResourceLocation.tryBuild(Prefab.MODID, "textures/gui/custom_middle_panel.png");
+    private final ResourceLocation rightPanelTexture = ResourceLocation.tryBuild(Prefab.MODID, "textures/gui/custom_right_panel.png");
     protected int modifiedInitialXAxis = 0;
     protected int modifiedInitialYAxis = 0;
     protected int imagePanelWidth = 0;
@@ -328,7 +329,7 @@ public abstract class GuiBase extends Screen {
             if (button instanceof AbstractWidget currentButton) {
                 if (currentButton.visible) {
                     if (this.getMinecraft() != null) {
-                        currentButton.render(guiGraphics, mouseX, mouseY, this.getMinecraft().getFrameTime());
+                        currentButton.render(guiGraphics, mouseX, mouseY, this.getMinecraft().getFrameTimeNs());
                     }
                 }
             }
