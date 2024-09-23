@@ -1,8 +1,8 @@
 package com.wuest.prefab.structures.gui;
 
-import com.wuest.prefab.Tuple;
-import com.wuest.prefab.gui.GuiBase;
-import com.wuest.prefab.gui.GuiLangKeys;
+import com.prefab.Tuple;
+import com.prefab.gui.GuiBase;
+import com.prefab.gui.GuiLangKeys;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractButton;
 import net.minecraft.client.gui.components.Button;

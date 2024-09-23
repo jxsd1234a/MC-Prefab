@@ -3,6 +3,7 @@ package com.wuest.prefab;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.VertexFormat;
+import com.prefab.PrefabBase;
 import com.wuest.prefab.config.ModConfiguration;
 import com.wuest.prefab.config.RecipeMapGuiProvider;
 import com.wuest.prefab.config.StructureOptionGuiProvider;
@@ -22,7 +23,7 @@ public class PrefabClient implements ClientModInitializer {
 
 	@Override
 	public void onInitializeClient() {
-		Prefab.logger.info("Registering client-side components");
+		PrefabBase.logger.info("Registering client-side components");
 		ClientModRegistry.registerModComponents();
 
 		GuiRegistry registry = AutoConfig.getGuiRegistry(ModConfiguration.class);
@@ -37,7 +38,7 @@ public class PrefabClient implements ClientModInitializer {
 
 	private static class PreviewLayer extends RenderType {
 		public PreviewLayer() {
-			super(Prefab.MODID + ".preview", DefaultVertexFormat.NEW_ENTITY, VertexFormat.Mode.QUADS, 256, true, true,
+			super(PrefabBase.MODID + ".preview", DefaultVertexFormat.NEW_ENTITY, VertexFormat.Mode.QUADS, 256, true, true,
 					() -> {
 						Sheets.translucentCullBlockSheet().setupRenderState();
 						RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 0.4F);

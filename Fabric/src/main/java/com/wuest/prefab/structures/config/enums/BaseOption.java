@@ -1,6 +1,6 @@
 package com.wuest.prefab.structures.config.enums;
 
-import com.wuest.prefab.Prefab;
+import com.prefab.PrefabBase;
 import net.minecraft.resources.ResourceLocation;
 
 import java.util.ArrayList;
@@ -25,7 +25,7 @@ public class BaseOption {
             boolean hasGlassColor) {
         this.translationString = translationString;
         this.assetLocation = assetLocation;
-        this.pictureLocation = ResourceLocation.tryBuild(Prefab.MODID, pictureLocation);
+        this.pictureLocation = ResourceLocation.tryBuild(PrefabBase.MODID, pictureLocation);
         this.hasBedColor = hasBedColor;
         this.hasGlassColor = hasGlassColor;
 

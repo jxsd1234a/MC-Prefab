@@ -2,12 +2,12 @@ package com.wuest.prefab.structures.gui;
 
 import com.wuest.prefab.ClientModRegistry;
 import com.wuest.prefab.Prefab;
-import com.wuest.prefab.Tuple;
+import com.prefab.Tuple;
 import com.wuest.prefab.config.ModConfiguration;
-import com.wuest.prefab.gui.GuiLangKeys;
-import com.wuest.prefab.gui.GuiUtils;
-import com.wuest.prefab.gui.controls.ExtendedButton;
-import com.wuest.prefab.gui.controls.GuiCheckBox;
+import com.prefab.gui.GuiLangKeys;
+import com.prefab.gui.GuiUtils;
+import com.prefab.gui.controls.ExtendedButton;
+import com.prefab.gui.controls.GuiCheckBox;
 import com.wuest.prefab.structures.config.HouseImprovedConfiguration;
 import com.wuest.prefab.structures.messages.StructureTagMessage;
 import com.wuest.prefab.structures.predefined.StructureHouseImproved;

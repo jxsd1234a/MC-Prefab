@@ -1,6 +1,6 @@
 package com.wuest.prefab.config;
 
-import com.wuest.prefab.Utils;
+import com.prefab.Utils;
 import me.shedaniel.autoconfig.gui.registry.api.GuiProvider;
 import me.shedaniel.autoconfig.gui.registry.api.GuiRegistryAccess;
 import me.shedaniel.clothconfig2.api.AbstractConfigListEntry;

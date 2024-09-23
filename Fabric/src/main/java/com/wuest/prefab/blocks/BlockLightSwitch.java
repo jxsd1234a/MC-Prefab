@@ -2,7 +2,7 @@ package com.wuest.prefab.blocks;
 
 import com.mojang.serialization.MapCodec;
 import com.wuest.prefab.ModRegistry;
-import com.wuest.prefab.base.TileBlockBase;
+import com.prefab.base.TileBlockBase;
 import com.wuest.prefab.blocks.entities.LightSwitchBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -10,7 +10,6 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
 import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;

@@ -1,6 +1,6 @@
 package com.wuest.prefab.structures.messages;
 
-import com.wuest.prefab.Prefab;
+import com.prefab.PrefabBase;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
@@ -11,7 +11,7 @@ public class StructurePayload implements CustomPacketPayload {
     private final StructureTagMessage structureTagMessage;
 
     public static final CustomPacketPayload.Type<StructurePayload> PACKET_TYPE = new CustomPacketPayload.Type<>(
-            ResourceLocation.tryBuild(Prefab.MODID, "structure_payload"));
+            ResourceLocation.tryBuild(PrefabBase.MODID, "structure_payload"));
 
     public static final StreamCodec<FriendlyByteBuf, StructurePayload> STREAM_CODEC = CustomPacketPayload.codec(
             StructurePayload::write,

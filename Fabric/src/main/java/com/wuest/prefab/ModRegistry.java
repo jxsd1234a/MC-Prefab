@@ -1,5 +1,7 @@
 package com.wuest.prefab;
 
+import com.prefab.PrefabBase;
+import com.prefab.Utils;
 import com.wuest.prefab.blocks.*;
 import com.wuest.prefab.blocks.entities.LightSwitchBlockEntity;
 import com.wuest.prefab.blocks.entities.StructureScannerBlockEntity;
@@ -226,7 +228,7 @@ public class ModRegistry {
     public static final RecipeSerializer<ConditionedSmeltingRecipe> ConditionedSmeltingRecipeSeriaizer = new ConditionedSmeltingRecipe.Serializer();
 
     /* *********************************** Sounds *********************************** */
-    public static final SoundEvent BuildingBlueprint = SoundEvent.createVariableRangeEvent(ResourceLocation.tryBuild(Prefab.MODID, "building_blueprint"));
+    public static final SoundEvent BuildingBlueprint = SoundEvent.createVariableRangeEvent(ResourceLocation.tryBuild(PrefabBase.MODID, "building_blueprint"));
 
     /* *********************************** Block Entities Types *********************************** */
     public static BlockEntityType<StructureScannerBlockEntity> StructureScannerEntityType;
@@ -237,7 +239,7 @@ public class ModRegistry {
             .icon(() -> new ItemStack(ModRegistry.LogoItem))
             .displayItems((context, entries) -> {
                 for (Item item : ModRegistry.ModItems) {
-                    if (item == ModRegistry.StructureScannerItem && !Prefab.isDebug) {
+                    if (item == ModRegistry.StructureScannerItem && !PrefabBase.isDebug) {
                         continue;
                     } else if (item == ModRegistry.LogoItem) {
                         continue;
@@ -250,7 +252,7 @@ public class ModRegistry {
             .build();
 
     // This variable may not be used, but the registration is still needed.
-    public static final CreativeModeTab creativeModeTab = Registry.register(BuiltInRegistries.CREATIVE_MODE_TAB, ResourceLocation.tryBuild(Prefab.MODID, "logo"), ITEM_GROUP);
+    public static final CreativeModeTab creativeModeTab = Registry.register(BuiltInRegistries.CREATIVE_MODE_TAB, ResourceLocation.tryBuild(PrefabBase.MODID, "logo"), ITEM_GROUP);
 
     public static void registerModComponents() {
         ModRegistry.registerSounds();
@@ -273,11 +275,11 @@ public class ModRegistry {
     }
 
     private static void registerSounds() {
-        Registry.register(BuiltInRegistries.SOUND_EVENT, ResourceLocation.tryBuild(Prefab.MODID, "building_blueprint"), ModRegistry.BuildingBlueprint);
+        Registry.register(BuiltInRegistries.SOUND_EVENT, ResourceLocation.tryBuild(PrefabBase.MODID, "building_blueprint"), ModRegistry.BuildingBlueprint);
     }
 
     private static void registerBlockEntities() {
-        if (Prefab.isDebug) {
+        if (PrefabBase.isDebug) {
             StructureScannerEntityType = Registry.register(
                     BuiltInRegistries.BLOCK_ENTITY_TYPE,
                     "prefab:structure_scanner_entity",
@@ -330,7 +332,7 @@ public class ModRegistry {
         ModRegistry.registerBlock("item_crate_of_carrots", ModRegistry.CrateOfCarrots);
         ModRegistry.registerBlock("item_crate_of_beets", ModRegistry.CrateOfBeets);
 
-        if (Prefab.isDebug) {
+        if (PrefabBase.isDebug) {
             ModRegistry.StructureScanner = new BlockStructureScanner();
             ModRegistry.registerBlock("block_structure_scanner", ModRegistry.StructureScanner);
         }
@@ -452,7 +454,7 @@ public class ModRegistry {
         ModRegistry.registerItem("block_dirt_stairs", ModRegistry.DirtStairsItem);
         ModRegistry.registerItem("block_dirt_slab", ModRegistry.DirtSlabItem);
 
-        if (Prefab.isDebug) {
+        if (PrefabBase.isDebug) {
             ModRegistry.StructureScannerItem = new BlockItem(ModRegistry.StructureScanner, new Item.Properties());
             ModRegistry.registerItem("block_structure_scanner", ModRegistry.StructureScannerItem);
         }
@@ -486,17 +488,17 @@ public class ModRegistry {
     }
 
     private static void RegisterRecipeSerializers() {
-        Registry.register(BuiltInRegistries.RECIPE_SERIALIZER, ResourceLocation.tryBuild(Prefab.MODID, "condition_crafting_shaped"), ModRegistry.ConditionedShapedRecipeSeriaizer);
-        Registry.register(BuiltInRegistries.RECIPE_SERIALIZER, ResourceLocation.tryBuild(Prefab.MODID, "condition_crafting_shapeless"), ModRegistry.ConditionedShapelessRecipeSeriaizer);
-        Registry.register(BuiltInRegistries.RECIPE_SERIALIZER, ResourceLocation.tryBuild(Prefab.MODID, "condition_smelting"), ModRegistry.ConditionedSmeltingRecipeSeriaizer);
+        Registry.register(BuiltInRegistries.RECIPE_SERIALIZER, ResourceLocation.tryBuild(PrefabBase.MODID, "condition_crafting_shaped"), ModRegistry.ConditionedShapedRecipeSeriaizer);
+        Registry.register(BuiltInRegistries.RECIPE_SERIALIZER, ResourceLocation.tryBuild(PrefabBase.MODID, "condition_crafting_shapeless"), ModRegistry.ConditionedShapelessRecipeSeriaizer);
+        Registry.register(BuiltInRegistries.RECIPE_SERIALIZER, ResourceLocation.tryBuild(PrefabBase.MODID, "condition_smelting"), ModRegistry.ConditionedSmeltingRecipeSeriaizer);
     }
 
     private static void registerBlock(String registryName, Block block) {
-        Registry.register(BuiltInRegistries.BLOCK, ResourceLocation.tryBuild(Prefab.MODID, registryName), block);
+        Registry.register(BuiltInRegistries.BLOCK, ResourceLocation.tryBuild(PrefabBase.MODID, registryName), block);
     }
 
     private static void registerItem(String registryName, Item item) {
-        Registry.register(BuiltInRegistries.ITEM, ResourceLocation.tryBuild(Prefab.MODID, registryName), item);
+        Registry.register(BuiltInRegistries.ITEM, ResourceLocation.tryBuild(PrefabBase.MODID, registryName), item);
         ModRegistry.ModItems.add(item);
     }
 

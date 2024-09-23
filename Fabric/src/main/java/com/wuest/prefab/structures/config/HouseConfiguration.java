@@ -1,13 +1,14 @@
 package com.wuest.prefab.structures.config;
 
+import com.prefab.PrefabBase;
 import com.wuest.prefab.ModRegistry;
 import com.wuest.prefab.Prefab;
-import com.wuest.prefab.blocks.FullDyeColor;
+import com.prefab.blocks.FullDyeColor;
 import com.wuest.prefab.config.EntityPlayerConfiguration;
-import com.wuest.prefab.gui.GuiLangKeys;
+import com.prefab.gui.GuiLangKeys;
 import com.wuest.prefab.network.message.PlayerConfigPayload;
 import com.wuest.prefab.network.message.TagMessage;
-import com.wuest.prefab.structures.base.BuildBlock;
+import com.prefab.structures.base.BuildBlock;
 import com.wuest.prefab.structures.predefined.StructureHouse;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.core.BlockPos;
@@ -204,51 +205,51 @@ public class HouseConfiguration extends StructureConfiguration {
                 GuiLangKeys.HOUSE_BASIC_DISPLAY,
                 ResourceLocation.tryBuild("prefab", "textures/gui/house_basic.png"),
                 "assets/prefab/structures/house_basic.zip"),
-        RANCH(1, GuiLangKeys.HOUSE_RANCH_DISPLAY, ResourceLocation.tryBuild(Prefab.MODID, "textures/gui/house_ranch.png"),
+        RANCH(1, GuiLangKeys.HOUSE_RANCH_DISPLAY, ResourceLocation.tryBuild(PrefabBase.MODID, "textures/gui/house_ranch.png"),
                 "assets/prefab/structures/house_ranch.zip"),
-        LOFT(2, GuiLangKeys.HOUSE_LOFT_DISPLAY, ResourceLocation.tryBuild(Prefab.MODID, "textures/gui/house_loft.png"),
+        LOFT(2, GuiLangKeys.HOUSE_LOFT_DISPLAY, ResourceLocation.tryBuild(PrefabBase.MODID, "textures/gui/house_loft.png"),
                 "assets/prefab/structures/house_loft.zip"),
-        HOBBIT(3, GuiLangKeys.HOUSE_HOBBIT_DISPLAY, ResourceLocation.tryBuild(Prefab.MODID, "textures/gui/house_hobbit.png"),
+        HOBBIT(3, GuiLangKeys.HOUSE_HOBBIT_DISPLAY, ResourceLocation.tryBuild(PrefabBase.MODID, "textures/gui/house_hobbit.png"),
                 "assets/prefab/structures/house_hobbit.zip"),
-        DESERT(4, GuiLangKeys.HOUSE_DESERT_DISPLAY, ResourceLocation.tryBuild(Prefab.MODID, "textures/gui/house_desert.png"),
+        DESERT(4, GuiLangKeys.HOUSE_DESERT_DISPLAY, ResourceLocation.tryBuild(PrefabBase.MODID, "textures/gui/house_desert.png"),
                 "assets/prefab/structures/house_desert.zip"),
-        SNOWY(5, GuiLangKeys.HOUSE_SNOWY_DISPLAY, ResourceLocation.tryBuild(Prefab.MODID, "textures/gui/house_snowy.png"),
+        SNOWY(5, GuiLangKeys.HOUSE_SNOWY_DISPLAY, ResourceLocation.tryBuild(PrefabBase.MODID, "textures/gui/house_snowy.png"),
                 "assets/prefab/structures/house_snow.zip"),
         DESERT2(6,
                 GuiLangKeys.HOUSE_DESERT_DISPLAY2,
-                ResourceLocation.tryBuild(Prefab.MODID, "textures/gui/house_desert_2.png"),
+                ResourceLocation.tryBuild(PrefabBase.MODID, "textures/gui/house_desert_2.png"),
                 "assets/prefab/structures/house_desert_2.zip"),
         SUBAQUATIC(7,
                 GuiLangKeys.HOUSE_SUBAQUATIC_DISPLAY,
-                ResourceLocation.tryBuild(Prefab.MODID, "textures/gui/house_subaquatic.png"),
+                ResourceLocation.tryBuild(PrefabBase.MODID, "textures/gui/house_subaquatic.png"),
                 "assets/prefab/structures/house_sub_aqua.zip"),
         MODERN(8,
                 GuiLangKeys.HOUSE_MODERN_DISPLAY,
-                ResourceLocation.tryBuild(Prefab.MODID, "textures/gui/house_modern.png"),
+                ResourceLocation.tryBuild(PrefabBase.MODID, "textures/gui/house_modern.png"),
                 "assets/prefab/structures/house_modern.zip"),
         CAMPSITE(9,
                 GuiLangKeys.HOUSE_CAMPING_DISPLAY,
-                ResourceLocation.tryBuild(Prefab.MODID, "textures/gui/house_campsite.png"),
+                ResourceLocation.tryBuild(PrefabBase.MODID, "textures/gui/house_campsite.png"),
                 "assets/prefab/structures/house_campsite.zip"),
         IZBA(10,
                 GuiLangKeys.HOUSE_IZBA_DISPLAY,
-                ResourceLocation.tryBuild(Prefab.MODID, "textures/gui/house_izba.png"),
+                ResourceLocation.tryBuild(PrefabBase.MODID, "textures/gui/house_izba.png"),
                 "assets/prefab/structures/house_izba.zip"),
         TOWER(11,
                 GuiLangKeys.HOUSE_TOWER_DISPLAY,
-                ResourceLocation.tryBuild(Prefab.MODID, "textures/gui/house_tower.png"),
+                ResourceLocation.tryBuild(PrefabBase.MODID, "textures/gui/house_tower.png"),
                 "assets/prefab/structures/house_tower.zip"),
         CABIN(12,
                 GuiLangKeys.HOUSE_CABIN_DISPLAY,
-                ResourceLocation.tryBuild(Prefab.MODID, "textures/gui/house_cabin.png"),
+                ResourceLocation.tryBuild(PrefabBase.MODID, "textures/gui/house_cabin.png"),
                 "assets/prefab/structures/house_cabin.zip"),
         TREE(13,
                 GuiLangKeys.HOUSE_TREE_HOUSE_DISPLAY,
-                ResourceLocation.tryBuild(Prefab.MODID, "textures/gui/house_tree.png"),
+                ResourceLocation.tryBuild(PrefabBase.MODID, "textures/gui/house_tree.png"),
                 "assets/prefab/structures/house_tree.zip"),
         MUSHROOM(14,
                 GuiLangKeys.HOUSE_MUSHROOM_HOUSE_DISPLAY,
-                ResourceLocation.tryBuild(Prefab.MODID, "textures/gui/house_mushroom.png"),
+                ResourceLocation.tryBuild(PrefabBase.MODID, "textures/gui/house_mushroom.png"),
                 "assets/prefab/structures/house_mushroom.zip");
 
         private final int value;

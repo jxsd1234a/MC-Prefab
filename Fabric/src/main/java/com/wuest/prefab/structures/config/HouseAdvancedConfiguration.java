@@ -1,8 +1,8 @@
 package com.wuest.prefab.structures.config;
 
+import com.prefab.PrefabBase;
 import com.wuest.prefab.ModRegistry;
-import com.wuest.prefab.Prefab;
-import com.wuest.prefab.gui.GuiLangKeys;
+import com.prefab.gui.GuiLangKeys;
 import com.wuest.prefab.structures.predefined.StructureHouseAdvanced;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -112,11 +112,11 @@ public class HouseAdvancedConfiguration extends StructureConfiguration {
      * @author WuestMan
      */
     public enum HouseStyle {
-        MANOR(0, GuiLangKeys.ADVANCED_HOUSE_MANOR, ResourceLocation.tryBuild(Prefab.MODID, "textures/gui/house_advanced_manor.png"),
+        MANOR(0, GuiLangKeys.ADVANCED_HOUSE_MANOR, ResourceLocation.tryBuild(PrefabBase.MODID, "textures/gui/house_advanced_manor.png"),
                 "assets/prefab/structures/house_advanced_manor.zip"),
-        WORKSHOP(1, GuiLangKeys.ADVANCED_HOUSE_WORKSHOP, ResourceLocation.tryBuild(Prefab.MODID, "textures/gui/house_advanced_workshop.png"),
+        WORKSHOP(1, GuiLangKeys.ADVANCED_HOUSE_WORKSHOP, ResourceLocation.tryBuild(PrefabBase.MODID, "textures/gui/house_advanced_workshop.png"),
                 "assets/prefab/structures/house_advanced_workshop.zip"),
-        ESTATE(2, GuiLangKeys.ADVANCED_HOUSE_ESTATE, ResourceLocation.tryBuild(Prefab.MODID, "textures/gui/house_advanced_estate.png"),
+        ESTATE(2, GuiLangKeys.ADVANCED_HOUSE_ESTATE, ResourceLocation.tryBuild(PrefabBase.MODID, "textures/gui/house_advanced_estate.png"),
                 "assets/prefab/structures/house_advanced_estate.zip");
 
         private final int value;

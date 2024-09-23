@@ -1,11 +1,11 @@
 package com.wuest.prefab.structures.predefined;
 
 import com.wuest.prefab.Prefab;
-import com.wuest.prefab.Tuple;
-import com.wuest.prefab.blocks.FullDyeColor;
-import com.wuest.prefab.structures.base.BuildBlock;
-import com.wuest.prefab.structures.base.BuildingMethods;
-import com.wuest.prefab.structures.base.Structure;
+import com.prefab.Tuple;
+import com.prefab.blocks.FullDyeColor;
+import com.prefab.structures.base.BuildBlock;
+import com.prefab.structures.base.BuildingMethods;
+import com.prefab.structures.base.Structure;
 import com.wuest.prefab.structures.config.BasicStructureConfiguration;
 import com.wuest.prefab.structures.config.BasicStructureConfiguration.EnumBasicStructureName;
 import com.wuest.prefab.structures.config.StructureConfiguration;

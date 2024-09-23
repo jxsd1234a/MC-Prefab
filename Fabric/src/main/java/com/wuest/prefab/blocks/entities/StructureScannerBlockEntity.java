@@ -1,11 +1,11 @@
 package com.wuest.prefab.blocks.entities;
 
 import com.wuest.prefab.ModRegistry;
-import com.wuest.prefab.base.TileEntityBase;
+import com.prefab.base.TileEntityBase;
 import com.wuest.prefab.config.StructureScannerConfig;
-import com.wuest.prefab.structures.base.BuildClear;
-import com.wuest.prefab.structures.base.BuildShape;
-import com.wuest.prefab.structures.base.Structure;
+import com.prefab.structures.base.BuildClear;
+import com.prefab.structures.base.BuildShape;
+import com.prefab.structures.base.Structure;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;

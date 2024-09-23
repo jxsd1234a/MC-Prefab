@@ -1,6 +1,6 @@
 package com.wuest.prefab.config;
 
-import com.wuest.prefab.base.BaseConfig;
+import com.prefab.base.BaseConfig;
 import net.minecraft.nbt.CompoundTag;
 
 public class LightSwitchConfig extends BaseConfig {

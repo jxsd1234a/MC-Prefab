@@ -2,12 +2,12 @@ package com.wuest.prefab.structures.gui;
 
 import com.wuest.prefab.ClientModRegistry;
 import com.wuest.prefab.Prefab;
-import com.wuest.prefab.Tuple;
-import com.wuest.prefab.blocks.FullDyeColor;
+import com.prefab.Tuple;
+import com.prefab.blocks.FullDyeColor;
 import com.wuest.prefab.config.ModConfiguration;
-import com.wuest.prefab.gui.GuiLangKeys;
-import com.wuest.prefab.gui.GuiUtils;
-import com.wuest.prefab.gui.controls.ExtendedButton;
+import com.prefab.gui.GuiLangKeys;
+import com.prefab.gui.GuiUtils;
+import com.prefab.gui.controls.ExtendedButton;
 import com.wuest.prefab.structures.config.BasicStructureConfiguration;
 import com.wuest.prefab.structures.config.enums.BaseOption;
 import com.wuest.prefab.structures.items.ItemBasicStructure;

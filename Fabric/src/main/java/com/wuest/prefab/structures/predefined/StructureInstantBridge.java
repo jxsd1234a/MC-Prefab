@@ -1,8 +1,8 @@
 package com.wuest.prefab.structures.predefined;
 
-import com.wuest.prefab.structures.base.BuildBlock;
-import com.wuest.prefab.structures.base.BuildClear;
-import com.wuest.prefab.structures.base.Structure;
+import com.prefab.structures.base.BuildBlock;
+import com.prefab.structures.base.BuildClear;
+import com.prefab.structures.base.Structure;
 import com.wuest.prefab.structures.config.InstantBridgeConfiguration;
 import com.wuest.prefab.structures.config.StructureConfiguration;
 import net.minecraft.core.BlockPos;

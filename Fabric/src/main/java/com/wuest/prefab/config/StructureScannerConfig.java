@@ -1,6 +1,6 @@
 package com.wuest.prefab.config;
 
-import com.wuest.prefab.base.BaseConfig;
+import com.prefab.base.BaseConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;

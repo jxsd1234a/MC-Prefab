@@ -1,6 +1,6 @@
 package com.wuest.prefab.network.message;
 
-import com.wuest.prefab.Prefab;
+import com.prefab.PrefabBase;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
@@ -11,7 +11,7 @@ public class ScanShapePayload implements CustomPacketPayload {
     private final ScannerInfo scannerInfo;
 
     public static final Type<ScanShapePayload> PACKET_TYPE = new Type<>(
-            ResourceLocation.tryBuild(Prefab.MODID, "structure_scanner_action"));
+            ResourceLocation.tryBuild(PrefabBase.MODID, "structure_scanner_action"));
 
     public static final StreamCodec<FriendlyByteBuf, ScanShapePayload> STREAM_CODEC = CustomPacketPayload.codec(
             ScanShapePayload::write,

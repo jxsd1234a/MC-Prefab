@@ -2,7 +2,6 @@ package com.wuest.prefab.events;
 
 import com.wuest.prefab.ModRegistry;
 import com.wuest.prefab.Prefab;
-import com.wuest.prefab.Utils;
 import com.wuest.prefab.config.ModConfiguration;
 import com.wuest.prefab.items.ItemSickle;
 import com.wuest.prefab.network.message.ConfigSyncPayload;
@@ -14,7 +13,6 @@ import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 
 import java.util.ArrayList;

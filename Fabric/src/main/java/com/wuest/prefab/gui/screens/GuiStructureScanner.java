@@ -1,14 +1,12 @@
 package com.wuest.prefab.gui.screens;
 
+import com.prefab.Tuple;
 import com.wuest.prefab.ClientModRegistry;
-import com.wuest.prefab.ModRegistry;
-import com.wuest.prefab.Tuple;
-import com.wuest.prefab.Utils;
 import com.wuest.prefab.blocks.BlockStructureScanner;
 import com.wuest.prefab.config.StructureScannerConfig;
-import com.wuest.prefab.gui.GuiBase;
-import com.wuest.prefab.gui.controls.ExtendedButton;
-import com.wuest.prefab.gui.controls.GuiTextBox;
+import com.prefab.gui.GuiBase;
+import com.prefab.gui.controls.ExtendedButton;
+import com.prefab.gui.controls.GuiTextBox;
 import com.wuest.prefab.network.message.ScanShapePayload;
 import com.wuest.prefab.network.message.ScannerConfigPayload;
 import com.wuest.prefab.network.message.ScannerInfo;
@@ -17,7 +15,6 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractButton;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.Level;
 

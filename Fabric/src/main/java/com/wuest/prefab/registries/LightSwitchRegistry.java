@@ -1,7 +1,7 @@
 package com.wuest.prefab.registries;
 
 import com.wuest.prefab.ModRegistry;
-import com.wuest.prefab.Tuple;
+import com.prefab.Tuple;
 import com.wuest.prefab.blocks.BlockDarkLamp;
 import com.wuest.prefab.blocks.BlockLightSwitch;
 import net.minecraft.core.BlockPos;

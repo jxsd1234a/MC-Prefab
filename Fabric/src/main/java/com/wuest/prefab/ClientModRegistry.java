@@ -1,26 +1,22 @@
 package com.wuest.prefab;
 
 import com.mojang.blaze3d.platform.InputConstants;
-import com.wuest.prefab.base.BaseConfig;
+import com.prefab.base.BaseConfig;
 import com.wuest.prefab.blocks.BlockCustomWall;
 import com.wuest.prefab.blocks.BlockGrassSlab;
 import com.wuest.prefab.blocks.BlockGrassStairs;
 import com.wuest.prefab.config.EntityPlayerConfiguration;
 import com.wuest.prefab.config.StructureScannerConfig;
-import com.wuest.prefab.gui.GuiBase;
+import com.prefab.gui.GuiBase;
 import com.wuest.prefab.gui.screens.GuiStructureScanner;
 import com.wuest.prefab.network.message.PlayerConfigPayload;
 import com.wuest.prefab.network.message.ConfigSyncPayload;
-import com.wuest.prefab.network.message.ScanShapePayload;
-import com.wuest.prefab.network.message.ScannerConfigPayload;
 import com.wuest.prefab.structures.gui.GuiStructure;
-import com.wuest.prefab.structures.items.StructureItem;
-import com.wuest.prefab.structures.messages.StructurePayload;
+import com.prefab.structures.items.StructureItem;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
-import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;

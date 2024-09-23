@@ -1,12 +1,10 @@
 package com.wuest.prefab.structures.gui;
 
-import com.wuest.prefab.ModRegistry;
 import com.wuest.prefab.Prefab;
-import com.wuest.prefab.Tuple;
-import com.wuest.prefab.Utils;
-import com.wuest.prefab.gui.GuiBase;
-import com.wuest.prefab.gui.GuiLangKeys;
-import com.wuest.prefab.structures.base.Structure;
+import com.prefab.Tuple;
+import com.prefab.gui.GuiBase;
+import com.prefab.gui.GuiLangKeys;
+import com.prefab.structures.base.Structure;
 import com.wuest.prefab.structures.config.StructureConfiguration;
 import com.wuest.prefab.structures.messages.StructurePayload;
 import com.wuest.prefab.structures.messages.StructureTagMessage;
@@ -17,7 +15,6 @@ import net.minecraft.client.gui.components.AbstractButton;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 

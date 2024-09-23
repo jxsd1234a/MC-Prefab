@@ -1,7 +1,7 @@
 package com.wuest.prefab.structures.config;
 
-import com.wuest.prefab.Prefab;
-import com.wuest.prefab.blocks.FullDyeColor;
+import com.prefab.PrefabBase;
+import com.prefab.blocks.FullDyeColor;
 import com.wuest.prefab.structures.config.enums.*;
 import com.wuest.prefab.structures.items.ItemBasicStructure;
 import com.wuest.prefab.structures.predefined.StructureBasic;
@@ -229,7 +229,7 @@ public class BasicStructureConfiguration extends StructureConfiguration {
             this.itemTranslationString = itemTranslationString;
 
             if (itemTextureLocation != null) {
-                this.itemTextureLocation = ResourceLocation.tryBuild(Prefab.MODID, itemTextureLocation);
+                this.itemTextureLocation = ResourceLocation.tryBuild(PrefabBase.MODID, itemTextureLocation);
             }
 
             this.baseOption = baseOption;

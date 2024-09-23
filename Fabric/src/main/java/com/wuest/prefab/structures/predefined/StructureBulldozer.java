@@ -1,9 +1,9 @@
 package com.wuest.prefab.structures.predefined;
 
 import com.wuest.prefab.Prefab;
-import com.wuest.prefab.structures.base.BuildClear;
-import com.wuest.prefab.structures.base.BuildingMethods;
-import com.wuest.prefab.structures.base.Structure;
+import com.prefab.structures.base.BuildClear;
+import com.prefab.structures.base.BuildingMethods;
+import com.prefab.structures.base.Structure;
 import com.wuest.prefab.structures.config.BulldozerConfiguration;
 import com.wuest.prefab.structures.config.StructureConfiguration;
 import net.minecraft.core.BlockPos;

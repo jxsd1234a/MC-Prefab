@@ -60,6 +60,14 @@ tasks.withType(JavaCompile).configureEach {
     it.options.release = 21
 }
 
+sourceSets {
+    main {
+        java {
+            srcDirs '../Shared'
+        }
+    }
+}
+
 java {
     // Loom will automatically attach sourcesJar to a RemapSourcesJar task and to the "build" task
     // if it is present.

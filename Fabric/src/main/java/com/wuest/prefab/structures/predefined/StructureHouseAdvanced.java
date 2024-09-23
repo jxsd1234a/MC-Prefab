@@ -1,12 +1,12 @@
 package com.wuest.prefab.structures.predefined;
 
-import com.wuest.prefab.Tuple;
+import com.prefab.Tuple;
 import com.wuest.prefab.config.EntityPlayerConfiguration;
 import com.wuest.prefab.network.message.PlayerConfigPayload;
 import com.wuest.prefab.network.message.TagMessage;
-import com.wuest.prefab.structures.base.BuildBlock;
-import com.wuest.prefab.structures.base.BuildingMethods;
-import com.wuest.prefab.structures.base.Structure;
+import com.prefab.structures.base.BuildBlock;
+import com.prefab.structures.base.BuildingMethods;
+import com.prefab.structures.base.Structure;
 import com.wuest.prefab.structures.config.HouseAdvancedConfiguration;
 import com.wuest.prefab.structures.config.StructureConfiguration;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;

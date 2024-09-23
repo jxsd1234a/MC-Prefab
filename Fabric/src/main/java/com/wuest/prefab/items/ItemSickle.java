@@ -1,7 +1,7 @@
 package com.wuest.prefab.items;
 
-import com.wuest.prefab.Utils;
-import com.wuest.prefab.gui.GuiLangKeys;
+import com.prefab.Utils;
+import com.prefab.gui.GuiLangKeys;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.screens.Screen;

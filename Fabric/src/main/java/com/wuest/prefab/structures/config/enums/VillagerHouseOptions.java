@@ -1,6 +1,6 @@
 package com.wuest.prefab.structures.config.enums;
 
-import com.wuest.prefab.gui.GuiLangKeys;
+import com.prefab.gui.GuiLangKeys;
 
 public class VillagerHouseOptions extends BaseOption {
     public static VillagerHouseOptions FLAT_ROOF = new VillagerHouseOptions(

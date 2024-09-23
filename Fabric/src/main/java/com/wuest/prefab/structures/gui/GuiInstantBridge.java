@@ -1,14 +1,15 @@
 package com.wuest.prefab.structures.gui;
 
+import com.prefab.PrefabBase;
 import com.wuest.prefab.ClientModRegistry;
 import com.wuest.prefab.Prefab;
-import com.wuest.prefab.Tuple;
-import com.wuest.prefab.gui.GuiLangKeys;
-import com.wuest.prefab.gui.GuiUtils;
-import com.wuest.prefab.gui.controls.ExtendedButton;
-import com.wuest.prefab.gui.controls.GuiCheckBox;
-import com.wuest.prefab.gui.controls.GuiSlider;
-import com.wuest.prefab.structures.base.EnumStructureMaterial;
+import com.prefab.Tuple;
+import com.prefab.gui.GuiLangKeys;
+import com.prefab.gui.GuiUtils;
+import com.prefab.gui.controls.ExtendedButton;
+import com.prefab.gui.controls.GuiCheckBox;
+import com.prefab.gui.controls.GuiSlider;
+import com.prefab.structures.base.EnumStructureMaterial;
 import com.wuest.prefab.structures.config.InstantBridgeConfiguration;
 import com.wuest.prefab.structures.messages.StructureTagMessage;
 import com.wuest.prefab.structures.predefined.StructureInstantBridge;
@@ -20,7 +21,7 @@ import net.minecraft.resources.ResourceLocation;
 
 @SuppressWarnings("SpellCheckingInspection")
 public class GuiInstantBridge extends GuiStructure {
-    private static final ResourceLocation structureTopDown = ResourceLocation.tryBuild(Prefab.MODID, "textures/gui/instant_bridge.png");
+    private static final ResourceLocation structureTopDown = ResourceLocation.tryBuild(PrefabBase.MODID, "textures/gui/instant_bridge.png");
     protected InstantBridgeConfiguration specificConfiguration;
     private ExtendedButton btnMaterialType;
     private GuiSlider sldrBridgeLength;

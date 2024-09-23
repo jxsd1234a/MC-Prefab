@@ -1,6 +1,6 @@
 package com.wuest.prefab.network.message;
 
-import com.wuest.prefab.Prefab;
+import com.prefab.PrefabBase;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
@@ -11,7 +11,7 @@ public class ConfigSyncPayload implements CustomPacketPayload {
     private final TagMessage tagMessage;
 
     public static final CustomPacketPayload.Type<ConfigSyncPayload> PACKET_TYPE = new CustomPacketPayload.Type<>(
-            ResourceLocation.tryBuild(Prefab.MODID, "config_sync"));
+            ResourceLocation.tryBuild(PrefabBase.MODID, "config_sync"));
 
     public static final StreamCodec<FriendlyByteBuf, ConfigSyncPayload> STREAM_CODEC = CustomPacketPayload.codec(
             ConfigSyncPayload::write,

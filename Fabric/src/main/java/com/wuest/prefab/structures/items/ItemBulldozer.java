@@ -2,8 +2,8 @@ package com.wuest.prefab.structures.items;
 
 import com.wuest.prefab.ClientModRegistry;
 import com.wuest.prefab.ModRegistry;
-import com.wuest.prefab.Utils;
-import com.wuest.prefab.gui.GuiLangKeys;
+import com.prefab.Utils;
+import com.prefab.gui.GuiLangKeys;
 import com.wuest.prefab.structures.gui.GuiBulldozer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
