@@ -1,0 +1,19 @@
+{
+  "type": "prefab:condition_crafting_shaped",
+  "configName": "Glass Stairs",
+  "group": "Glass Stairs",
+  "pattern": [
+    "#  ",
+    "## ",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "tag": "c:glass_blocks"
+    }
+  },
+  "result": {
+    "id": "prefab:block_glass_stairs",
+    "count": 4
+  }
+}

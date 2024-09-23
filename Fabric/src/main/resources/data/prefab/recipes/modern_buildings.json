@@ -1,0 +1,31 @@
+{
+  "type": "prefab:condition_crafting_shaped",
+  "configName": "Modern Buildings",
+  "group": "Modern Buildings",
+  "pattern": [
+    "a a",
+    "bcb",
+    "ded"
+  ],
+  "key": {
+    "a": {
+      "tag": "c:compressed_lights"
+    },
+    "b": {
+      "tag": "c:compressed_stone"
+    },
+    "c": {
+      "tag": "c:double_compressed_stone"
+    },
+    "d": {
+      "item": "minecraft:iron_block"
+    },
+    "e": {
+      "tag": "c:compressed_quartz_crete"
+    }
+  },
+  "result": {
+    "id": "prefab:item_modern_buildings",
+    "count": 1
+  }
+}

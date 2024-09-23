@@ -1,0 +1,20 @@
+{
+  "type": "prefab:condition_crafting_shapeless",
+  "configName": "Paper Lantern",
+  "group": "Paper Lantern",
+  "ingredients": [
+    {
+      "item": "minecraft:paper"
+    },
+    {
+      "item": "minecraft:stick"
+    },
+    {
+      "item": "minecraft:torch"
+    }
+  ],
+  "result": {
+    "id": "prefab:block_paper_lantern",
+    "count": 1
+  }
+}

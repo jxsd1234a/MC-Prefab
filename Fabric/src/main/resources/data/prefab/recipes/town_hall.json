@@ -1,0 +1,31 @@
+{
+  "type": "prefab:condition_crafting_shaped",
+  "configName": "Town Hall",
+  "group": "Town Hall",
+  "pattern": [
+    "bab",
+    "ded",
+    "c c"
+  ],
+  "key": {
+    "a": {
+      "item": "prefab:item_ton_of_timber"
+    },
+    "b": {
+      "tag": "c:double_compressed_stone"
+    },
+    "c": {
+      "tag": "c:double_compressed_dirt"
+    },
+    "d": {
+      "tag": "c:double_compressed_lights"
+    },
+    "e": {
+      "item": "prefab:item_heap_of_timber"
+    }
+  },
+  "result": {
+    "id": "prefab:item_town_hall",
+    "count": 1
+  }
+}

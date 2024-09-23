@@ -1,0 +1,17 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.wuest.prefab.mixins",
+  "compatibilityLevel": "JAVA_16",
+  "mixins": [
+    "SavePlayerDataMixin",
+    "AnvilScreenHandlerMixin"
+  ],
+  "client": [
+    "RenderIndicatorMixin",
+    "MinecraftClientInitMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

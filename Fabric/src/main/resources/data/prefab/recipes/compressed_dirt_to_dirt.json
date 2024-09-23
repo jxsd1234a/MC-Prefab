@@ -1,0 +1,17 @@
+{
+  "_comment": [
+    "Compressed dirt to normal dirt"
+  ],
+  "type": "prefab:condition_crafting_shapeless",
+  "configName": "Compressed Dirt",
+  "group": "Compressed Dirt",
+  "ingredients": [
+    {
+      "tag": "c:compressed_dirt"
+    }
+  ],
+  "result": {
+    "id": "minecraft:dirt",
+    "count": 9
+  }
+}

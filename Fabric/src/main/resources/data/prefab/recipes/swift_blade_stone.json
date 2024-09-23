@@ -1,0 +1,22 @@
+{
+  "type": "prefab:condition_crafting_shaped",
+  "configName": "Swift Blade",
+  "group": "Swift Blade",
+  "pattern": [
+    "  a",
+    " a ",
+    "b  "
+  ],
+  "key": {
+    "a": {
+      "item": "minecraft:cobblestone"
+    },
+    "b": {
+      "item": "minecraft:stick"
+    }
+  },
+  "result": {
+    "id": "prefab:item_swift_blade_stone",
+    "count": 1
+  }
+}

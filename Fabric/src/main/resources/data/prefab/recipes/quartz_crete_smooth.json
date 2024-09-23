@@ -1,0 +1,15 @@
+{
+  "type": "prefab:condition_smelting",
+  "group": "Quartz-Crete",
+  "configName": "Quartz-Crete",
+  "category": "blocks",
+  "ingredient": {
+    "item": "prefab:block_quartz_crete"
+  },
+  "result": {
+    "id": "prefab:block_quartz_crete_smooth",
+    "Count": 1
+  },
+  "experience": 0.1,
+  "cookingtime": 200
+}

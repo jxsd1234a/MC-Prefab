@@ -1,0 +1,22 @@
+{
+  "type": "prefab:condition_crafting_shaped",
+  "configName": "Sickle",
+  "group": "Sickle",
+  "pattern": [
+    " a ",
+    "  a",
+    "ba "
+  ],
+  "key": {
+    "a": {
+      "item": "minecraft:cobblestone"
+    },
+    "b": {
+      "item": "minecraft:stick"
+    }
+  },
+  "result": {
+    "id": "prefab:item_sickle_stone",
+    "count": 1
+  }
+}

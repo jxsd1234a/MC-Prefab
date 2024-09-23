@@ -1,0 +1,14 @@
+{
+  "type": "prefab:condition_crafting_shapeless",
+  "configName": "Pile of Bricks",
+  "group": "Pile of Bricks",
+  "ingredients": [
+    {
+      "tag": "c:pile_of_bricks"
+    }
+  ],
+  "result": {
+    "id": "minecraft:brick",
+    "count": 9
+  }
+}

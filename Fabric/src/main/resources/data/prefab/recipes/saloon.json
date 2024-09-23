@@ -1,0 +1,28 @@
+{
+  "type": "prefab:condition_crafting_shaped",
+  "configName": "Saloon",
+  "group": "Saloon",
+  "pattern": [
+    "aaa",
+    "bcd",
+    "aaa"
+  ],
+  "key": {
+    "a": {
+      "item": "prefab:item_bundle_of_timber"
+    },
+    "b": {
+      "tag": "c:glass_blocks"
+    },
+    "c": {
+      "item": "minecraft:brewing_stand"
+    },
+    "d": {
+      "item": "minecraft:note_block"
+    }
+  },
+  "result": {
+    "id": "prefab:item_saloon",
+    "count": 1
+  }
+}

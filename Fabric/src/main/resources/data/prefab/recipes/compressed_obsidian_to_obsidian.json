@@ -1,0 +1,14 @@
+{
+  "type": "prefab:condition_crafting_shapeless",
+  "configName": "Compressed Obsidian",
+  "group": "Compressed Obsidian",
+  "ingredients": [
+    {
+      "tag": "c:compressed_obsidian"
+    }
+  ],
+  "result": {
+    "id": "minecraft:obsidian",
+    "count": 9
+  }
+}
