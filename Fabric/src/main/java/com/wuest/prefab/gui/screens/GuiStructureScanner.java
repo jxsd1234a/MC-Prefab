@@ -1,9 +1,9 @@
 package com.wuest.prefab.gui.screens;
 
+import com.prefab.ClientModRegistryBase;
 import com.prefab.Tuple;
-import com.wuest.prefab.ClientModRegistry;
 import com.wuest.prefab.blocks.BlockStructureScanner;
-import com.wuest.prefab.config.StructureScannerConfig;
+import com.prefab.config.StructureScannerConfig;
 import com.prefab.gui.GuiBase;
 import com.prefab.gui.controls.ExtendedButton;
 import com.prefab.gui.controls.GuiTextBox;
@@ -134,7 +134,7 @@ public class GuiStructureScanner extends GuiBase {
             // Otherwise add it to the list of scanners.
             StructureScannerConfig existingConfig = null;
 
-            for (StructureScannerConfig config : ClientModRegistry.structureScanners) {
+            for (StructureScannerConfig config : ClientModRegistryBase.structureScanners) {
                 if (config.blockPos.getX() == this.config.blockPos.getX()
                         && config.blockPos.getZ() == this.config.blockPos.getZ()
                         && config.blockPos.getY() == this.config.blockPos.getY()) {
@@ -146,10 +146,10 @@ public class GuiStructureScanner extends GuiBase {
             // The config can get re-initialized so make sure to remove and re-add the instance.
             // This generally happens when leaving and re-joining the world.
             if (existingConfig != null) {
-                ClientModRegistry.structureScanners.remove(existingConfig);
+                ClientModRegistryBase.structureScanners.remove(existingConfig);
             }
 
-            ClientModRegistry.structureScanners.add(this.config);
+            ClientModRegistryBase.structureScanners.add(this.config);
 
             this.closeScreen();
         } else {

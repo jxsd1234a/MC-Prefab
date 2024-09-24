@@ -1,10 +1,10 @@
 package com.wuest.prefab.config;
 
-import com.wuest.prefab.structures.config.BasicStructureConfiguration;
-import com.wuest.prefab.structures.config.HouseAdvancedConfiguration;
+import com.prefab.structures.config.BasicStructureConfiguration;
+import com.prefab.structures.config.HouseAdvancedConfiguration;
 import com.wuest.prefab.structures.config.HouseConfiguration;
-import com.wuest.prefab.structures.config.HouseImprovedConfiguration;
-import com.wuest.prefab.structures.config.enums.BaseOption;
+import com.prefab.structures.config.HouseImprovedConfiguration;
+import com.prefab.structures.config.enums.BaseOption;
 import me.shedaniel.autoconfig.ConfigData;
 import me.shedaniel.autoconfig.annotation.Config;
 import me.shedaniel.autoconfig.annotation.ConfigEntry;

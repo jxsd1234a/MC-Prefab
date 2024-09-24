@@ -1,10 +1,10 @@
 package com.wuest.prefab.blocks;
 
 import com.mojang.serialization.MapCodec;
-import com.wuest.prefab.ClientModRegistry;
+import com.prefab.ClientModRegistryBase;
 import com.prefab.base.TileBlockBase;
-import com.wuest.prefab.blocks.entities.StructureScannerBlockEntity;
-import com.wuest.prefab.config.StructureScannerConfig;
+import com.prefab.blocks.entities.StructureScannerBlockEntity;
+import com.prefab.config.StructureScannerConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
@@ -73,7 +73,7 @@ public class BlockStructureScanner extends TileBlockBase<StructureScannerBlockEn
 
             if (blockEntity instanceof StructureScannerBlockEntity) {
                 StructureScannerConfig config = ((StructureScannerBlockEntity) blockEntity).getConfig();
-                ClientModRegistry.openGuiForBlock(pos, world, config);
+                ClientModRegistryBase.openGuiForBlock(pos, world, config);
             }
 
             return ItemInteractionResult.SUCCESS;

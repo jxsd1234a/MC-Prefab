@@ -1,5 +1,6 @@
 package com.wuest.prefab.blocks;
 
+import com.prefab.PrefabBase;
 import com.wuest.prefab.Prefab;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -24,7 +25,7 @@ public class BlockPaperLantern extends Block {
 	 * Initializes a new instance of the BlockPaperLantern class.
 	 */
 	public BlockPaperLantern() {
-		super(Prefab.SeeThroughImmovable.get()
+		super(PrefabBase.SeeThroughImmovable.get()
 				.sound(SoundType.SNOW)
 				.strength(0.6f)
 				.lightLevel(value -> 14)

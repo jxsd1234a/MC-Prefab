@@ -1,6 +1,6 @@
 package com.wuest.prefab.config;
 
-import com.wuest.prefab.structures.config.StructureConfiguration;
+import com.prefab.structures.config.StructureConfiguration;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.player.Player;
 

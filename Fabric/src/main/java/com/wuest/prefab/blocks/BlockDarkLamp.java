@@ -1,15 +1,14 @@
 package com.wuest.prefab.blocks;
 
-import com.wuest.prefab.ModRegistry;
+import com.prefab.ModRegistryBase;
+import com.prefab.PrefabBase;
 import com.wuest.prefab.Prefab;
-import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
-import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -34,7 +33,7 @@ public class BlockDarkLamp extends Block {
     }
 
     public BlockDarkLamp() {
-        super(Prefab.SeeThroughImmovable.get()
+        super(PrefabBase.SeeThroughImmovable.get()
                 .lightLevel(BlockDarkLamp.litBlockEmission(8))
                 .strength(0.3F)
                 .sound(SoundType.GLASS)
@@ -53,7 +52,7 @@ public class BlockDarkLamp extends Block {
     @Nullable
     public BlockState getStateForPlacement(BlockPlaceContext blockPlaceContext) {
         if (!blockPlaceContext.getLevel().isClientSide) {
-            boolean isLit = ModRegistry.serverModRegistries.getLightSwitchRegistry().checkForNearbyOnSwitch(blockPlaceContext.getLevel(), blockPlaceContext.getClickedPos());
+            boolean isLit = ModRegistryBase.serverModRegistries.getLightSwitchRegistry().checkForNearbyOnSwitch(blockPlaceContext.getLevel(), blockPlaceContext.getClickedPos());
             return this.defaultBlockState().setValue(BlockDarkLamp.LIT, isLit);
         } else {
             return this.defaultBlockState().setValue(BlockDarkLamp.LIT, false);

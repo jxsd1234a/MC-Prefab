@@ -1,8 +1,6 @@
 package com.wuest.prefab.blocks;
 
-
-import com.wuest.prefab.ModRegistry;
-import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
+import com.prefab.ModRegistryBase;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
@@ -17,7 +15,7 @@ public class BlockCustomWall extends WallBlock implements IGrassSpreadable {
     public EnumType BlockVariant;
 
     public BlockCustomWall(Block modelBlock, EnumType variant) {
-        super(FabricBlockSettings.ofFullCopy(variant.getBlockBehaviour())
+        super(BlockBehaviour.Properties.ofFullCopy(variant.getBlockBehaviour())
                 .strength(modelBlock.defaultDestroyTime(),
                         modelBlock.getExplosionResistance() * 5.0F / 3.0F)
                 .sound(modelBlock.defaultBlockState().getSoundType()));
@@ -42,7 +40,7 @@ public class BlockCustomWall extends WallBlock implements IGrassSpreadable {
 
     @Override
     public BlockState getGrassBlockState(BlockState originalState) {
-        return ModRegistry.GrassWall.defaultBlockState()
+        return ModRegistryBase.GrassWall.defaultBlockState()
                 .setValue(WallBlock.EAST_WALL, originalState.getValue(WallBlock.EAST_WALL))
                 .setValue(WallBlock.WEST_WALL, originalState.getValue(WallBlock.WEST_WALL))
                 .setValue(WallBlock.NORTH_WALL, originalState.getValue(WallBlock.NORTH_WALL))

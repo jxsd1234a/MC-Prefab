@@ -2,8 +2,8 @@ package com.wuest.prefab.mixins;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.wuest.prefab.ClientModRegistry;
-import com.wuest.prefab.PrefabClient;
+import com.prefab.ClientModRegistryBase;
+import com.prefab.PrefabClientBase;
 import com.wuest.prefab.structures.render.StructureRenderHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -22,13 +22,13 @@ public class RenderIndicatorMixin {
         if (prefabIndicatorMinecraft.player != null && (!prefabIndicatorMinecraft.player.isCrouching())) {
             StructureRenderHandler.RenderTest(prefabIndicatorMinecraft.level, matrices, vertexConsumers, (float)cameraX, (float)cameraY, (float)cameraZ);
 
-            VertexConsumer prefabBuffer = vertexConsumers.getBuffer(PrefabClient.PREVIEW_LAYER);
+            VertexConsumer prefabBuffer = vertexConsumers.getBuffer(PrefabClientBase.PREVIEW_LAYER);
 
             StructureRenderHandler.newRenderPlayerLook(prefabIndicatorMinecraft.player, matrices, prefabBuffer, cameraX, cameraY, cameraZ);
         }
 
         // It there are structure scanners; run the rendering for them now.
-        if (ClientModRegistry.structureScanners != null && !ClientModRegistry.structureScanners.isEmpty()) {
+        if (ClientModRegistryBase.structureScanners != null && !ClientModRegistryBase.structureScanners.isEmpty()) {
             StructureRenderHandler.renderScanningBoxes(matrices, vertexConsumers, (float)cameraX, (float)cameraY, (float)cameraZ);
         }
     }

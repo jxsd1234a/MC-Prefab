@@ -3,15 +3,12 @@ package com.prefab.structures.base;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.Expose;
-import com.prefab.PrefabBase;
-import com.prefab.Triple;
-import com.prefab.Tuple;
-import com.prefab.ZipUtil;
+import com.prefab.*;
 import com.wuest.prefab.*;
 import com.prefab.blocks.BlockFlags;
 import com.prefab.blocks.FullDyeColor;
 import com.prefab.gui.GuiLangKeys;
-import com.wuest.prefab.structures.config.StructureConfiguration;
+import com.prefab.structures.config.StructureConfiguration;
 import com.wuest.prefab.structures.events.StructureEventHandler;
 
 import net.minecraft.ChatFormatting;
@@ -394,7 +391,7 @@ public class Structure {
 
         if (Prefab.serverConfiguration.playBuildingSound) {
             // Play the building sound.
-            world.playSound(null, originalPos, ModRegistry.BuildingBlueprint, SoundSource.NEUTRAL, 0.8f, 0.8f);
+            world.playSound(null, originalPos, ModRegistryBase.BuildingBlueprint, SoundSource.NEUTRAL, 0.8f, 0.8f);
         }
 
         if (!this.BeforeBuilding(configuration, world, originalPos, player)) {

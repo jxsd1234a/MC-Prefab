@@ -4,6 +4,7 @@ import com.google.common.base.Strings;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.prefab.ModRegistryBase;
 import com.wuest.prefab.Prefab;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
@@ -25,6 +26,11 @@ public class ConditionedSmeltingRecipe extends SmeltingRecipe {
         super(group, cookingBookCategory, input, output, experience, cookTime);
 
         this.configName = configName;
+    }
+
+    @Override
+    public RecipeSerializer<?> getSerializer() {
+        return ModRegistryBase.ConditionedSmeltingRecipeSeriaizer;
     }
 
     public static class Serializer implements RecipeSerializer<ConditionedSmeltingRecipe> {

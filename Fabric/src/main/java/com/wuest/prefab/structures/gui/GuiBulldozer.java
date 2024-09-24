@@ -3,7 +3,7 @@ package com.wuest.prefab.structures.gui;
 import com.wuest.prefab.ClientModRegistry;
 import com.prefab.Tuple;
 import com.prefab.gui.GuiLangKeys;
-import com.wuest.prefab.structures.config.BulldozerConfiguration;
+import com.prefab.structures.config.BulldozerConfiguration;
 import com.wuest.prefab.structures.messages.StructureTagMessage;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractButton;

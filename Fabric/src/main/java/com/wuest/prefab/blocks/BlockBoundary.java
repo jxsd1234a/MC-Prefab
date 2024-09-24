@@ -1,5 +1,6 @@
 package com.wuest.prefab.blocks;
 
+import com.prefab.PrefabBase;
 import com.wuest.prefab.Prefab;
 import com.wuest.prefab.events.ServerEvents;
 import com.prefab.gui.GuiLangKeys;
@@ -44,7 +45,7 @@ public class BlockBoundary extends Block {
      */
     public BlockBoundary() {
         super(
-                Prefab.SeeThroughImmovable.get()
+                PrefabBase.SeeThroughImmovable.get()
                 .sound(SoundType.STONE)
                 .strength(0.6F)
         );

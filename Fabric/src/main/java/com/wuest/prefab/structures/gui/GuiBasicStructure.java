@@ -8,8 +8,8 @@ import com.wuest.prefab.config.ModConfiguration;
 import com.prefab.gui.GuiLangKeys;
 import com.prefab.gui.GuiUtils;
 import com.prefab.gui.controls.ExtendedButton;
-import com.wuest.prefab.structures.config.BasicStructureConfiguration;
-import com.wuest.prefab.structures.config.enums.BaseOption;
+import com.prefab.structures.config.BasicStructureConfiguration;
+import com.prefab.structures.config.enums.BaseOption;
 import com.wuest.prefab.structures.items.ItemBasicStructure;
 import com.wuest.prefab.structures.messages.StructureTagMessage;
 import com.wuest.prefab.structures.predefined.StructureBasic;
@@ -54,7 +54,7 @@ public class GuiBasicStructure extends GuiStructure {
         super.Initialize();
 
         // Get the structure configuration for this itemstack.
-        ItemStack stack = ItemBasicStructure.getBasicStructureItemInHand(this.player);
+        ItemStack stack = BasicStructureConfiguration.getBasicStructureItemInHand(this.player);
 
         if (stack != null) {
             ItemBasicStructure item = (ItemBasicStructure) stack.getItem();

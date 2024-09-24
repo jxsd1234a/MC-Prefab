@@ -1,6 +1,6 @@
 package com.wuest.prefab.mixins;
 
-import com.wuest.prefab.ClientModRegistry;
+import com.prefab.ClientModRegistryBase;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.main.GameConfig;
 import org.spongepowered.asm.mixin.Mixin;
@@ -20,6 +20,6 @@ public class MinecraftClientInitMixin {
             // it also needs to accept a special argument that mixin passes to this injection method
             GameConfig gameConfig, CallbackInfo ci
     ) {
-        ClientModRegistry.RegisterBlockRenderer();
+        ClientModRegistryBase.RegisterBlockRenderer();
     }
 }

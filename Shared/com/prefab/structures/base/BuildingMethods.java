@@ -1,6 +1,6 @@
 package com.prefab.structures.base;
 
-import com.wuest.prefab.ModRegistry;
+import com.prefab.ModRegistryBase;
 import com.wuest.prefab.Prefab;
 import com.prefab.Triple;
 import com.prefab.Tuple;
@@ -408,7 +408,7 @@ public class BuildingMethods {
 			}
 
 			if (Prefab.serverConfiguration.chestOptions.addSword) {
-				Item sword = ModRegistry.SwiftBladeStone;
+				Item sword = ModRegistryBase.SwiftBladeStone;
 
 				if (!Prefab.serverConfiguration.recipes.get(ModConfiguration.ConfigKeyNames.swiftBladeKey)) {
 					sword = Items.STONE_SWORD;

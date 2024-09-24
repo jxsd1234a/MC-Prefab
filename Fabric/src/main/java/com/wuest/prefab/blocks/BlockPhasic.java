@@ -1,17 +1,16 @@
 package com.wuest.prefab.blocks;
 
+import com.prefab.PrefabBase;
 import com.wuest.prefab.Prefab;
 import com.wuest.prefab.events.ServerEvents;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
 import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -60,7 +59,7 @@ public class BlockPhasic extends Block {
      * Initializes a new instance of the BlockPhasing class.
      */
     public BlockPhasic() {
-        super(Prefab.SeeThroughImmovable.get()
+        super(PrefabBase.SeeThroughImmovable.get()
                 .sound(SoundType.STONE)
                 .strength(0.6f));
 

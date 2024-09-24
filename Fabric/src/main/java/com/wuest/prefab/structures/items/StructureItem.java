@@ -1,6 +1,6 @@
 package com.wuest.prefab.structures.items;
 
-import com.wuest.prefab.ClientModRegistry;
+import com.prefab.ClientModRegistryBase;
 import com.wuest.prefab.structures.gui.GuiStructure;
 import java.lang.reflect.InvocationTargetException;
 
@@ -28,7 +28,7 @@ public class StructureItem extends com.prefab.structures.items.StructureItem {
         try {
             // TODO: There is probably a better way to do this.
             GuiStructure userInterface = (GuiStructure) classToRegister.getDeclaredConstructor().newInstance();
-            ClientModRegistry.ModGuis.put(this, userInterface);
+            ClientModRegistryBase.ModGuis.put(this, userInterface);
         } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
             e.printStackTrace();
         }

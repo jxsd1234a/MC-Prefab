@@ -5,7 +5,7 @@ import com.prefab.Tuple;
 import com.prefab.gui.GuiBase;
 import com.prefab.gui.GuiLangKeys;
 import com.prefab.structures.base.Structure;
-import com.wuest.prefab.structures.config.StructureConfiguration;
+import com.prefab.structures.config.StructureConfiguration;
 import com.wuest.prefab.structures.messages.StructurePayload;
 import com.wuest.prefab.structures.messages.StructureTagMessage;
 import com.wuest.prefab.structures.render.StructureRenderHandler;

@@ -1,6 +1,6 @@
 package com.wuest.prefab.network.message;
 
-import com.wuest.prefab.config.StructureScannerConfig;
+import com.prefab.config.StructureScannerConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.FriendlyByteBuf;

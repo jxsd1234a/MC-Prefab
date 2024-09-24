@@ -4,7 +4,6 @@ import com.prefab.gui.GuiLangKeys;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 
@@ -15,12 +14,12 @@ import java.util.List;
  *
  * @author WuestMan
  */
-public class ItemCompressedChest extends Item {
+public class ItemCompressedChest extends com.prefab.items.ItemCompressedChest {
     /**
-     * Initializes a new instance of the ItemCondensedChest class.
+     * Initializes a new instance of the ItemCompressedChest class.
      */
     public ItemCompressedChest() {
-        super(new Item.Properties());
+        super();
 
     }
 
@@ -29,7 +28,7 @@ public class ItemCompressedChest extends Item {
      */
     @Environment(EnvType.CLIENT)
     @Override
-    public void appendHoverText(ItemStack stack, Item.TooltipContext tooltipContext, List<Component> tooltip, TooltipFlag flagIn) {
+    public void appendHoverText(ItemStack stack, TooltipContext tooltipContext, List<Component> tooltip, TooltipFlag flagIn) {
         tooltip.add(GuiLangKeys.translateToComponent(GuiLangKeys.COMPRESSED_CHEST));
     }
 }

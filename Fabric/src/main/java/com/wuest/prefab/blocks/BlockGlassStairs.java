@@ -1,6 +1,6 @@
 package com.wuest.prefab.blocks;
 
-import com.wuest.prefab.ModRegistry;
+import com.prefab.ModRegistryBase;
 import com.prefab.Utils;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -40,7 +40,7 @@ public class BlockGlassStairs extends StairBlock {
         Block adjacentBlock = adjacentBlockState.getBlock();
 
         return foundBlock || adjacentBlock == this
-                || (adjacentBlock == ModRegistry.GlassSlab
+                || (adjacentBlock == ModRegistryBase.GlassSlab
                 && adjacentBlockState.getValue(SlabBlock.TYPE) == SlabType.DOUBLE);
     }
 }

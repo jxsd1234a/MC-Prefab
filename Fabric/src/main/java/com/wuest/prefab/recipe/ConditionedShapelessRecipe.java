@@ -5,6 +5,7 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.prefab.ModRegistryBase;
 import com.wuest.prefab.ModRegistry;
 import com.wuest.prefab.Prefab;
 import net.fabricmc.api.EnvType;
@@ -44,7 +45,7 @@ public class ConditionedShapelessRecipe extends ShapelessRecipe {
 
     @Override
     public RecipeSerializer<?> getSerializer() {
-        return ModRegistry.ConditionedShapelessRecipeSeriaizer;
+        return ModRegistryBase.ConditionedShapelessRecipeSeriaizer;
     }
 
     @Override

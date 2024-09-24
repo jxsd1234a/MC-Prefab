@@ -1,6 +1,6 @@
 package com.wuest.prefab.blocks;
 
-import com.wuest.prefab.ModRegistry;
+import com.prefab.ModRegistryBase;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.level.block.state.BlockState;
@@ -32,9 +32,9 @@ public interface IGrassSpreadable {
                     BlockState iblockstate1 = worldIn.getBlockState(blockpos);
 
                     if ((iblockstate1.getBlock() == Blocks.GRASS_BLOCK
-                            || iblockstate1.getBlock() == ModRegistry.GrassStairs
-                            || iblockstate1.getBlock() == ModRegistry.GrassWall
-                            || iblockstate1.getBlock() == ModRegistry.GrassSlab)
+                            || iblockstate1.getBlock() == ModRegistryBase.GrassStairs
+                            || iblockstate1.getBlock() == ModRegistryBase.GrassWall
+                            || iblockstate1.getBlock() == ModRegistryBase.GrassSlab)
                             // This equivalent to light level 4.
                             && worldIn.getBrightness(LightLayer.SKY, blockpos.above()) >= 0.08333334) {
 

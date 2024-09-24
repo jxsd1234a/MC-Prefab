@@ -1,5 +1,6 @@
 package com.prefab.structures.items;
 
+import com.prefab.ClientModRegistryBase;
 import com.wuest.prefab.ClientModRegistry;
 import com.wuest.prefab.Prefab;
 import com.wuest.prefab.structures.gui.GuiStructure;
@@ -39,7 +40,7 @@ public class StructureItem extends Item {
                     this.scanningMode(context);
                 } else {
                     // Open the client side gui to determine the house options.
-                    ClientModRegistry.openGuiForItem(context);
+                    ClientModRegistryBase.openGuiForItem(context);
                 }
 
                 return InteractionResult.PASS;
@@ -61,7 +62,7 @@ public class StructureItem extends Item {
     protected void RegisterGui(Class<?> classToRegister) {
         try {
             GuiStructure userInterface = (GuiStructure) classToRegister.getDeclaredConstructor().newInstance();
-            ClientModRegistry.ModGuis.put(this, userInterface);
+            ClientModRegistryBase.ModGuis.put(this, userInterface);
         } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
             e.printStackTrace();
         }

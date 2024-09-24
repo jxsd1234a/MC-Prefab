@@ -1,9 +1,9 @@
 package com.wuest.prefab.blocks;
 
 import com.mojang.serialization.MapCodec;
-import com.wuest.prefab.ModRegistry;
+import com.prefab.ModRegistryBase;
 import com.prefab.base.TileBlockBase;
-import com.wuest.prefab.blocks.entities.LightSwitchBlockEntity;
+import com.prefab.blocks.entities.LightSwitchBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvent;
@@ -122,7 +122,7 @@ public class BlockLightSwitch extends TileBlockBase<LightSwitchBlockEntity> {
             // if the state is just changing, don't remove it from the registry.
             if (blockState.getBlock() != blockState2.getBlock()) {
                 // Remove this switch from the registry and turn off the registered blocks.
-                ModRegistry.serverModRegistries.getLightSwitchRegistry().remove(level, blockPos);
+                ModRegistryBase.serverModRegistries.getLightSwitchRegistry().remove(level, blockPos);
             }
         }
     }
@@ -147,7 +147,7 @@ public class BlockLightSwitch extends TileBlockBase<LightSwitchBlockEntity> {
         blockState = blockState.cycle(POWERED);
         level.setBlock(blockPos, blockState, 3);
 
-        ModRegistry.serverModRegistries.getLightSwitchRegistry().flipSwitch(level, blockPos, blockState.getValue(POWERED));
+        ModRegistryBase.serverModRegistries.getLightSwitchRegistry().flipSwitch(level, blockPos, blockState.getValue(POWERED));
         return blockState;
     }
 
@@ -200,7 +200,7 @@ public class BlockLightSwitch extends TileBlockBase<LightSwitchBlockEntity> {
     @Override
     public void setPlacedBy(Level level, BlockPos blockPos, BlockState blockState, @Nullable LivingEntity livingEntity, ItemStack itemStack) {
         if (!level.isClientSide) {
-            ModRegistry.serverModRegistries.getLightSwitchRegistry().register(level, blockPos);
+            ModRegistryBase.serverModRegistries.getLightSwitchRegistry().register(level, blockPos);
         }
     }
 

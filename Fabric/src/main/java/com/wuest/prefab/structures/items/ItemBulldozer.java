@@ -1,5 +1,7 @@
 package com.wuest.prefab.structures.items;
 
+import com.prefab.ClientModRegistryBase;
+import com.prefab.ModRegistryBase;
 import com.wuest.prefab.ClientModRegistry;
 import com.wuest.prefab.ModRegistry;
 import com.prefab.Utils;
@@ -58,7 +60,7 @@ public class ItemBulldozer extends StructureItem {
         if (context.getLevel().isClientSide()) {
             if (context.getClickedFace() == Direction.UP && this.getPoweredValue(context.getPlayer(), context.getHand())) {
                 // Open the client side gui to determine the house options.
-                ClientModRegistry.openGuiForItem(context);
+                ClientModRegistryBase.openGuiForItem(context);
                 return InteractionResult.PASS;
             }
         }
@@ -120,7 +122,7 @@ public class ItemBulldozer extends StructureItem {
             return true;
         }
 
-        if (stack.getItem() == ModRegistry.Bulldozer) {
+        if (stack.getItem() == ModRegistryBase.Bulldozer) {
             if (stack.getComponents().isEmpty()) {
                 CompoundTag baseTag = new CompoundTag();
                 CompoundTag prefabTag = new CompoundTag();

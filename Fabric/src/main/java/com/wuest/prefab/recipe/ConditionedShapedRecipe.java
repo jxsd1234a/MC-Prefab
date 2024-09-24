@@ -4,13 +4,13 @@ import com.google.common.base.Strings;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.prefab.ModRegistryBase;
 import com.wuest.prefab.ModRegistry;
 import com.wuest.prefab.Prefab;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
@@ -57,7 +57,7 @@ public class ConditionedShapedRecipe extends ShapedRecipe {
 
     @Override
     public RecipeSerializer<?> getSerializer() {
-        return ModRegistry.ConditionedShapedRecipeSeriaizer;
+        return ModRegistryBase.ConditionedShapedRecipeSeriaizer;
     }
 
     @Override

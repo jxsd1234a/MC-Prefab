@@ -1,6 +1,6 @@
 package com.wuest.prefab.structures.events;
 
-import com.wuest.prefab.ModRegistry;
+import com.prefab.ModRegistryBase;
 import com.wuest.prefab.Prefab;
 import com.prefab.Tuple;
 import com.wuest.prefab.config.EntityPlayerConfiguration;
@@ -106,12 +106,12 @@ public final class StructureEventHandler {
 
             switch (startingItem) {
                 case StartingHouse: {
-                    stack = new ItemStack(ModRegistry.House);
+                    stack = new ItemStack(ModRegistryBase.House);
                     break;
                 }
 
                 case ModerateHouse: {
-                    stack = new ItemStack(ModRegistry.HouseImproved);
+                    stack = new ItemStack(ModRegistryBase.HouseImproved);
                     break;
                 }
             }

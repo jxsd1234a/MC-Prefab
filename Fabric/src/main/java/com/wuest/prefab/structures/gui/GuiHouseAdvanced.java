@@ -8,7 +8,7 @@ import com.prefab.gui.GuiLangKeys;
 import com.prefab.gui.GuiUtils;
 import com.prefab.gui.controls.ExtendedButton;
 import com.prefab.gui.controls.GuiCheckBox;
-import com.wuest.prefab.structures.config.HouseAdvancedConfiguration;
+import com.prefab.structures.config.HouseAdvancedConfiguration;
 import com.wuest.prefab.structures.messages.StructureTagMessage;
 import com.wuest.prefab.structures.predefined.StructureHouseAdvanced;
 import net.minecraft.client.gui.GuiGraphics;

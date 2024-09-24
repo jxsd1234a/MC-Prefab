@@ -1,9 +1,9 @@
 package com.wuest.prefab.structures.config;
 
+import com.prefab.ModRegistryBase;
 import com.prefab.PrefabBase;
-import com.wuest.prefab.ModRegistry;
-import com.wuest.prefab.Prefab;
 import com.prefab.blocks.FullDyeColor;
+import com.prefab.structures.config.StructureConfiguration;
 import com.wuest.prefab.config.EntityPlayerConfiguration;
 import com.prefab.gui.GuiLangKeys;
 import com.wuest.prefab.network.message.PlayerConfigPayload;
@@ -182,7 +182,7 @@ public class HouseConfiguration extends StructureConfiguration {
             EntityPlayerConfiguration playerConfig = EntityPlayerConfiguration.loadFromEntity(player);
             playerConfig.builtStarterHouse = true;
 
-            this.RemoveStructureItemFromPlayer(player, ModRegistry.House);
+            this.RemoveStructureItemFromPlayer(player, ModRegistryBase.House);
 
             // Make sure to send a message to the client to sync up the server player information and the client player
             // information.

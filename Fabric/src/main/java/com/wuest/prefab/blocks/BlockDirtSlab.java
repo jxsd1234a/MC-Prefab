@@ -1,7 +1,6 @@
 package com.wuest.prefab.blocks;
 
-import com.wuest.prefab.ModRegistry;
-import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
+import com.prefab.ModRegistryBase;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
@@ -12,11 +11,9 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.MapColor;
 
-
-
 public class BlockDirtSlab extends SlabBlock implements IGrassSpreadable {
     public BlockDirtSlab() {
-        super(FabricBlockSettings.ofFullCopy(Blocks.DIRT).mapColor(MapColor.DIRT).sound(SoundType.GRAVEL)
+        super(BlockBehaviour.Properties.ofFullCopy(Blocks.DIRT).mapColor(MapColor.DIRT).sound(SoundType.GRAVEL)
                 .strength(0.5f, 0.5f));
     }
 
@@ -37,7 +34,7 @@ public class BlockDirtSlab extends SlabBlock implements IGrassSpreadable {
 
     @Override
     public BlockState getGrassBlockState(BlockState originalState) {
-        return ModRegistry.GrassSlab.defaultBlockState().setValue(SlabBlock.TYPE,
+        return ModRegistryBase.GrassSlab.defaultBlockState().setValue(SlabBlock.TYPE,
                 originalState.getValue(SlabBlock.TYPE));
     }
 }

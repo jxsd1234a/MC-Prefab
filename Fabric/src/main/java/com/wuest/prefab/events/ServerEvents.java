@@ -1,12 +1,12 @@
 package com.wuest.prefab.events;
 
-import com.wuest.prefab.ModRegistry;
+import com.prefab.ModRegistryBase;
 import com.wuest.prefab.Prefab;
 import com.wuest.prefab.config.ModConfiguration;
-import com.wuest.prefab.items.ItemSickle;
+import com.prefab.items.ItemSickle;
 import com.wuest.prefab.network.message.ConfigSyncPayload;
 import com.wuest.prefab.network.message.TagMessage;
-import com.wuest.prefab.registries.ModRegistries;
+import com.prefab.registries.ModRegistries;
 import com.wuest.prefab.structures.events.StructureEventHandler;
 import me.shedaniel.autoconfig.AutoConfig;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents;
@@ -40,7 +40,7 @@ public class ServerEvents {
     private static void serverStarting() {
         ServerLifecycleEvents.SERVER_STARTING.register((server -> {
             // Only do this for server-side.
-            ModRegistry.serverModRegistries = new ModRegistries();
+            ModRegistryBase.serverModRegistries = new ModRegistries();
         }));
     }
 

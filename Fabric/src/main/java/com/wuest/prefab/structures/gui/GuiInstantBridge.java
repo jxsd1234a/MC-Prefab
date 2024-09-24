@@ -2,7 +2,6 @@ package com.wuest.prefab.structures.gui;
 
 import com.prefab.PrefabBase;
 import com.wuest.prefab.ClientModRegistry;
-import com.wuest.prefab.Prefab;
 import com.prefab.Tuple;
 import com.prefab.gui.GuiLangKeys;
 import com.prefab.gui.GuiUtils;
@@ -10,7 +9,7 @@ import com.prefab.gui.controls.ExtendedButton;
 import com.prefab.gui.controls.GuiCheckBox;
 import com.prefab.gui.controls.GuiSlider;
 import com.prefab.structures.base.EnumStructureMaterial;
-import com.wuest.prefab.structures.config.InstantBridgeConfiguration;
+import com.prefab.structures.config.InstantBridgeConfiguration;
 import com.wuest.prefab.structures.messages.StructureTagMessage;
 import com.wuest.prefab.structures.predefined.StructureInstantBridge;
 import net.minecraft.client.gui.GuiGraphics;

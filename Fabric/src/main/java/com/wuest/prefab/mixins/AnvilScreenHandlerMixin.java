@@ -1,7 +1,7 @@
 package com.wuest.prefab.mixins;
 
 import com.llamalad7.mixinextras.sugar.Local;
-import com.wuest.prefab.ModRegistry;
+import com.prefab.ModRegistryBase;
 import com.wuest.prefab.structures.items.ItemBulldozer;
 import net.minecraft.world.inventory.AnvilMenu;
 import net.minecraft.world.inventory.DataSlot;
@@ -24,8 +24,8 @@ public class AnvilScreenHandlerMixin {
     public void AnvilUpdate(CallbackInfo ci, @Local(ordinal = 1) ItemStack itemStack2, @Local(ordinal = 2) ItemStack itemStack3) {
         // Because this gets injected into the actual class; we can use "this" to represent the AnvilScreenHandler correctly.
         AnvilMenu prefabHandler = (AnvilMenu) (Object) this;
-        Item prefabTripleCompressedStone = ModRegistry.TripleCompressedStoneItem;
-        ItemBulldozer prefabBulldozer = ModRegistry.Bulldozer;
+        Item prefabTripleCompressedStone = ModRegistryBase.TripleCompressedStoneItem;
+        ItemBulldozer prefabBulldozer = ModRegistryBase.Bulldozer;
 
         if (itemStack2.getItem() == prefabTripleCompressedStone || itemStack3.getItem() == prefabTripleCompressedStone) {
             if (itemStack2.getItem() == prefabBulldozer || itemStack3.getItem() == prefabBulldozer) {

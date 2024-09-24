@@ -9,7 +9,7 @@ import com.prefab.structures.base.BuildBlock;
 import com.prefab.structures.base.BuildingMethods;
 import com.prefab.structures.base.Structure;
 import com.wuest.prefab.structures.config.HouseConfiguration;
-import com.wuest.prefab.structures.config.StructureConfiguration;
+import com.prefab.structures.config.StructureConfiguration;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;

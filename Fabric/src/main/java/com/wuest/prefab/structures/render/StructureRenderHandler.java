@@ -1,13 +1,13 @@
 package com.wuest.prefab.structures.render;
 
 import com.mojang.blaze3d.vertex.*;
-import com.wuest.prefab.ClientModRegistry;
+import com.prefab.ClientModRegistryBase;
 import com.wuest.prefab.Prefab;
 import com.wuest.prefab.blocks.BlockStructureScanner;
-import com.wuest.prefab.config.StructureScannerConfig;
+import com.prefab.config.StructureScannerConfig;
 import com.prefab.structures.base.BuildBlock;
 import com.prefab.structures.base.Structure;
-import com.wuest.prefab.structures.config.StructureConfiguration;
+import com.prefab.structures.config.StructureConfiguration;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -163,8 +163,8 @@ public class StructureRenderHandler {
                                            float cameraX,
                                            float cameraY,
                                            float cameraZ) {
-        for (int i = 0; i < ClientModRegistry.structureScanners.size(); i++) {
-            StructureScannerConfig config = ClientModRegistry.structureScanners.get(i);
+        for (int i = 0; i < ClientModRegistryBase.structureScanners.size(); i++) {
+            StructureScannerConfig config = ClientModRegistryBase.structureScanners.get(i);
 
             BlockPos pos = config.blockPos;
             boolean removeConfig = false;
@@ -176,7 +176,7 @@ public class StructureRenderHandler {
             }
 
             if (removeConfig) {
-                ClientModRegistry.structureScanners.remove(i);
+                ClientModRegistryBase.structureScanners.remove(i);
                 i--;
                 continue;
             }
