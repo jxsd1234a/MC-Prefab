@@ -1,4 +1,4 @@
-package com.wuest.prefab.network.message;
+package com.prefab.network.message;
 
 import com.prefab.config.StructureScannerConfig;
 import net.minecraft.core.BlockPos;

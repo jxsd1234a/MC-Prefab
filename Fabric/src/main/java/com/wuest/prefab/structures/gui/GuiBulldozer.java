@@ -4,7 +4,7 @@ import com.wuest.prefab.ClientModRegistry;
 import com.prefab.Tuple;
 import com.prefab.gui.GuiLangKeys;
 import com.prefab.structures.config.BulldozerConfiguration;
-import com.wuest.prefab.structures.messages.StructureTagMessage;
+import com.prefab.structures.messages.StructureTagMessage;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractButton;
 import net.minecraft.network.chat.Component;

@@ -1,17 +1,17 @@
 package com.wuest.prefab.events;
 
 import com.prefab.ModRegistryBase;
+import com.prefab.PrefabBase;
+import com.prefab.network.ServerToClientTypes;
 import com.wuest.prefab.Prefab;
 import com.wuest.prefab.config.ModConfiguration;
 import com.prefab.items.ItemSickle;
-import com.wuest.prefab.network.message.ConfigSyncPayload;
-import com.wuest.prefab.network.message.TagMessage;
+import com.prefab.network.message.TagMessage;
 import com.prefab.registries.ModRegistries;
 import com.wuest.prefab.structures.events.StructureEventHandler;
 import me.shedaniel.autoconfig.AutoConfig;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
-import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 
@@ -59,8 +59,8 @@ public class ServerEvents {
         ServerEntityEvents.ENTITY_LOAD.register((entity, serverWorld) -> {
             if (entity instanceof ServerPlayer) {
                 // Send the message to the client.
-                ConfigSyncPayload configSyncPayload = new ConfigSyncPayload(new TagMessage(Prefab.serverConfiguration.writeCompoundTag()));
-                ServerPlayNetworking.send((ServerPlayer) entity, configSyncPayload);
+                TagMessage message = new TagMessage(Prefab.serverConfiguration.writeCompoundTag());
+                PrefabBase.networkWrapper.sendToClient(ServerToClientTypes.MOD_CONFIG_SYNC, (ServerPlayer) entity, message);
             }
         });
     }

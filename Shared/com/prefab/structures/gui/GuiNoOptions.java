@@ -1,4 +1,4 @@
-package com.wuest.prefab.structures.gui;
+package com.prefab.structures.gui;
 
 import com.prefab.Tuple;
 import com.prefab.gui.GuiBase;

@@ -2,7 +2,7 @@ package com.prefab.structures.config;
 
 import com.prefab.ModRegistryBase;
 import com.prefab.structures.base.EnumStructureMaterial;
-import com.wuest.prefab.structures.predefined.StructureInstantBridge;
+import com.prefab.structures.predefined.StructureInstantBridge;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;

@@ -1,8 +1,7 @@
-package com.wuest.prefab.structures.messages;
+package com.prefab.structures.messages;
 
 import com.prefab.structures.config.*;
-import com.wuest.prefab.network.message.TagMessage;
-import com.wuest.prefab.structures.config.*;
+import com.prefab.network.message.TagMessage;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 

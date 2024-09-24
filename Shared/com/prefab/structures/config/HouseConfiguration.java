@@ -1,16 +1,14 @@
-package com.wuest.prefab.structures.config;
+package com.prefab.structures.config;
 
 import com.prefab.ModRegistryBase;
 import com.prefab.PrefabBase;
 import com.prefab.blocks.FullDyeColor;
-import com.prefab.structures.config.StructureConfiguration;
-import com.wuest.prefab.config.EntityPlayerConfiguration;
+import com.prefab.network.ServerToClientTypes;
+import com.prefab.config.EntityPlayerConfiguration;
 import com.prefab.gui.GuiLangKeys;
-import com.wuest.prefab.network.message.PlayerConfigPayload;
-import com.wuest.prefab.network.message.TagMessage;
+import com.prefab.network.message.TagMessage;
 import com.prefab.structures.base.BuildBlock;
-import com.wuest.prefab.structures.predefined.StructureHouse;
-import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import com.prefab.structures.predefined.StructureHouse;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
@@ -189,8 +187,7 @@ public class HouseConfiguration extends StructureConfiguration {
             TagMessage tagMessage = new TagMessage();
             tagMessage.setMessageTag(playerConfig.createPlayerTag());
 
-            PlayerConfigPayload playerConfigPayload = new PlayerConfigPayload(tagMessage);
-            ServerPlayNetworking.send((ServerPlayer) player, playerConfigPayload);
+            PrefabBase.networkWrapper.sendToClient(ServerToClientTypes.PLAYER_CONFIG_SYNC, (ServerPlayer) player, tagMessage);
         }
     }
 

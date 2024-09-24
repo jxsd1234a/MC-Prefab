@@ -17,7 +17,7 @@ import com.wuest.prefab.network.message.ScannerConfigPayload;
 import com.prefab.structures.config.BasicStructureConfiguration;
 import com.prefab.structures.config.StructureConfiguration;
 import com.wuest.prefab.structures.messages.StructurePayload;
-import com.wuest.prefab.structures.messages.StructureTagMessage;
+import com.prefab.structures.messages.StructureTagMessage;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;

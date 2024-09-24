@@ -1,16 +1,15 @@
 package com.wuest.prefab.gui.screens;
 
 import com.prefab.ClientModRegistryBase;
+import com.prefab.PrefabBase;
 import com.prefab.Tuple;
 import com.prefab.blocks.BlockStructureScanner;
 import com.prefab.config.StructureScannerConfig;
 import com.prefab.gui.GuiBase;
 import com.prefab.gui.controls.ExtendedButton;
 import com.prefab.gui.controls.GuiTextBox;
-import com.wuest.prefab.network.message.ScanShapePayload;
-import com.wuest.prefab.network.message.ScannerConfigPayload;
-import com.wuest.prefab.network.message.ScannerInfo;
-import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
+import com.prefab.network.ClientToServerTypes;
+import com.prefab.network.message.ScannerInfo;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractButton;
 import net.minecraft.core.BlockPos;
@@ -198,12 +197,12 @@ public class GuiStructureScanner extends GuiBase {
     }
 
     private void sendUpdatePacket() {
-        ScannerConfigPayload scannerConfigPayload = new ScannerConfigPayload(new ScannerInfo(this.config));
-        ClientPlayNetworking.send(scannerConfigPayload);
+        ScannerInfo message = new ScannerInfo(this.config);
+        PrefabBase.networkWrapper.sendToServer(ClientToServerTypes.SCANNER_CONFIG_UPDATE, message);
     }
 
     private void sendScanPacket() {
-        ScanShapePayload scanShapePayload = new ScanShapePayload(new ScannerInfo(this.config));
-        ClientPlayNetworking.send(scanShapePayload);
+        ScannerInfo message = new ScannerInfo(this.config);
+        PrefabBase.networkWrapper.sendToServer(ClientToServerTypes.SCANNER_CONFIG_UPDATE, message);
     }
 }

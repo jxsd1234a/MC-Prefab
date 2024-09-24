@@ -1,17 +1,17 @@
 package com.wuest.prefab.events;
 
 import com.prefab.ClientModRegistryBase;
+import com.prefab.PrefabBase;
+import com.prefab.network.ClientToServerTypes;
 import com.prefab.structures.config.BasicStructureConfiguration;
 import com.wuest.prefab.ClientModRegistry;
 import com.wuest.prefab.structures.events.StructureClientEventHandler;
 import com.wuest.prefab.structures.gui.GuiStructure;
 import com.wuest.prefab.structures.items.ItemBasicStructure;
 import com.prefab.structures.items.StructureItem;
-import com.wuest.prefab.structures.messages.StructurePayload;
-import com.wuest.prefab.structures.messages.StructureTagMessage;
+import com.prefab.structures.messages.StructureTagMessage;
 import com.wuest.prefab.structures.render.StructureRenderHandler;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
-import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.item.ItemStack;
 
@@ -50,10 +50,11 @@ public class ClientEvents {
                     }
 
                     if (foundCorrectStructureItem) {
-                        StructurePayload payload = new StructurePayload(new StructureTagMessage(StructureRenderHandler.currentConfiguration.WriteToCompoundTag(),
-                                StructureTagMessage.EnumStructureConfiguration.getByConfigurationInstance(StructureRenderHandler.currentConfiguration)));
+                        StructureTagMessage message =
+                        new StructureTagMessage(StructureRenderHandler.currentConfiguration.WriteToCompoundTag(),
+                                StructureTagMessage.EnumStructureConfiguration.getByConfigurationInstance(StructureRenderHandler.currentConfiguration));
 
-                        ClientPlayNetworking.send(payload);
+                        PrefabBase.networkWrapper.sendToServer(ClientToServerTypes.STRUCTURE_BUILD, message);
                     }
 
                     StructureRenderHandler.currentStructure = null;

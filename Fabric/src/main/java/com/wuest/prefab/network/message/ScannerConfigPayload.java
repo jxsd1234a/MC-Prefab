@@ -1,6 +1,7 @@
 package com.wuest.prefab.network.message;
 
 import com.prefab.PrefabBase;
+import com.prefab.network.message.ScannerInfo;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;

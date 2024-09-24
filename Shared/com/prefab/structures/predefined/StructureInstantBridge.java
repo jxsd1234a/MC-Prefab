@@ -1,4 +1,4 @@
-package com.wuest.prefab.structures.predefined;
+package com.prefab.structures.predefined;
 
 import com.prefab.structures.base.BuildBlock;
 import com.prefab.structures.base.BuildClear;

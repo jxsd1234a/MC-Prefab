@@ -1,12 +1,12 @@
 package com.prefab.structures.base;
 
 import com.prefab.ModRegistryBase;
+import com.prefab.PrefabBase;
 import com.wuest.prefab.Prefab;
 import com.prefab.Triple;
 import com.prefab.Tuple;
 import com.prefab.blocks.FullDyeColor;
 import com.wuest.prefab.config.ModConfiguration;
-import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -231,9 +231,7 @@ public class BuildingMethods {
 				}
 
 				if (!world.isEmptyBlock(currentPos)) {
-					// TODO: Create own event interface which is implemented in mod-loader specific process
-					// pass in the world, player, position, block state.
-					if (!PlayerBlockBreakEvents.BEFORE.invoker().beforeBlockBreak(world, player, currentPos, world.getBlockState(currentPos), null)) {
+					if (!PrefabBase.eventCaller.canBreakBlock(world, player, world.getBlockState(currentPos), currentPos)) {
 						return new Triple<>(false, blockState, currentPos);
 					}
 				}

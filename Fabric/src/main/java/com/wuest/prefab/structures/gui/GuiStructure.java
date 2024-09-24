@@ -1,15 +1,16 @@
 package com.wuest.prefab.structures.gui;
 
+import com.prefab.PrefabBase;
+import com.prefab.network.ClientToServerTypes;
+import com.prefab.structures.gui.GuiNoOptions;
 import com.wuest.prefab.Prefab;
 import com.prefab.Tuple;
 import com.prefab.gui.GuiBase;
 import com.prefab.gui.GuiLangKeys;
 import com.prefab.structures.base.Structure;
 import com.prefab.structures.config.StructureConfiguration;
-import com.wuest.prefab.structures.messages.StructurePayload;
-import com.wuest.prefab.structures.messages.StructureTagMessage;
+import com.prefab.structures.messages.StructureTagMessage;
 import com.wuest.prefab.structures.render.StructureRenderHandler;
-import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractButton;
 import net.minecraft.client.gui.components.Button;
@@ -103,10 +104,7 @@ public abstract class GuiStructure extends GuiBase {
         if (button == this.btnCancel) {
             this.closeScreen();
         } else if (button == this.btnBuild) {
-            StructurePayload payload = new StructurePayload(new StructureTagMessage(this.configuration.WriteToCompoundTag(), this.structureConfiguration));
-
-            ClientPlayNetworking.send(payload);
-
+            PrefabBase.networkWrapper.sendToServer(ClientToServerTypes.STRUCTURE_BUILD, new StructureTagMessage(this.configuration.WriteToCompoundTag(), this.structureConfiguration));
             this.closeScreen();
         }
     }

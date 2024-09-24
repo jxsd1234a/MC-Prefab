@@ -1,4 +1,4 @@
-package com.wuest.prefab.network.message;
+package com.prefab.network.message;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;

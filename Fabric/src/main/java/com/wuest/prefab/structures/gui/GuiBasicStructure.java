@@ -11,7 +11,7 @@ import com.prefab.gui.controls.ExtendedButton;
 import com.prefab.structures.config.BasicStructureConfiguration;
 import com.prefab.structures.config.enums.BaseOption;
 import com.wuest.prefab.structures.items.ItemBasicStructure;
-import com.wuest.prefab.structures.messages.StructureTagMessage;
+import com.prefab.structures.messages.StructureTagMessage;
 import com.wuest.prefab.structures.predefined.StructureBasic;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;

@@ -1,6 +1,7 @@
 package com.wuest.prefab.structures.messages;
 
 import com.prefab.PrefabBase;
+import com.prefab.structures.messages.StructureTagMessage;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;

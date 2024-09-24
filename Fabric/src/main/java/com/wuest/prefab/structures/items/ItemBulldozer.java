@@ -2,7 +2,6 @@ package com.wuest.prefab.structures.items;
 
 import com.prefab.ClientModRegistryBase;
 import com.prefab.ModRegistryBase;
-import com.wuest.prefab.ClientModRegistry;
 import com.wuest.prefab.ModRegistry;
 import com.prefab.Utils;
 import com.prefab.gui.GuiLangKeys;

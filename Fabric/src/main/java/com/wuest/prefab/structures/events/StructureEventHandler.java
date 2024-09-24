@@ -1,12 +1,13 @@
 package com.wuest.prefab.structures.events;
 
 import com.prefab.ModRegistryBase;
+import com.prefab.PrefabBase;
+import com.prefab.network.ServerToClientTypes;
 import com.wuest.prefab.Prefab;
 import com.prefab.Tuple;
-import com.wuest.prefab.config.EntityPlayerConfiguration;
+import com.prefab.config.EntityPlayerConfiguration;
 import com.wuest.prefab.config.ModConfiguration;
-import com.wuest.prefab.network.message.PlayerConfigPayload;
-import com.wuest.prefab.network.message.TagMessage;
+import com.prefab.network.message.TagMessage;
 import com.prefab.structures.base.BuildBlock;
 import com.prefab.structures.base.BuildEntity;
 import com.prefab.structures.base.BuildingMethods;
@@ -14,7 +15,6 @@ import com.prefab.structures.base.Structure;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
-import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -133,8 +133,7 @@ public final class StructureEventHandler {
         TagMessage tagMessage = new TagMessage();
         tagMessage.setMessageTag(playerConfig.createPlayerTag());
 
-        PlayerConfigPayload playerConfigPayload = new PlayerConfigPayload(tagMessage);
-        ServerPlayNetworking.send(player, playerConfigPayload);
+        PrefabBase.networkWrapper.sendToClient(ServerToClientTypes.PLAYER_CONFIG_SYNC, player, tagMessage);
     }
 
     /**

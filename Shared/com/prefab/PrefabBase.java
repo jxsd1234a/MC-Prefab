@@ -1,5 +1,6 @@
 package com.prefab;
 
+import com.prefab.network.INetworkWrapper;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -26,6 +27,13 @@ public class PrefabBase {
 	 * Basically a GLASS block, but NOT glass.
 	 */
 	public static final Supplier<BlockBehaviour.Properties> SeeThroughImmovable = ()->BlockBehaviour.Properties.of().noOcclusion().isViewBlocking(Blocks::never).pushReaction(PushReaction.IGNORE).sound(SoundType.STONE);
+
+	public static INetworkWrapper networkWrapper;
+
+	/**
+	 * Used to call mod-loader specific events/methods (such as whether or not a player can break a block)
+	 */
+	public static IEventCaller eventCaller;
 
 	static {
 		PrefabBase.logger = LogManager.getLogger("Prefab");

@@ -1,15 +1,15 @@
-package com.wuest.prefab.structures.predefined;
+package com.prefab.structures.predefined;
 
+import com.prefab.PrefabBase;
 import com.prefab.Tuple;
-import com.wuest.prefab.config.EntityPlayerConfiguration;
-import com.wuest.prefab.network.message.PlayerConfigPayload;
-import com.wuest.prefab.network.message.TagMessage;
+import com.prefab.network.ServerToClientTypes;
+import com.prefab.config.EntityPlayerConfiguration;
+import com.prefab.network.message.TagMessage;
 import com.prefab.structures.base.BuildBlock;
 import com.prefab.structures.base.BuildingMethods;
 import com.prefab.structures.base.Structure;
 import com.prefab.structures.config.HouseAdvancedConfiguration;
 import com.prefab.structures.config.StructureConfiguration;
-import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -114,8 +114,7 @@ public class StructureHouseAdvanced extends Structure {
 
         // Make sure to send a message to the client to sync up the server player information and the client player
         // information.
-        PlayerConfigPayload playerConfigPayload = new PlayerConfigPayload(message);
-        ServerPlayNetworking.send((ServerPlayer) player, playerConfigPayload);
+        PrefabBase.networkWrapper.sendToClient(ServerToClientTypes.PLAYER_CONFIG_SYNC, (ServerPlayer) player, message);
     }
 
 }

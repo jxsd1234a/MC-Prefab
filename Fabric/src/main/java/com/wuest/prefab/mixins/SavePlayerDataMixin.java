@@ -1,7 +1,7 @@
 package com.wuest.prefab.mixins;
 
 import com.mojang.authlib.GameProfile;
-import com.wuest.prefab.config.EntityPlayerConfiguration;
+import com.prefab.config.EntityPlayerConfiguration;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.player.Player;
 import org.spongepowered.asm.mixin.Final;

@@ -1,4 +1,4 @@
-package com.wuest.prefab.config;
+package com.prefab.config;
 
 import com.prefab.structures.config.StructureConfiguration;
 import net.minecraft.nbt.CompoundTag;

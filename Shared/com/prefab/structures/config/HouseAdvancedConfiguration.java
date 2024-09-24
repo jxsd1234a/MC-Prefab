@@ -3,7 +3,7 @@ package com.prefab.structures.config;
 import com.prefab.ModRegistryBase;
 import com.prefab.PrefabBase;
 import com.prefab.gui.GuiLangKeys;
-import com.wuest.prefab.structures.predefined.StructureHouseAdvanced;
+import com.prefab.structures.predefined.StructureHouseAdvanced;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;

@@ -3,7 +3,7 @@ package com.wuest.prefab;
 import com.mojang.blaze3d.platform.InputConstants;
 import com.prefab.ClientModRegistryBase;
 import com.prefab.ModRegistryBase;
-import com.wuest.prefab.config.EntityPlayerConfiguration;
+import com.prefab.config.EntityPlayerConfiguration;
 import com.wuest.prefab.network.message.PlayerConfigPayload;
 import com.wuest.prefab.network.message.ConfigSyncPayload;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
