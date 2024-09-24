@@ -1,7 +1,6 @@
 package com.wuest.prefab.events;
 
 import com.prefab.ClientModRegistryBase;
-import com.wuest.prefab.ClientModRegistry;
 import com.prefab.structures.config.BasicStructureConfiguration;
 import com.wuest.prefab.structures.events.StructureClientEventHandler;
 import com.wuest.prefab.structures.gui.GuiStructure;

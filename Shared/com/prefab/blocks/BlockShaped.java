@@ -1,4 +1,4 @@
-package com.wuest.prefab.blocks;
+package com.prefab.blocks;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;

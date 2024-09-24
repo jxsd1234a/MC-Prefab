@@ -1,4 +1,4 @@
-package com.wuest.prefab.blocks;
+package com.prefab.blocks;
 
 import com.mojang.serialization.MapCodec;
 import com.prefab.ModRegistryBase;

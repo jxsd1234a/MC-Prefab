@@ -1,4 +1,4 @@
-package com.wuest.prefab.blocks;
+package com.prefab.blocks;
 
 import com.prefab.ModRegistryBase;
 import net.minecraft.core.BlockPos;

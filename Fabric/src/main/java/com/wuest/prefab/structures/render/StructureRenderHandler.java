@@ -3,7 +3,7 @@ package com.wuest.prefab.structures.render;
 import com.mojang.blaze3d.vertex.*;
 import com.prefab.ClientModRegistryBase;
 import com.wuest.prefab.Prefab;
-import com.wuest.prefab.blocks.BlockStructureScanner;
+import com.prefab.blocks.BlockStructureScanner;
 import com.prefab.config.StructureScannerConfig;
 import com.prefab.structures.base.BuildBlock;
 import com.prefab.structures.base.Structure;

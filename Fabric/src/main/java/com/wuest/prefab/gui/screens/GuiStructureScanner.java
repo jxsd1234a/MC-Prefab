@@ -2,7 +2,7 @@ package com.wuest.prefab.gui.screens;
 
 import com.prefab.ClientModRegistryBase;
 import com.prefab.Tuple;
-import com.wuest.prefab.blocks.BlockStructureScanner;
+import com.prefab.blocks.BlockStructureScanner;
 import com.prefab.config.StructureScannerConfig;
 import com.prefab.gui.GuiBase;
 import com.prefab.gui.controls.ExtendedButton;

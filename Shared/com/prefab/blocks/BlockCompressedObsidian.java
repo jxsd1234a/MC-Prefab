@@ -1,4 +1,4 @@
-package com.wuest.prefab.blocks;
+package com.prefab.blocks;
 
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.level.block.Block;

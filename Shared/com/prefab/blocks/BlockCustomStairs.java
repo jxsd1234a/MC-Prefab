@@ -1,4 +1,4 @@
-package com.wuest.prefab.blocks;
+package com.prefab.blocks;
 
 import net.minecraft.world.level.block.StairBlock;
 import net.minecraft.world.level.block.state.BlockState;

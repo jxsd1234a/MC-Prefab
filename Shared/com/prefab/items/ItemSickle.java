@@ -1,12 +1,7 @@
 package com.prefab.items;
 
 import com.prefab.Utils;
-import com.prefab.gui.GuiLangKeys;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.Component;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -20,7 +15,6 @@ import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.HashSet;
-import java.util.List;
 
 public class ItemSickle extends TieredItem {
     public static HashSet<Block> effectiveBlocks = new HashSet<>();
@@ -86,23 +80,5 @@ public class ItemSickle extends TieredItem {
         }
 
         return true;
-    }
-
-    /**
-     * allows items to add custom lines of information to the mouseover description
-     */
-    @Environment(EnvType.CLIENT)
-    @Override
-    public void appendHoverText(ItemStack stack, Item.TooltipContext tooltipContext, List<Component> tooltip,
-                                TooltipFlag advanced) {
-        super.appendHoverText(stack, tooltipContext, tooltip, advanced);
-
-        boolean advancedKeyDown = Screen.hasShiftDown();
-
-        if (!advancedKeyDown) {
-            tooltip.add(GuiLangKeys.translateToComponent(GuiLangKeys.SHIFT_TOOLTIP));
-        } else {
-            tooltip.add(GuiLangKeys.translateToComponent(GuiLangKeys.SICKLE_DESC));
-        }
     }
 }

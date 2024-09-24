@@ -3,10 +3,11 @@ package com.wuest.prefab;
 import com.prefab.ModRegistryBase;
 import com.prefab.PrefabBase;
 import com.prefab.Utils;
-import com.wuest.prefab.blocks.*;
+import com.prefab.blocks.*;
 import com.prefab.blocks.entities.LightSwitchBlockEntity;
 import com.prefab.blocks.entities.StructureScannerBlockEntity;
 import com.prefab.config.StructureScannerConfig;
+import com.wuest.prefab.blocks.BlockBoundary;
 import com.wuest.prefab.items.ItemCompressedChest;
 import com.wuest.prefab.items.ItemSickle;
 import com.wuest.prefab.network.message.ConfigSyncPayload;
@@ -113,7 +114,12 @@ public class ModRegistry {
     }
 
     private static void doFabricBlockReplacements() {
-
+        // Always make sure do re-do the block item when replacing a block.
+        ModRegistryBase.Boundary = new BlockBoundary();
+        ModRegistryBase.GlassSlab = new BlockGlassSlab(Block.Properties.ofFullCopy(Blocks.GLASS));
+        ModRegistryBase.GlassStairs = new BlockGlassStairs(Blocks.GLASS.defaultBlockState(), Block.Properties.ofFullCopy(Blocks.GLASS));
+        ModRegistryBase.PaperLantern = new BlockPaperLantern();
+        ModRegistryBase.Phasic = new BlockPhasic();
     }
 
     private static void doFabricItemReplacements() {
@@ -131,7 +137,12 @@ public class ModRegistry {
     }
 
     private static void doFabricItemBlockReplacements() {
-
+        // Always make sure do re-do the block item when replacing a block.
+        ModRegistryBase.BoundaryItem = new BlockItem(ModRegistryBase.Boundary, new Item.Properties());
+        ModRegistryBase.GlassSlabItem = new BlockItem(ModRegistryBase.GlassSlab, new Item.Properties());
+        ModRegistryBase.GlassStairsItem = new BlockItem(ModRegistryBase.GlassStairs, new Item.Properties());
+        ModRegistryBase.PaperLanternItem = new BlockItem(ModRegistryBase.PaperLantern, new Item.Properties());
+        ModRegistryBase.PhasicItem = new BlockItem(ModRegistryBase.Phasic, new Item.Properties());
     }
 
     private static void registerSounds() {

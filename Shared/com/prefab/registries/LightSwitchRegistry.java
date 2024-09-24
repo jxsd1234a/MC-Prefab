@@ -2,8 +2,8 @@ package com.prefab.registries;
 
 import com.prefab.ModRegistryBase;
 import com.prefab.Tuple;
-import com.wuest.prefab.blocks.BlockDarkLamp;
-import com.wuest.prefab.blocks.BlockLightSwitch;
+import com.prefab.blocks.BlockDarkLamp;
+import com.prefab.blocks.BlockLightSwitch;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;

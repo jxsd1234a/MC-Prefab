@@ -1,8 +1,7 @@
-package com.wuest.prefab.blocks;
+package com.prefab.blocks;
 
 import com.prefab.ModRegistryBase;
 import com.prefab.PrefabBase;
-import com.wuest.prefab.Prefab;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.context.BlockPlaceContext;

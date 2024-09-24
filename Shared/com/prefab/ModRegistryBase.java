@@ -1,10 +1,14 @@
 package com.prefab;
 
+import com.prefab.blocks.*;
+import com.prefab.blocks.BlockBoundary;
+import com.prefab.blocks.BlockGlassSlab;
+import com.prefab.blocks.BlockGlassStairs;
+import com.prefab.blocks.BlockPaperLantern;
 import com.prefab.items.ItemCompressedChest;
 import com.prefab.items.ItemSwiftBlade;
 import com.prefab.registries.ModRegistries;
 import com.wuest.prefab.ModRegistry;
-import com.wuest.prefab.blocks.*;
 import com.prefab.blocks.entities.LightSwitchBlockEntity;
 import com.prefab.blocks.entities.StructureScannerBlockEntity;
 import com.prefab.items.ItemBlockWoodenCrate;
@@ -43,11 +47,11 @@ public class ModRegistryBase {
 
     public static BlockCompressedObsidian CompressedObsidian = new BlockCompressedObsidian(BlockCompressedObsidian.EnumType.COMPRESSED_OBSIDIAN);
     public static BlockCompressedObsidian DoubleCompressedObsidian = new BlockCompressedObsidian(BlockCompressedObsidian.EnumType.DOUBLE_COMPRESSED_OBSIDIAN);
-    public static BlockGlassSlab GlassSlab = new BlockGlassSlab(Block.Properties.ofFullCopy(Blocks.GLASS));
-    public static BlockGlassStairs GlassStairs = new BlockGlassStairs(Blocks.GLASS.defaultBlockState(), Block.Properties.ofFullCopy(Blocks.GLASS));
-    public static BlockPaperLantern PaperLantern = new BlockPaperLantern();
-    public static BlockPhasic Phasic = new BlockPhasic();
-    public static BlockBoundary Boundary = new BlockBoundary();
+    public static BlockGlassSlab GlassSlab;
+    public static BlockGlassStairs GlassStairs;
+    public static BlockPaperLantern PaperLantern;
+    public static BlockPhasic Phasic;
+    public static BlockBoundary Boundary;
     public static BlockGrassSlab GrassSlab = new BlockGrassSlab();
     public static BlockGrassStairs GrassStairs = new BlockGrassStairs();
     public static BlockCustomWall GrassWall = new BlockCustomWall(Blocks.GRASS_BLOCK, BlockCustomWall.EnumType.GRASS);
@@ -95,11 +99,11 @@ public class ModRegistryBase {
 
     public static BlockItem CompressedObsidianItem = new BlockItem(ModRegistryBase.CompressedObsidian, new Item.Properties());
     public static BlockItem DoubleCompressedObsidianItem = new BlockItem(ModRegistryBase.DoubleCompressedObsidian, new Item.Properties());
-    public static BlockItem GlassSlabItem = new BlockItem(ModRegistryBase.GlassSlab, new Item.Properties());
-    public static BlockItem GlassStairsItem = new BlockItem(ModRegistryBase.GlassStairs, new Item.Properties());
-    public static BlockItem PaperLanternItem = new BlockItem(ModRegistryBase.PaperLantern, new Item.Properties());
-    public static BlockItem PhasicItem = new BlockItem(ModRegistryBase.Phasic, new Item.Properties());
-    public static BlockItem BoundaryItem = new BlockItem(ModRegistryBase.Boundary, new Item.Properties());
+    public static BlockItem GlassSlabItem;
+    public static BlockItem GlassStairsItem;
+    public static BlockItem PaperLanternItem;
+    public static BlockItem PhasicItem;
+    public static BlockItem BoundaryItem;
     public static BlockItem GrassSlabItem = new BlockItem(ModRegistryBase.GrassSlab, new Item.Properties());
     public static BlockItem GrassStairsItem = new BlockItem(ModRegistryBase.GrassStairs, new Item.Properties());
     public static BlockItem GrassWallItem = new BlockItem(ModRegistryBase.GrassWall, new Item.Properties());
