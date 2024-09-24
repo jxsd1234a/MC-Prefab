@@ -1,5 +1,6 @@
 package com.wuest.prefab.config;
 
+import com.prefab.config.ModConfiguration;
 import com.terraformersmc.modmenu.api.ConfigScreenFactory;
 import com.terraformersmc.modmenu.api.ModMenuApi;
 import me.shedaniel.autoconfig.AutoConfig;

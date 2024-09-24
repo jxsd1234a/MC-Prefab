@@ -1,15 +1,15 @@
 package com.prefab;
 
 import com.prefab.base.BaseConfig;
+import com.prefab.config.EntityPlayerConfiguration;
 import com.prefab.gui.GuiBase;
+import com.prefab.gui.screens.GuiStructureScanner;
+import com.prefab.structures.gui.GuiStructure;
 import com.prefab.structures.items.StructureItem;
-import com.wuest.prefab.ModRegistry;
 import com.prefab.blocks.BlockCustomWall;
 import com.prefab.blocks.BlockGrassSlab;
 import com.prefab.blocks.BlockGrassStairs;
 import com.prefab.config.StructureScannerConfig;
-import com.wuest.prefab.gui.screens.GuiStructureScanner;
-import com.wuest.prefab.structures.gui.GuiStructure;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.BiomeColors;
@@ -28,6 +28,8 @@ import java.util.function.Consumer;
 
 public class ClientModRegistryBase {
     public static ArrayList<StructureScannerConfig> structureScanners;
+
+    public static EntityPlayerConfiguration playerConfig = new EntityPlayerConfiguration();
 
     /**
      * The hashmap of mod guis.
@@ -111,7 +113,7 @@ public class ClientModRegistryBase {
      * Adds all of the Mod Guis to the HasMap.
      */
     public static void RegisterGuis() {
-        for (Consumer<Object> consumer : ModRegistry.guiRegistrations) {
+        for (Consumer<Object> consumer : ModRegistryBase.guiRegistrations) {
             consumer.accept(null);
         }
     }

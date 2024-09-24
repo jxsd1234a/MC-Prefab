@@ -8,17 +8,17 @@ import com.prefab.blocks.BlockPaperLantern;
 import com.prefab.items.ItemCompressedChest;
 import com.prefab.items.ItemSwiftBlade;
 import com.prefab.registries.ModRegistries;
+import com.prefab.structures.items.*;
 import com.wuest.prefab.ModRegistry;
 import com.prefab.blocks.entities.LightSwitchBlockEntity;
 import com.prefab.blocks.entities.StructureScannerBlockEntity;
 import com.prefab.items.ItemBlockWoodenCrate;
 import com.prefab.items.ItemSickle;
 import com.prefab.items.ItemWoodenCrate;
-import com.wuest.prefab.recipe.ConditionedShapedRecipe;
-import com.wuest.prefab.recipe.ConditionedShapelessRecipe;
-import com.wuest.prefab.recipe.ConditionedSmeltingRecipe;
+import com.prefab.recipe.ConditionedShapedRecipe;
+import com.prefab.recipe.ConditionedShapelessRecipe;
+import com.prefab.recipe.ConditionedSmeltingRecipe;
 import com.prefab.structures.config.BasicStructureConfiguration;
-import com.wuest.prefab.structures.items.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.item.BlockItem;
@@ -29,10 +29,14 @@ import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.material.MapColor;
 
+import java.util.ArrayList;
+import java.util.function.Consumer;
+
 import static net.minecraft.world.item.Tiers.WOOD;
 
 public class ModRegistryBase {
     public static ModRegistries serverModRegistries;
+    public static final ArrayList<Consumer<Object>> guiRegistrations = new ArrayList<>();
 
     /* *********************************** Blocks *********************************** */
     public static BlockCompressedStone CompressedStone = new BlockCompressedStone(BlockCompressedStone.EnumType.COMPRESSED_STONE);
@@ -171,8 +175,8 @@ public class ModRegistryBase {
     public static ItemHouse House = new ItemHouse();
     public static ItemHouseImproved HouseImproved = new ItemHouseImproved();
     public static ItemHouseAdvanced HouseAdvanced = new ItemHouseAdvanced();
-    public static ItemBulldozer Bulldozer = new ItemBulldozer();
-    public static ItemBulldozer CreativeBulldozer = new ItemBulldozer(true);
+    public static ItemBulldozer Bulldozer;
+    public static ItemBulldozer CreativeBulldozer;
     public static ItemBasicStructure MachineryTower = new ItemBasicStructure(BasicStructureConfiguration.EnumBasicStructureName.MachineryTower);
     public static ItemBasicStructure DefenseBunker = new ItemBasicStructure(BasicStructureConfiguration.EnumBasicStructureName.DefenseBunker);
     public static ItemBasicStructure MineshaftEntrance = new ItemBasicStructure(BasicStructureConfiguration.EnumBasicStructureName.MineshaftEntrance);

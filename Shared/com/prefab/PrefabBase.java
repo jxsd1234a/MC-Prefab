@@ -1,5 +1,6 @@
 package com.prefab;
 
+import com.prefab.config.ModConfiguration;
 import com.prefab.network.INetworkWrapper;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
@@ -34,6 +35,9 @@ public class PrefabBase {
 	 * Used to call mod-loader specific events/methods (such as whether or not a player can break a block)
 	 */
 	public static IEventCaller eventCaller;
+
+	public static ModConfiguration configuration;
+	public static ModConfiguration serverConfiguration;
 
 	static {
 		PrefabBase.logger = LogManager.getLogger("Prefab");

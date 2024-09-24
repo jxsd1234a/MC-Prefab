@@ -1,6 +1,6 @@
 package com.wuest.prefab.structures.events;
 
-import com.wuest.prefab.structures.render.StructureRenderHandler;
+import com.prefab.structures.render.StructureRenderHandler;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.InteractionResult;

@@ -4,7 +4,7 @@ import com.prefab.ModRegistryBase;
 import com.prefab.PrefabBase;
 import com.prefab.blocks.FullDyeColor;
 import com.prefab.structures.config.enums.*;
-import com.wuest.prefab.structures.predefined.StructureBasic;
+import com.prefab.structures.predefined.StructureBasic;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;

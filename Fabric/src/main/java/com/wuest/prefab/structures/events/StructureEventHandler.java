@@ -6,7 +6,7 @@ import com.prefab.network.ServerToClientTypes;
 import com.wuest.prefab.Prefab;
 import com.prefab.Tuple;
 import com.prefab.config.EntityPlayerConfiguration;
-import com.wuest.prefab.config.ModConfiguration;
+import com.prefab.config.ModConfiguration;
 import com.prefab.network.message.TagMessage;
 import com.prefab.structures.base.BuildBlock;
 import com.prefab.structures.base.BuildEntity;
@@ -98,10 +98,10 @@ public final class StructureEventHandler {
     public static void playerLoggedIn(ServerPlayer player, ServerLevel serverWorld) {
         EntityPlayerConfiguration playerConfig = EntityPlayerConfiguration.loadFromEntity(player);
 
-        ModConfiguration.StartingItemOptions startingItem = Prefab.serverConfiguration.startingItem;
+        ModConfiguration.StartingItemOptions startingItem = PrefabBase.serverConfiguration.startingItem;
 
         if (!playerConfig.givenHouseBuilder && startingItem != null
-            && Prefab.serverConfiguration.newPlayersGetStartingItem) {
+            && PrefabBase.serverConfiguration.newPlayersGetStartingItem) {
             ItemStack stack = ItemStack.EMPTY;
 
             switch (startingItem) {

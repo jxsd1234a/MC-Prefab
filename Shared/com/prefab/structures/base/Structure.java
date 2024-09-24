@@ -389,7 +389,7 @@ public class Structure {
             return false;
         }
 
-        if (Prefab.serverConfiguration.playBuildingSound) {
+        if (PrefabBase.serverConfiguration.playBuildingSound) {
             // Play the building sound.
             world.playSound(null, originalPos, ModRegistryBase.BuildingBlueprint, SoundSource.NEUTRAL, 0.8f, 0.8f);
         }
@@ -578,7 +578,7 @@ public class Structure {
         boolean isOverworld = Level.OVERWORLD.location().toString().equals(world.dimension().location().toString());
 
         if (world.dimensionType().ultraWarm()
-                || (!isOverworld && Prefab.serverConfiguration.allowWaterInNonOverworldDimensions)) {
+                || (!isOverworld && PrefabBase.serverConfiguration.allowWaterInNonOverworldDimensions)) {
             boolean foundWaterLikeBlock = (foundBlock instanceof LiquidBlock && blockState.getBlock() == Blocks.WATER)
                     || foundBlock instanceof SeagrassBlock;
 

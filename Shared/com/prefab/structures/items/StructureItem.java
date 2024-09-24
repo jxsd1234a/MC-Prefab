@@ -1,9 +1,8 @@
 package com.prefab.structures.items;
 
 import com.prefab.ClientModRegistryBase;
-import com.wuest.prefab.ClientModRegistry;
 import com.wuest.prefab.Prefab;
-import com.wuest.prefab.structures.gui.GuiStructure;
+import com.prefab.structures.gui.GuiStructure;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.Item;

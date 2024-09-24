@@ -2,11 +2,10 @@ package com.prefab.structures.base;
 
 import com.prefab.ModRegistryBase;
 import com.prefab.PrefabBase;
-import com.wuest.prefab.Prefab;
 import com.prefab.Triple;
 import com.prefab.Tuple;
 import com.prefab.blocks.FullDyeColor;
-import com.wuest.prefab.config.ModConfiguration;
+import com.prefab.config.ModConfiguration;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -391,33 +390,33 @@ public class BuildingMethods {
             int itemSlot = 0;
 
 			// Add the tools.
-			if (Prefab.serverConfiguration.chestOptions.addAxe) {
+			if (PrefabBase.serverConfiguration.chestOptions.addAxe) {
 				chestTile.setItem(itemSlot++, new ItemStack(Items.STONE_AXE));
 			}
 
-			if (Prefab.serverConfiguration.chestOptions.addHoe) {
+			if (PrefabBase.serverConfiguration.chestOptions.addHoe) {
 				chestTile.setItem(itemSlot++, new ItemStack(Items.STONE_HOE));
 			}
 
-			if (Prefab.serverConfiguration.chestOptions.addPickAxe) {
+			if (PrefabBase.serverConfiguration.chestOptions.addPickAxe) {
 				chestTile.setItem(itemSlot++, new ItemStack(Items.STONE_PICKAXE));
 			}
 
-			if (Prefab.serverConfiguration.chestOptions.addShovel) {
+			if (PrefabBase.serverConfiguration.chestOptions.addShovel) {
 				chestTile.setItem(itemSlot++, new ItemStack(Items.STONE_SHOVEL));
 			}
 
-			if (Prefab.serverConfiguration.chestOptions.addSword) {
+			if (PrefabBase.serverConfiguration.chestOptions.addSword) {
 				Item sword = ModRegistryBase.SwiftBladeStone;
 
-				if (!Prefab.serverConfiguration.recipes.get(ModConfiguration.ConfigKeyNames.swiftBladeKey)) {
+				if (!PrefabBase.serverConfiguration.recipes.get(ModConfiguration.ConfigKeyNames.swiftBladeKey)) {
 					sword = Items.STONE_SWORD;
 				}
 
 				chestTile.setItem(itemSlot++, new ItemStack(sword));
 			}
 
-			if (Prefab.serverConfiguration.chestOptions.addArmor) {
+			if (PrefabBase.serverConfiguration.chestOptions.addArmor) {
 				// Add the armor.
 				chestTile.setItem(itemSlot++, new ItemStack(Items.LEATHER_BOOTS));
 				chestTile.setItem(itemSlot++, new ItemStack(Items.LEATHER_CHESTPLATE));
@@ -425,12 +424,12 @@ public class BuildingMethods {
 				chestTile.setItem(itemSlot++, new ItemStack(Items.LEATHER_LEGGINGS));
 			}
 
-			if (Prefab.serverConfiguration.chestOptions.addFood) {
+			if (PrefabBase.serverConfiguration.chestOptions.addFood) {
 				// Add some bread.
 				chestTile.setItem(itemSlot++, new ItemStack(Items.BREAD, 20));
 			}
 
-			if (Prefab.serverConfiguration.chestOptions.addCrops) {
+			if (PrefabBase.serverConfiguration.chestOptions.addCrops) {
 				// Add potatoes.
 				chestTile.setItem(itemSlot++, new ItemStack(Items.POTATO, 3));
 
@@ -441,22 +440,22 @@ public class BuildingMethods {
 				chestTile.setItem(itemSlot++, new ItemStack(Items.WHEAT_SEEDS, 3));
 			}
 
-			if (Prefab.serverConfiguration.chestOptions.addCobble) {
+			if (PrefabBase.serverConfiguration.chestOptions.addCobble) {
 				// Add Cobblestone.
 				chestTile.setItem(itemSlot++, new ItemStack(Item.byBlock(Blocks.COBBLESTONE), 64));
 			}
 
-			if (Prefab.serverConfiguration.chestOptions.addDirt) {
+			if (PrefabBase.serverConfiguration.chestOptions.addDirt) {
 				// Add Dirt.
 				chestTile.setItem(itemSlot++, new ItemStack(Item.byBlock(Blocks.DIRT), 64));
 			}
 
-			if (Prefab.serverConfiguration.chestOptions.addSaplings) {
+			if (PrefabBase.serverConfiguration.chestOptions.addSaplings) {
 				// Add oak saplings.
 				chestTile.setItem(itemSlot++, new ItemStack(Item.byBlock(Blocks.OAK_SAPLING), 3));
 			}
 
-			if (Prefab.serverConfiguration.chestOptions.addTorches) {
+			if (PrefabBase.serverConfiguration.chestOptions.addTorches) {
 				// Add a set of 20 torches.
 				chestTile.setItem(itemSlot++, new ItemStack(Item.byBlock(Blocks.TORCH), 20));
 			}
@@ -608,7 +607,7 @@ public class BuildingMethods {
 		BlockState blockState = Blocks.TORCH.defaultBlockState();
 		BuildingMethods.ReplaceBlock(world, pos.relative(facing.getCounterClockWise()), blockState);
 
-		if (Prefab.serverConfiguration.includeMineshaftChest) {
+		if (PrefabBase.serverConfiguration.includeMineshaftChest) {
 			// Place a chest to the right of the ladder.
 			BlockState chestState = Blocks.CHEST.defaultBlockState().setValue(ChestBlock.FACING, facing);
 			BuildingMethods.ReplaceBlock(world, pos.relative(facing.getClockWise()), chestState);

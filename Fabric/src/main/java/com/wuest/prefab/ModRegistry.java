@@ -7,7 +7,6 @@ import com.prefab.blocks.*;
 import com.prefab.blocks.entities.LightSwitchBlockEntity;
 import com.prefab.blocks.entities.StructureScannerBlockEntity;
 import com.prefab.config.StructureScannerConfig;
-import com.wuest.prefab.blocks.BlockBoundary;
 import com.wuest.prefab.items.ItemCompressedChest;
 import com.wuest.prefab.items.ItemSickle;
 import com.wuest.prefab.network.message.ConfigSyncPayload;
@@ -38,7 +37,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
-import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 /**
@@ -48,7 +46,6 @@ import java.util.function.Supplier;
  */
 public class ModRegistry {
     private static final ArrayList<Item> ModItems = new ArrayList<>();
-    public static final ArrayList<Consumer<Object>> guiRegistrations = new ArrayList<>();
 
     /* *********************************** Item Group *********************************** */
     private static final CreativeModeTab ITEM_GROUP = FabricItemGroup.builder()
@@ -110,16 +107,16 @@ public class ModRegistry {
     }
 
     private static void doFabricBlockEntityReplacements() {
-
     }
 
     private static void doFabricBlockReplacements() {
         // Always make sure do re-do the block item when replacing a block.
-        ModRegistryBase.Boundary = new BlockBoundary();
-        ModRegistryBase.GlassSlab = new BlockGlassSlab(Block.Properties.ofFullCopy(Blocks.GLASS));
-        ModRegistryBase.GlassStairs = new BlockGlassStairs(Blocks.GLASS.defaultBlockState(), Block.Properties.ofFullCopy(Blocks.GLASS));
-        ModRegistryBase.PaperLantern = new BlockPaperLantern();
-        ModRegistryBase.Phasic = new BlockPhasic();
+        // Always make sure to fully qualify WHICH block we are creating...
+        ModRegistryBase.Boundary = new com.wuest.prefab.blocks.BlockBoundary();
+        ModRegistryBase.GlassSlab = new com.wuest.prefab.blocks.BlockGlassSlab(Block.Properties.ofFullCopy(Blocks.GLASS));
+        ModRegistryBase.GlassStairs = new com.wuest.prefab.blocks.BlockGlassStairs(Blocks.GLASS.defaultBlockState(), Block.Properties.ofFullCopy(Blocks.GLASS));
+        ModRegistryBase.PaperLantern = new com.wuest.prefab.blocks.BlockPaperLantern();
+        ModRegistryBase.Phasic = new com.wuest.prefab.blocks.BlockPhasic();
     }
 
     private static void doFabricItemReplacements() {
@@ -133,7 +130,9 @@ public class ModRegistry {
     }
 
     private static void doFabricBluePrintReplacements() {
-
+        // Always make sure to fully qualify WHICH item we are creating...
+        ModRegistryBase.Bulldozer = new com.wuest.prefab.structures.items.ItemBulldozer();
+        ModRegistryBase.CreativeBulldozer = new com.wuest.prefab.structures.items.ItemBulldozer(true);
     }
 
     private static void doFabricItemBlockReplacements() {

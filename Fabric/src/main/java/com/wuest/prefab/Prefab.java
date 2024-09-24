@@ -1,7 +1,7 @@
 package com.wuest.prefab;
 
 import com.prefab.PrefabBase;
-import com.wuest.prefab.config.ModConfiguration;
+import com.prefab.config.ModConfiguration;
 import com.wuest.prefab.events.ServerEvents;
 import com.wuest.prefab.network.NetworkWrapper;
 import me.shedaniel.autoconfig.AutoConfig;
@@ -15,8 +15,6 @@ public class Prefab implements ModInitializer {
      * Note: this should only be set to true during debug mode.
      */
     public static boolean useScanningMode = false;
-    public static ModConfiguration configuration;
-    public static ModConfiguration serverConfiguration;
 
     @Override
     public void onInitialize() {
@@ -28,8 +26,8 @@ public class Prefab implements ModInitializer {
 
         AutoConfig.register(ModConfiguration.class, GsonConfigSerializer::new);
 
-        Prefab.serverConfiguration = new ModConfiguration();
-        Prefab.configuration = AutoConfig.getConfigHolder(ModConfiguration.class).getConfig();
+        PrefabBase.serverConfiguration = new ModConfiguration();
+        PrefabBase.configuration = AutoConfig.getConfigHolder(ModConfiguration.class).getConfig();
 
         ServerEvents.registerServerEvents();
     }

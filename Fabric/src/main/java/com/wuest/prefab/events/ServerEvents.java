@@ -4,7 +4,7 @@ import com.prefab.ModRegistryBase;
 import com.prefab.PrefabBase;
 import com.prefab.network.ServerToClientTypes;
 import com.wuest.prefab.Prefab;
-import com.wuest.prefab.config.ModConfiguration;
+import com.prefab.config.ModConfiguration;
 import com.prefab.items.ItemSickle;
 import com.prefab.network.message.TagMessage;
 import com.prefab.registries.ModRegistries;
@@ -48,7 +48,7 @@ public class ServerEvents {
         ServerLifecycleEvents.SERVER_STARTED.register((server) -> {
             // Get the server configuration.
             // This will be pushed to the player when they join the world.
-            Prefab.serverConfiguration = AutoConfig.getConfigHolder(ModConfiguration.class).getConfig();
+            PrefabBase.serverConfiguration = AutoConfig.getConfigHolder(ModConfiguration.class).getConfig();
 
             // Do this when the server starts so that all appropriate tags are used.
             ItemSickle.setEffectiveBlocks();
@@ -59,7 +59,7 @@ public class ServerEvents {
         ServerEntityEvents.ENTITY_LOAD.register((entity, serverWorld) -> {
             if (entity instanceof ServerPlayer) {
                 // Send the message to the client.
-                TagMessage message = new TagMessage(Prefab.serverConfiguration.writeCompoundTag());
+                TagMessage message = new TagMessage(PrefabBase.serverConfiguration.writeCompoundTag());
                 PrefabBase.networkWrapper.sendToClient(ServerToClientTypes.MOD_CONFIG_SYNC, (ServerPlayer) entity, message);
             }
         });

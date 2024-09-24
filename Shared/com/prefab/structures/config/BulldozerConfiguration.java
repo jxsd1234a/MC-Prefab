@@ -1,7 +1,7 @@
 package com.prefab.structures.config;
 
 import com.prefab.ModRegistryBase;
-import com.wuest.prefab.structures.predefined.StructureBulldozer;
+import com.prefab.structures.predefined.StructureBulldozer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;

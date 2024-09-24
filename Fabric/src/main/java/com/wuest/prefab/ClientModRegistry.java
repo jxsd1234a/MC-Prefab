@@ -3,6 +3,7 @@ package com.wuest.prefab;
 import com.mojang.blaze3d.platform.InputConstants;
 import com.prefab.ClientModRegistryBase;
 import com.prefab.ModRegistryBase;
+import com.prefab.PrefabBase;
 import com.prefab.config.EntityPlayerConfiguration;
 import com.wuest.prefab.network.message.PlayerConfigPayload;
 import com.wuest.prefab.network.message.ConfigSyncPayload;
@@ -19,7 +20,6 @@ import java.util.UUID;
 
 public class ClientModRegistry {
     public static KeyMapping keyBinding;
-    public static EntityPlayerConfiguration playerConfig = new EntityPlayerConfiguration();
 
     public static void registerModComponents() {
         ClientModRegistry.registerKeyBindings();
@@ -36,7 +36,7 @@ public class ClientModRegistry {
                 (payload, context) -> {
                     context.client().execute(() -> {
                         // This is now on the "main" client thread and things can be done in the world!
-                        Prefab.serverConfiguration.readFromTag(payload.tagMessage().getMessageTag());
+                        PrefabBase.serverConfiguration.readFromTag(payload.tagMessage().getMessageTag());
                     });
                 }
         );
@@ -47,8 +47,8 @@ public class ClientModRegistry {
                 UUID playerUUID = Minecraft.getInstance().player.getUUID();
 
                 EntityPlayerConfiguration playerConfiguration = EntityPlayerConfiguration.loadFromTag(playerUUID, payload.tagMessage().getMessageTag());
-                ClientModRegistry.playerConfig.builtStarterHouse = playerConfiguration.builtStarterHouse;
-                ClientModRegistry.playerConfig.givenHouseBuilder = playerConfiguration.givenHouseBuilder;
+                ClientModRegistryBase.playerConfig.builtStarterHouse = playerConfiguration.builtStarterHouse;
+                ClientModRegistryBase.playerConfig.givenHouseBuilder = playerConfiguration.givenHouseBuilder;
             });
         });
     }
