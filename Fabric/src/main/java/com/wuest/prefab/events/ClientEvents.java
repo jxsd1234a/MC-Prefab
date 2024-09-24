@@ -2,6 +2,7 @@ package com.wuest.prefab.events;
 
 import com.prefab.ClientModRegistryBase;
 import com.prefab.structures.config.BasicStructureConfiguration;
+import com.wuest.prefab.ClientModRegistry;
 import com.wuest.prefab.structures.events.StructureClientEventHandler;
 import com.wuest.prefab.structures.gui.GuiStructure;
 import com.wuest.prefab.structures.items.ItemBasicStructure;
@@ -28,7 +29,7 @@ public class ClientEvents {
 
     public static void registerClientEndTick() {
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
-            if (ClientModRegistryBase.keyBinding.isDown()) {
+            if (ClientModRegistry.keyBinding.isDown()) {
                 if (StructureRenderHandler.currentStructure != null) {
                     ItemStack mainHandStack = Minecraft.getInstance().player.getMainHandItem();
                     ItemStack offHandStack = Minecraft.getInstance().player.getOffhandItem();

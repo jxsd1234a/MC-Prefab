@@ -231,6 +231,8 @@ public class BuildingMethods {
 				}
 
 				if (!world.isEmptyBlock(currentPos)) {
+					// TODO: Create own event interface which is implemented in mod-loader specific process
+					// pass in the world, player, position, block state.
 					if (!PlayerBlockBreakEvents.BEFORE.invoker().beforeBlockBreak(world, player, currentPos, world.getBlockState(currentPos), null)) {
 						return new Triple<>(false, blockState, currentPos);
 					}

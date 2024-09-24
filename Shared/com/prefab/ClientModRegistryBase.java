@@ -1,6 +1,5 @@
 package com.prefab;
 
-import com.mojang.blaze3d.platform.InputConstants;
 import com.prefab.base.BaseConfig;
 import com.prefab.gui.GuiBase;
 import com.prefab.structures.items.StructureItem;
@@ -11,8 +10,6 @@ import com.prefab.blocks.BlockGrassStairs;
 import com.prefab.config.StructureScannerConfig;
 import com.wuest.prefab.gui.screens.GuiStructureScanner;
 import com.wuest.prefab.structures.gui.GuiStructure;
-import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
-import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.BiomeColors;
@@ -23,7 +20,6 @@ import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.GrassColor;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import org.lwjgl.glfw.GLFW;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,7 +27,6 @@ import java.util.Map;
 import java.util.function.Consumer;
 
 public class ClientModRegistryBase {
-    public static KeyMapping keyBinding;
     public static ArrayList<StructureScannerConfig> structureScanners;
 
     /**
@@ -44,8 +39,6 @@ public class ClientModRegistryBase {
     }
 
     public static void registerModComponents() {
-        ClientModRegistryBase.registerKeyBindings();
-
         ClientModRegistryBase.RegisterGuis();
     }
 
@@ -122,15 +115,4 @@ public class ClientModRegistryBase {
             consumer.accept(null);
         }
     }
-
-    public static void registerKeyBindings() {
-        // TODO: Create translation keys.
-        keyBinding = KeyBindingHelper.registerKeyBinding(new KeyMapping(
-                "Build Current Structure", // The translation key of the keybinding's name
-                InputConstants.Type.KEYSYM,
-                GLFW.GLFW_KEY_B,
-                "Prefab - Structure Preview" // The translation key of the keybinding's category.
-        ));
-    }
-
 }

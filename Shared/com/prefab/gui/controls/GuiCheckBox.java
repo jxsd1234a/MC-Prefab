@@ -5,8 +5,6 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.prefab.PrefabBase;
 import com.prefab.Utils;
 import com.prefab.gui.GuiUtils;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractButton;
@@ -163,7 +161,6 @@ public class GuiCheckBox extends AbstractButton {
         }
     }
 
-    @Environment(EnvType.CLIENT)
     public interface IPressable {
         void onPress(GuiCheckBox p_onPress_1_);
     }

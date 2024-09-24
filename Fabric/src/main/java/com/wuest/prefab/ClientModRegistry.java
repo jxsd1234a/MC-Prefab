@@ -1,5 +1,6 @@
 package com.wuest.prefab;
 
+import com.mojang.blaze3d.platform.InputConstants;
 import com.prefab.ClientModRegistryBase;
 import com.prefab.ModRegistryBase;
 import com.wuest.prefab.config.EntityPlayerConfiguration;
@@ -7,17 +8,21 @@ import com.wuest.prefab.network.message.PlayerConfigPayload;
 import com.wuest.prefab.network.message.ConfigSyncPayload;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 
+import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
+import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderType;
+import org.lwjgl.glfw.GLFW;
+
 import java.util.UUID;
 
 public class ClientModRegistry {
-
+    public static KeyMapping keyBinding;
     public static EntityPlayerConfiguration playerConfig = new EntityPlayerConfiguration();
 
     public static void registerModComponents() {
-        ClientModRegistryBase.registerKeyBindings();
+        ClientModRegistry.registerKeyBindings();
 
         ClientModRegistry.registerBlockLayers();
 
@@ -63,5 +68,15 @@ public class ClientModRegistry {
         BlockRenderLayerMap.INSTANCE.putBlock(ModRegistryBase.DirtWall, RenderType.cutoutMipped());
         BlockRenderLayerMap.INSTANCE.putBlock(ModRegistryBase.LightSwitch, RenderType.cutout());
         BlockRenderLayerMap.INSTANCE.putBlock(ModRegistryBase.DarkLamp, RenderType.cutoutMipped());
+    }
+
+    public static void registerKeyBindings() {
+        // TODO: Create translation keys.
+        keyBinding = KeyBindingHelper.registerKeyBinding(new KeyMapping(
+                "Build Current Structure", // The translation key of the keybinding's name
+                InputConstants.Type.KEYSYM,
+                GLFW.GLFW_KEY_B,
+                "Prefab - Structure Preview" // The translation key of the keybinding's category.
+        ));
     }
 }
