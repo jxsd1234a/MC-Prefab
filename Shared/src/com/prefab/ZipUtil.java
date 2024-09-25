@@ -4,7 +4,6 @@ import com.google.common.base.Charsets;
 import com.google.common.io.ByteStreams;
 import com.google.common.io.CharStreams;
 import com.google.common.io.Files;
-import com.wuest.prefab.Prefab;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -113,7 +112,7 @@ public class ZipUtil {
 	 * @param fileLocation     The file location to save the compressed data too.
 	 */
 	public static void zipResourceToFile(String resourceLocation, String fileLocation) {
-		InputStream stream = Prefab.class.getClassLoader().getResourceAsStream(resourceLocation);
+		InputStream stream = ZipUtil.class.getClassLoader().getResourceAsStream(resourceLocation);
 		String temp;
 
 		try {
@@ -148,7 +147,7 @@ public class ZipUtil {
 	 * @return The de-compressed string.
 	 */
 	public static String decompressResource(String resourceLocation) {
-		InputStream stream = Prefab.class.getClassLoader().getResourceAsStream(resourceLocation);
+		InputStream stream = ZipUtil.class.getClassLoader().getResourceAsStream(resourceLocation);
 		byte[] buf;
 		String returnValue = "";
 
@@ -171,7 +170,7 @@ public class ZipUtil {
 	 * @return A buffered image for the resource location.
 	 */
 	public static BufferedImage decompressImageResource(String resourceLocation) {
-		InputStream stream = Prefab.class.getClassLoader().getResourceAsStream(resourceLocation);
+		InputStream stream = ZipUtil.class.getClassLoader().getResourceAsStream(resourceLocation);
 		byte[] buf;
 		BufferedImage returnValue = null;
 

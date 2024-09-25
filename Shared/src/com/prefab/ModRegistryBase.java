@@ -9,7 +9,6 @@ import com.prefab.items.ItemCompressedChest;
 import com.prefab.items.ItemSwiftBlade;
 import com.prefab.registries.ModRegistries;
 import com.prefab.structures.items.*;
-import com.wuest.prefab.ModRegistry;
 import com.prefab.blocks.entities.LightSwitchBlockEntity;
 import com.prefab.blocks.entities.StructureScannerBlockEntity;
 import com.prefab.items.ItemBlockWoodenCrate;
@@ -19,18 +18,28 @@ import com.prefab.recipe.ConditionedShapedRecipe;
 import com.prefab.recipe.ConditionedShapelessRecipe;
 import com.prefab.recipe.ConditionedSmeltingRecipe;
 import com.prefab.structures.config.BasicStructureConfiguration;
+import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.TagKey;
+import net.minecraft.util.LazyLoadedValue;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.Tiers;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.MapColor;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 import static net.minecraft.world.item.Tiers.WOOD;
 
@@ -65,11 +74,11 @@ public class ModRegistryBase {
     public static BlockStructureScanner StructureScanner = null;
     public static BlockLightSwitch LightSwitch = new BlockLightSwitch();
     public static BlockDarkLamp DarkLamp = new BlockDarkLamp();
-    public static BlockRotatableHorizontalShaped PileOfBricks = new BlockRotatableHorizontalShaped(BlockShaped.BlockShape.PileOfBricks, Block.Properties.ofFullCopy(Blocks.BRICKS).mapColor(MapColor.COLOR_RED).noOcclusion().isViewBlocking(ModRegistry::never));
-    public static BlockRotatableHorizontalShaped PalletOfBricks = new BlockRotatableHorizontalShaped(BlockShaped.BlockShape.PalletOfBricks, Block.Properties.ofFullCopy(Blocks.BRICKS).mapColor(MapColor.COLOR_RED).noOcclusion().isViewBlocking(ModRegistry::never));
-    public static BlockRotatableHorizontalShaped BundleOfTimber = new BlockRotatableHorizontalShaped(BlockShaped.BlockShape.BundleOfTimber, Block.Properties.ofFullCopy(Blocks.OAK_WOOD).mapColor(MapColor.COLOR_BROWN).sound(SoundType.WOOD).noOcclusion().isViewBlocking(ModRegistry::never));
-    public static BlockRotatableHorizontalShaped HeapOfTimber = new BlockRotatableHorizontalShaped(BlockShaped.BlockShape.HeapOfTimber, Block.Properties.ofFullCopy(Blocks.OAK_WOOD).mapColor(MapColor.COLOR_BROWN).sound(SoundType.WOOD).noOcclusion().isViewBlocking(ModRegistry::never));
-    public static BlockRotatableHorizontalShaped TonOfTimber = new BlockRotatableHorizontalShaped(BlockShaped.BlockShape.TonOfTimber, Block.Properties.ofFullCopy(Blocks.OAK_WOOD).mapColor(MapColor.COLOR_BROWN).sound(SoundType.WOOD).noOcclusion().isViewBlocking(ModRegistry::never));
+    public static BlockRotatableHorizontalShaped PileOfBricks = new BlockRotatableHorizontalShaped(BlockShaped.BlockShape.PileOfBricks, Block.Properties.ofFullCopy(Blocks.BRICKS).mapColor(MapColor.COLOR_RED).noOcclusion().isViewBlocking(ModRegistryBase::never));
+    public static BlockRotatableHorizontalShaped PalletOfBricks = new BlockRotatableHorizontalShaped(BlockShaped.BlockShape.PalletOfBricks, Block.Properties.ofFullCopy(Blocks.BRICKS).mapColor(MapColor.COLOR_RED).noOcclusion().isViewBlocking(ModRegistryBase::never));
+    public static BlockRotatableHorizontalShaped BundleOfTimber = new BlockRotatableHorizontalShaped(BlockShaped.BlockShape.BundleOfTimber, Block.Properties.ofFullCopy(Blocks.OAK_WOOD).mapColor(MapColor.COLOR_BROWN).sound(SoundType.WOOD).noOcclusion().isViewBlocking(ModRegistryBase::never));
+    public static BlockRotatableHorizontalShaped HeapOfTimber = new BlockRotatableHorizontalShaped(BlockShaped.BlockShape.HeapOfTimber, Block.Properties.ofFullCopy(Blocks.OAK_WOOD).mapColor(MapColor.COLOR_BROWN).sound(SoundType.WOOD).noOcclusion().isViewBlocking(ModRegistryBase::never));
+    public static BlockRotatableHorizontalShaped TonOfTimber = new BlockRotatableHorizontalShaped(BlockShaped.BlockShape.TonOfTimber, Block.Properties.ofFullCopy(Blocks.OAK_WOOD).mapColor(MapColor.COLOR_BROWN).sound(SoundType.WOOD).noOcclusion().isViewBlocking(ModRegistryBase::never));
     public static BlockRotatable EmptyCrate = new BlockRotatable(Block.Properties.ofFullCopy(Blocks.OAK_WOOD).sound(SoundType.WOOD));
     public static BlockRotatable CartonOfEggs = new BlockRotatable(Block.Properties.ofFullCopy(Blocks.OAK_WOOD).sound(SoundType.WOOD));
     public static BlockRotatable CrateOfPotatoes = new BlockRotatable(Block.Properties.ofFullCopy(Blocks.OAK_WOOD).sound(SoundType.WOOD));
@@ -144,11 +153,11 @@ public class ModRegistryBase {
     public static Item SwiftBladeIron = new ItemSwiftBlade(Tiers.IRON, 2, .5f);
     public static Item SwiftBladeDiamond = new ItemSwiftBlade(Tiers.DIAMOND, 2, .5f);
     public static Item SwiftBladeGold = new ItemSwiftBlade(Tiers.GOLD, 2, .5f);
-    public static Item SwiftBladeCopper = new ItemSwiftBlade(ModRegistry.CustomItemTier.COPPER, 2, .5f);
-    public static Item SwiftBladeOsmium = new ItemSwiftBlade(ModRegistry.CustomItemTier.OSMIUM, 2, .5f);
-    public static Item SwiftBladeBronze = new ItemSwiftBlade(ModRegistry.CustomItemTier.BRONZE, 2, .5f);
-    public static Item SwiftBladeSteel = new ItemSwiftBlade(ModRegistry.CustomItemTier.STEEL, 2, .5f);
-    public static Item SwiftBladeObsidian = new ItemSwiftBlade(ModRegistry.CustomItemTier.OBSIDIAN, 2, .5f);
+    public static Item SwiftBladeCopper = new ItemSwiftBlade(ModRegistryBase.CustomItemTier.COPPER, 2, .5f);
+    public static Item SwiftBladeOsmium = new ItemSwiftBlade(ModRegistryBase.CustomItemTier.OSMIUM, 2, .5f);
+    public static Item SwiftBladeBronze = new ItemSwiftBlade(ModRegistryBase.CustomItemTier.BRONZE, 2, .5f);
+    public static Item SwiftBladeSteel = new ItemSwiftBlade(ModRegistryBase.CustomItemTier.STEEL, 2, .5f);
+    public static Item SwiftBladeObsidian = new ItemSwiftBlade(ModRegistryBase.CustomItemTier.OBSIDIAN, 2, .5f);
     public static Item SwiftBladeNetherite = new ItemSwiftBlade(Tiers.NETHERITE, 2, .5f);
 
     // These will be overridden in mod-loader files.
@@ -214,4 +223,105 @@ public class ModRegistryBase {
     /* *********************************** Block Entities Types *********************************** */
     public static BlockEntityType<StructureScannerBlockEntity> StructureScannerEntityType;
     public static BlockEntityType<LightSwitchBlockEntity> LightSwitchEntityType;
+
+    public static boolean always(BlockState state, BlockGetter world, BlockPos pos) {
+        return true;
+    }
+
+    public static boolean never(BlockState state, BlockGetter world, BlockPos pos) {
+        return false;
+    }
+
+    public enum CustomItemTier implements Tier {
+        COPPER("Copper", (int)Tiers.STONE.getAttackDamageBonus(), Tiers.STONE.getUses(), Tiers.STONE.getSpeed(),
+                Tiers.STONE.getAttackDamageBonus(), Tiers.STONE.getEnchantmentValue(), () -> {
+            return Ingredient
+                    .of(Utils.getItemStacksWithTag(ResourceLocation.tryBuild("c", "copper_ingots")).stream());
+        }, BlockTags.INCORRECT_FOR_STONE_TOOL),
+        OSMIUM("Osmium", (int)Tiers.IRON.getAttackDamageBonus(), 500, Tiers.IRON.getSpeed(),
+                Tiers.IRON.getAttackDamageBonus() + .5f, Tiers.IRON.getEnchantmentValue(), () -> {
+            return Ingredient
+                    .of(Utils.getItemStacksWithTag(ResourceLocation.tryBuild("c", "osmium_ingots")).stream());
+        }, BlockTags.INCORRECT_FOR_IRON_TOOL),
+        BRONZE("Bronze", (int)Tiers.IRON.getAttackDamageBonus(), Tiers.IRON.getUses(), Tiers.IRON.getSpeed(),
+                Tiers.IRON.getAttackDamageBonus(), Tiers.IRON.getEnchantmentValue(), () -> {
+            return Ingredient
+                    .of(Utils.getItemStacksWithTag(ResourceLocation.tryBuild("c", "bronze_ingots")).stream());
+        }, BlockTags.INCORRECT_FOR_IRON_TOOL),
+        STEEL("Steel", (int)Tiers.DIAMOND.getAttackDamageBonus(), (int) (Tiers.IRON.getUses() * 1.5),
+                Tiers.DIAMOND.getSpeed(), Tiers.DIAMOND.getAttackDamageBonus(),
+                Tiers.DIAMOND.getEnchantmentValue(), () -> {
+            return Ingredient
+                    .of(Utils.getItemStacksWithTag(ResourceLocation.tryBuild("c", "steel_ingots")).stream());
+        }, BlockTags.INCORRECT_FOR_DIAMOND_TOOL),
+        OBSIDIAN("Obsidian", (int)Tiers.DIAMOND.getAttackDamageBonus(), (int) (Tiers.DIAMOND.getUses() * 1.5),
+                Tiers.DIAMOND.getSpeed(), Tiers.DIAMOND.getAttackDamageBonus(),
+                Tiers.DIAMOND.getEnchantmentValue(), () -> {
+            return Ingredient.of(Item.byBlock(Blocks.OBSIDIAN));
+        }, BlockTags.INCORRECT_FOR_DIAMOND_TOOL);
+
+        private final String name;
+        private final int harvestLevel;
+        private final int maxUses;
+        private final float efficiency;
+        private final float attackDamage;
+        private final int enchantability;
+        private final LazyLoadedValue<Ingredient> repairMaterial;
+        private final TagKey<Block> incorrectBlocksForDrops;
+
+        CustomItemTier(String name, int harvestLevelIn, int maxUsesIn, float efficiencyIn, float attackDamageIn,
+                       int enchantability, Supplier<Ingredient> repairMaterialIn, TagKey<Block> incorrectBlocksForDrops) {
+            this.name = name;
+            this.harvestLevel = harvestLevelIn;
+            this.maxUses = maxUsesIn;
+            this.efficiency = efficiencyIn;
+            this.attackDamage = attackDamageIn;
+            this.enchantability = enchantability;
+            this.repairMaterial = new LazyLoadedValue<>(repairMaterialIn);
+            this.incorrectBlocksForDrops = incorrectBlocksForDrops;
+        }
+
+        public static CustomItemTier getByName(String name) {
+            for (CustomItemTier item : CustomItemTier.values()) {
+                if (item.getName().equals(name)) {
+                    return item;
+                }
+            }
+
+            return null;
+        }
+
+        public String getName() {
+            return this.name;
+        }
+
+        public int getUses() {
+            return this.maxUses;
+        }
+
+        public float getSpeed() {
+            return this.efficiency;
+        }
+
+        public float getAttackDamageBonus() {
+            return this.attackDamage;
+        }
+
+        @Override
+        public @NotNull TagKey<Block> getIncorrectBlocksForDrops() {
+            return this.incorrectBlocksForDrops;
+        }
+
+        public int getLevel() {
+            return this.harvestLevel;
+        }
+
+        public int getEnchantmentValue() {
+            return this.enchantability;
+        }
+
+        public @NotNull Ingredient getRepairIngredient() {
+            return this.repairMaterial.get();
+        }
+    }
 }

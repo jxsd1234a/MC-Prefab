@@ -4,12 +4,10 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.Expose;
 import com.prefab.*;
-import com.wuest.prefab.*;
 import com.prefab.blocks.BlockFlags;
 import com.prefab.blocks.FullDyeColor;
 import com.prefab.gui.GuiLangKeys;
 import com.prefab.structures.config.StructureConfiguration;
-import com.wuest.prefab.structures.events.StructureEventHandler;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -484,12 +482,12 @@ public class Structure {
                 world.blockUpdated(pos, block);
             }
 
-            if (StructureEventHandler.structuresToBuild.containsKey(player)) {
-                StructureEventHandler.structuresToBuild.get(player).add(this);
+            if (PrefabBase.structuresToBuild.containsKey(player)) {
+                PrefabBase.structuresToBuild.get(player).add(this);
             } else {
                 ArrayList<Structure> structures = new ArrayList<>();
                 structures.add(this);
-                StructureEventHandler.structuresToBuild.put(player, structures);
+                PrefabBase.structuresToBuild.put(player, structures);
             }
 
         }

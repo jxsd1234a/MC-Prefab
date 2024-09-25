@@ -1,7 +1,7 @@
 package com.prefab.structures.items;
 
 import com.prefab.ClientModRegistryBase;
-import com.wuest.prefab.Prefab;
+import com.prefab.PrefabBase;
 import com.prefab.structures.gui.GuiStructure;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionResult;
@@ -35,7 +35,7 @@ public class StructureItem extends Item {
     public InteractionResult useOn(UseOnContext context) {
         if (context.getLevel().isClientSide) {
             if (context.getClickedFace() == Direction.UP) {
-                if (Prefab.useScanningMode) {
+                if (PrefabBase.useScanningMode) {
                     this.scanningMode(context);
                 } else {
                     // Open the client side gui to determine the house options.

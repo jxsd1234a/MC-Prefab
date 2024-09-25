@@ -3,7 +3,6 @@ package com.wuest.prefab.structures.events;
 import com.prefab.ModRegistryBase;
 import com.prefab.PrefabBase;
 import com.prefab.network.ServerToClientTypes;
-import com.wuest.prefab.Prefab;
 import com.prefab.Tuple;
 import com.prefab.config.EntityPlayerConfiguration;
 import com.prefab.config.ModConfiguration;
@@ -47,11 +46,6 @@ import java.util.*;
  * @author WuestMan
  */
 public final class StructureEventHandler {
-    /**
-     * Contains a hashmap for the structures to build and for whom.
-     */
-    public static HashMap<Player, ArrayList<Structure>> structuresToBuild = new HashMap<>();
-
     public static ArrayList<Tuple<Structure, BuildEntity>> entitiesToGenerate = new ArrayList<>();
 
     public static int ticksSinceLastEntitiesGenerated = 0;
@@ -155,8 +149,8 @@ public final class StructureEventHandler {
             }
         }
 
-        if (StructureEventHandler.structuresToBuild.size() > 0) {
-            for (Map.Entry<Player, ArrayList<Structure>> entry : StructureEventHandler.structuresToBuild.entrySet()) {
+        if (PrefabBase.structuresToBuild.size() > 0) {
+            for (Map.Entry<Player, ArrayList<Structure>> entry : PrefabBase.structuresToBuild.entrySet()) {
                 ArrayList<Structure> structuresToRemove = new ArrayList<>();
 
                 // Build the first 100 blocks of each structure for this player.
@@ -209,7 +203,7 @@ public final class StructureEventHandler {
 
         // Remove each player that has their structure's built.
         for (Player player : playersToRemove) {
-            StructureEventHandler.structuresToBuild.remove(player);
+            PrefabBase.structuresToBuild.remove(player);
         }
 
     }
