@@ -99,6 +99,7 @@ public class ConditionedShapelessRecipe extends ShapelessRecipe {
                         Ingredient[] ingredients = list.stream().filter((ingredient) -> {
                             return !ingredient.isEmpty();
                         }).toArray(Ingredient[]::new);
+
                         if (ingredients.length == 0) {
                             return DataResult.error(() -> {
                                 return "No ingredients for shapeless recipe";
@@ -108,6 +109,7 @@ public class ConditionedShapelessRecipe extends ShapelessRecipe {
                                 return "Too many ingredients for shapeless recipe";
                             }) : DataResult.success(NonNullList.of(Ingredient.EMPTY, ingredients));
                         }
+
                     }, DataResult::success).forGetter((shapelessRecipe) -> {
                         return shapelessRecipe.ingredients;
                     }), Codec.STRING.optionalFieldOf("configName", "").forGetter((shapelessRecipe) -> {

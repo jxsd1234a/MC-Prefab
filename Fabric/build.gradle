@@ -63,7 +63,11 @@ tasks.withType(JavaCompile).configureEach {
 sourceSets {
     main {
         java {
-            srcDirs '../Shared'
+            srcDirs '../Shared/src'
+        }
+
+        resources {
+            srcDir '../Shared/resources'
         }
     }
 }

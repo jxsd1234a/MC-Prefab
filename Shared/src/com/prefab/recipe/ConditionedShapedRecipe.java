@@ -40,7 +40,6 @@ public class ConditionedShapedRecipe extends ShapedRecipe {
             boolean showNotification
     ) {
         super(group, craftingBookCategory, pattern, output, showNotification);
-
         this.group = group;
         this.craftingBookCategory = craftingBookCategory;
         this.width = pattern.width();

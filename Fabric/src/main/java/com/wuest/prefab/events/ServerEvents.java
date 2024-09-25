@@ -3,7 +3,6 @@ package com.wuest.prefab.events;
 import com.prefab.ModRegistryBase;
 import com.prefab.PrefabBase;
 import com.prefab.network.ServerToClientTypes;
-import com.wuest.prefab.Prefab;
 import com.prefab.config.ModConfiguration;
 import com.prefab.items.ItemSickle;
 import com.prefab.network.message.TagMessage;
