@@ -12,7 +12,13 @@ public class Prefab implements ModInitializer {
     @Override
     public void onInitialize() {
         PrefabBase.logger.info("Registering Mod Components");
-        ModRegistry.registerModComponents();
+
+        // While we do create an instance of the mod registry to initialize and register the mod components.
+        // We throw this away as all of the mod items/blocks/etc are saved off in the static instance.
+        ModRegistry registry = new ModRegistry();
+        registry.initializeEverything();
+
+        registry.registerModComponents();
 
         PrefabBase.networkWrapper = new NetworkWrapper();
         PrefabBase.eventCaller = new EventCaller();
