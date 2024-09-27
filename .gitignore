@@ -13,6 +13,7 @@ bin
 /run
 /Forge/run
 /Fabric/run
+/NeoForge/run
 
 # idea
 Forge/out
@@ -27,62 +28,82 @@ Fabric/*.iws
 Fabric/*.iml
 Fabric/.idea
 
+NeoForge/out
+NeoForge/*.ipr
+NeoForge/*.iws
+NeoForge/*.iml
+NeoForge/.idea
+
 # gradle
 build
 Forge/build
 Fabric/build
+NeoForge/build
 
 .gradle
-Forge/build
-Fabric/build
+Forge/gradle
+Fabric/gradle
+NeoForge/gradle
 
 # other
 eclipse
 Forge/eclipse
 Fabric/eclipse
+eclipse/eclipse
 
 run
 
 saves
 Forge/saves
 Fabric/saves
+NeoForge/saves
 
 screenshots
 Forge/screenshots
 Fabric/screenshots
+NeoForge/screenshots
 
 logs
 Forge/logs
 Fabric/logs
+NeoForge/logs
 
 crash-reports
 Forge/crash-reports
 Fabric/crash-reports
+NeoForge/crash-reports
 
 usercache.json
 Forge/usercache.json
 Fabric/usercache.json
+NeoForge/usercache.json
 
 usernamecache.json
 Forge/usernamecache.json
 Fabric/usernamecache.json
+NeoForge/usernamecache.json
 
 options.txt
 Forge/options.txt
 Fabric/options.txt
+NeoForge/options.txt
 
 mods
 Forge/mods
 Fabric/mods
+NeoForge/mods
 
 journeymap
 Forge/journeymap
 Fabric/journeymap
+NeoForge/journeymap
 
 realms_persistence.json
 Forge/realms_persistence.json
 Fabric/realms_persistence.json
+NeoForge/realms_persistence.json
 
 doc
 Forge/doc
 Fabric/doc
+NeoForge/doc
