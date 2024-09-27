@@ -4,10 +4,13 @@ import com.prefab.config.ModConfiguration;
 import com.prefab.network.INetworkWrapper;
 import com.prefab.structures.base.BuildEntity;
 import com.prefab.structures.base.Structure;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.PushReaction;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -37,7 +40,7 @@ public class PrefabBase {
 	 * Simulates an air block that blocks movement and cannot be moved.
 	 * Basically a GLASS block, but NOT glass.
 	 */
-	public static final Supplier<BlockBehaviour.Properties> SeeThroughImmovable = ()->BlockBehaviour.Properties.of().noOcclusion().isViewBlocking(Blocks::never).pushReaction(PushReaction.IGNORE).sound(SoundType.STONE);
+	public static final Supplier<BlockBehaviour.Properties> SeeThroughImmovable = ()->BlockBehaviour.Properties.of().noOcclusion().isViewBlocking(PrefabBase::never).pushReaction(PushReaction.IGNORE).sound(SoundType.STONE);
 
 	public static INetworkWrapper networkWrapper;
 
@@ -58,6 +61,14 @@ public class PrefabBase {
 	static {
 		PrefabBase.logger = LogManager.getLogger("Prefab");
 		PrefabBase.isDebug = java.lang.management.ManagementFactory.getRuntimeMXBean().getInputArguments().toString().contains("-agentlib:jdwp");
+	}
+
+	public static boolean always(BlockState blockState, BlockGetter blockGetter, BlockPos blockPos) {
+		return true;
+	}
+
+	public static boolean never(BlockState blockState, BlockGetter blockGetter, BlockPos blockPos) {
+		return false;
 	}
 
 }

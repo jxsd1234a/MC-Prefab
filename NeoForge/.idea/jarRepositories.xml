@@ -31,5 +31,10 @@
       <option name="name" value="MavenLocal" />
       <option name="url" value="file:/$MAVEN_REPOSITORY$/" />
     </remote-repository>
+    <remote-repository>
+      <option name="id" value="shedaniel" />
+      <option name="name" value="shedaniel" />
+      <option name="url" value="https://maven.shedaniel.me" />
+    </remote-repository>
   </component>
 </project>

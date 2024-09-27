@@ -1,7 +1,9 @@
 package com.wuest.prefab;
 
-import net.minecraft.core.Registry;
-import net.minecraft.resources.ResourceLocation;
+import com.prefab.PrefabBase;
+import com.prefab.config.ModConfiguration;
+import me.shedaniel.autoconfig.AutoConfig;
+import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
 import net.neoforged.neoforge.registries.*;
 import org.slf4j.Logger;
 
@@ -10,16 +12,8 @@ import com.mojang.logging.LogUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.network.chat.Component;
-import net.minecraft.world.food.FoodProperties;
-import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.CreativeModeTabs;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.material.MapColor;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -33,13 +27,9 @@ import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
 
-import java.util.Objects;
-
-import static com.wuest.prefab.ModRegistry.EXAMPLE_BLOCK_ITEM;
-
 // The value here should match an entry in the META-INF/neoforge.mods.toml file
-@Mod(ExampleMod.MODID)
-public class ExampleMod
+@Mod(Prefab.MODID)
+public class Prefab
 {
     // Define mod id in a common place for everything to reference
     public static final String MODID = "prefab";
@@ -57,9 +47,10 @@ public class ExampleMod
 
     // The constructor for the mod class is the first code that is run when your mod is loaded.
     // FML will recognize some parameter types like IEventBus or ModContainer and pass them in automatically.
-    public ExampleMod(IEventBus modEventBus, ModContainer modContainer)
+    public Prefab(IEventBus modEventBus, ModContainer modContainer)
     {
         ModRegistry registry = new ModRegistry();
+        PrefabBase.eventCaller = new EventCaller();
 
         // Register the commonSetup method for modloading
         modEventBus.addListener(this::commonSetup);
@@ -89,22 +80,15 @@ public class ExampleMod
 
     private void commonSetup(final FMLCommonSetupEvent event)
     {
-        // Some common setup code
-        LOGGER.warn("HELLO FROM COMMON SETUP");
+        AutoConfig.register(ModConfiguration.class, GsonConfigSerializer::new);
 
-        if (Config.logDirtBlock)
-            LOGGER.warn("DIRT BLOCK >> {}", BuiltInRegistries.BLOCK.getKey(Blocks.DIRT));
-
-        LOGGER.warn(Config.magicNumberIntroduction + Config.magicNumber);
-
-        Config.items.forEach((item) -> LOGGER.warn("ITEM >> {}", item.toString()));
+        PrefabBase.serverConfiguration = new ModConfiguration();
+        PrefabBase.configuration = AutoConfig.getConfigHolder(ModConfiguration.class).getConfig();
     }
 
     // Add the example block item to the building blocks tab
     private void addCreative(BuildCreativeModeTabContentsEvent event)
     {
-        if (event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS)
-            event.accept(EXAMPLE_BLOCK_ITEM);
     }
 
     // You can use SubscribeEvent and let the Event Bus discover methods to call
