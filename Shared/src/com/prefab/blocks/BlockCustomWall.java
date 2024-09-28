@@ -19,7 +19,8 @@ public class BlockCustomWall extends WallBlock implements IGrassSpreadable {
                 .strength(modelBlock.defaultDestroyTime(),
                         modelBlock.getExplosionResistance() * 5.0F / 3.0F)
                 .sound(modelBlock.defaultBlockState().getSoundType()));
-        
+
+        // Comment test
         this.BlockVariant = variant;
     }
 
