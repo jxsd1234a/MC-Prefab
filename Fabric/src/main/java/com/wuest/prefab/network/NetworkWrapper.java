@@ -5,8 +5,7 @@ import com.prefab.network.INetworkWrapper;
 import com.prefab.network.ServerToClientTypes;
 import com.prefab.network.message.ScannerInfo;
 import com.prefab.network.message.TagMessage;
-import com.wuest.prefab.network.message.*;
-import com.wuest.prefab.structures.messages.StructurePayload;
+import com.prefab.network.payloads.*;
 import com.prefab.structures.messages.StructureTagMessage;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
@@ -23,12 +22,12 @@ public class NetworkWrapper implements INetworkWrapper {
             }
 
             case ClientToServerTypes.SCAN_SHAPE -> {
-                this.sendScannerConfigMessage((ScannerInfo) message);
+                this.sendScannerScanMessage((ScannerInfo) message);
                 break;
             }
 
             case ClientToServerTypes.SCANNER_CONFIG_UPDATE -> {
-                this.sendScannerScanMessage((ScannerInfo) message);
+                this.sendScannerConfigMessage((ScannerInfo) message);
                 break;
             }
         }

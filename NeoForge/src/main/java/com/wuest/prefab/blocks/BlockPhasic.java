@@ -1,6 +1,6 @@
 package com.wuest.prefab.blocks;
 
-import com.wuest.prefab.events.ServerEvents;
+import com.wuest.prefab.events.GameServerEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -30,7 +30,7 @@ public class BlockPhasic extends com.prefab.blocks.BlockPhasic {
 
         super.playerWillDestroy(world, pos, state, player);
 
-        ServerEvents.RedstoneAffectedBlockPositions.remove(pos);
+        GameServerEvents.RedstoneAffectedBlockPositions.remove(pos);
 
         boolean poweredSide = world.hasNeighborSignal(pos);
 
@@ -46,7 +46,7 @@ public class BlockPhasic extends com.prefab.blocks.BlockPhasic {
     public void tick(BlockState state, ServerLevel worldIn, BlockPos pos, RandomSource random) {
         int tickDelay = this.tickRate;
 
-        if (ServerEvents.RedstoneAffectedBlockPositions.contains(pos)) {
+        if (GameServerEvents.RedstoneAffectedBlockPositions.contains(pos)) {
             return;
         }
 
@@ -58,7 +58,7 @@ public class BlockPhasic extends com.prefab.blocks.BlockPhasic {
             for (Direction facing : Direction.values()) {
                 Block currentBlock = worldIn.getBlockState(pos.relative(facing)).getBlock();
 
-                if (currentBlock instanceof com.prefab.blocks.BlockPhasic && !ServerEvents.RedstoneAffectedBlockPositions.contains(pos.relative(facing))) {
+                if (currentBlock instanceof com.prefab.blocks.BlockPhasic && !GameServerEvents.RedstoneAffectedBlockPositions.contains(pos.relative(facing))) {
                     worldIn.scheduleTick(pos.relative(facing), currentBlock, tickDelay);
                 }
             }
@@ -113,10 +113,10 @@ public class BlockPhasic extends com.prefab.blocks.BlockPhasic {
             worldIn.setBlock(positionToUpdate, updatedBlockState, 3);
 
             if (triggeredByRedstone) {
-                if (ServerEvents.RedstoneAffectedBlockPositions.contains(positionToUpdate) && !setToTransparent) {
-                    ServerEvents.RedstoneAffectedBlockPositions.remove(positionToUpdate);
-                } else if (!ServerEvents.RedstoneAffectedBlockPositions.contains(positionToUpdate) && setToTransparent) {
-                    ServerEvents.RedstoneAffectedBlockPositions.add(positionToUpdate);
+                if (GameServerEvents.RedstoneAffectedBlockPositions.contains(positionToUpdate) && !setToTransparent) {
+                    GameServerEvents.RedstoneAffectedBlockPositions.remove(positionToUpdate);
+                } else if (!GameServerEvents.RedstoneAffectedBlockPositions.contains(positionToUpdate) && setToTransparent) {
+                    GameServerEvents.RedstoneAffectedBlockPositions.add(positionToUpdate);
                 }
             }
         }

@@ -7,7 +7,6 @@ import com.prefab.config.ModConfiguration;
 import com.prefab.items.ItemSickle;
 import com.prefab.network.message.TagMessage;
 import com.prefab.registries.ModRegistries;
-import com.wuest.prefab.structures.events.StructureEventHandler;
 import me.shedaniel.autoconfig.AutoConfig;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;

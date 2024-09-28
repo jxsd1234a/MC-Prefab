@@ -5,7 +5,6 @@ import com.prefab.PrefabBase;
 import com.prefab.network.ClientToServerTypes;
 import com.prefab.structures.config.BasicStructureConfiguration;
 import com.wuest.prefab.ClientModRegistry;
-import com.wuest.prefab.structures.events.StructureClientEventHandler;
 import com.prefab.structures.gui.GuiStructure;
 import com.prefab.structures.items.ItemBasicStructure;
 import com.prefab.structures.items.StructureItem;

@@ -1,4 +1,4 @@
-package com.wuest.prefab.network.message;
+package com.prefab.network.payloads;
 
 import com.prefab.PrefabBase;
 import com.prefab.network.message.ScannerInfo;
@@ -8,21 +8,23 @@ import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
-public class ScanShapePayload implements CustomPacketPayload {
+import java.util.Objects;
+
+public class ScannerConfigPayload implements CustomPacketPayload {
     private final ScannerInfo scannerInfo;
 
-    public static final Type<ScanShapePayload> PACKET_TYPE = new Type<>(
-            ResourceLocation.tryBuild(PrefabBase.MODID, "structure_scanner_action"));
+    public static final CustomPacketPayload.Type<ScannerConfigPayload> PACKET_TYPE = new CustomPacketPayload.Type<>(
+            Objects.requireNonNull(ResourceLocation.tryBuild(PrefabBase.MODID, "structure_scanner_config")));
 
-    public static final StreamCodec<FriendlyByteBuf, ScanShapePayload> STREAM_CODEC = CustomPacketPayload.codec(
-            ScanShapePayload::write,
-            ScanShapePayload::new);
+    public static final StreamCodec<FriendlyByteBuf, ScannerConfigPayload> STREAM_CODEC = CustomPacketPayload.codec(
+            ScannerConfigPayload::write,
+            ScannerConfigPayload::new);
 
-    public ScanShapePayload(ScannerInfo scannerInfo) {
+    public ScannerConfigPayload(ScannerInfo scannerInfo) {
         this.scannerInfo = scannerInfo;
     }
 
-    public ScanShapePayload(FriendlyByteBuf friendlyByteBuf) {
+    public ScannerConfigPayload(FriendlyByteBuf friendlyByteBuf) {
         this(new ScannerInfo(friendlyByteBuf));
     }
 

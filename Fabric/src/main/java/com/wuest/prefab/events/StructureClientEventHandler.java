@@ -1,4 +1,4 @@
-package com.wuest.prefab.structures.events;
+package com.wuest.prefab.events;
 
 import com.prefab.structures.render.StructureRenderHandler;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;

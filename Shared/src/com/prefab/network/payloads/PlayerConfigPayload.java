@@ -1,4 +1,4 @@
-package com.wuest.prefab.network.message;
+package com.prefab.network.payloads;
 
 import com.prefab.PrefabBase;
 import com.prefab.network.message.TagMessage;
@@ -8,21 +8,21 @@ import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
-public class ConfigSyncPayload implements CustomPacketPayload {
+public class PlayerConfigPayload implements CustomPacketPayload {
     private final TagMessage tagMessage;
 
-    public static final CustomPacketPayload.Type<ConfigSyncPayload> PACKET_TYPE = new CustomPacketPayload.Type<>(
-            ResourceLocation.tryBuild(PrefabBase.MODID, "config_sync"));
+    public static final Type<PlayerConfigPayload> PACKET_TYPE = new Type<>(
+            ResourceLocation.tryBuild(PrefabBase.MODID, "payer_config_payload"));
 
-    public static final StreamCodec<FriendlyByteBuf, ConfigSyncPayload> STREAM_CODEC = CustomPacketPayload.codec(
-            ConfigSyncPayload::write,
-            ConfigSyncPayload::new);
+    public static final StreamCodec<FriendlyByteBuf, PlayerConfigPayload> STREAM_CODEC = CustomPacketPayload.codec(
+            PlayerConfigPayload::write,
+            PlayerConfigPayload::new);
 
-    public ConfigSyncPayload(TagMessage tagMessage) {
+    public PlayerConfigPayload(TagMessage tagMessage) {
         this.tagMessage = tagMessage;
     }
 
-    public ConfigSyncPayload(FriendlyByteBuf friendlyByteBuf) {
+    public PlayerConfigPayload(FriendlyByteBuf friendlyByteBuf) {
         this(new TagMessage(friendlyByteBuf));
     }
 

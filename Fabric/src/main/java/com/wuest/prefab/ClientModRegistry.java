@@ -5,8 +5,8 @@ import com.prefab.ClientModRegistryBase;
 import com.prefab.ModRegistryBase;
 import com.prefab.PrefabBase;
 import com.prefab.config.EntityPlayerConfiguration;
-import com.wuest.prefab.network.message.PlayerConfigPayload;
-import com.wuest.prefab.network.message.ConfigSyncPayload;
+import com.prefab.network.payloads.PlayerConfigPayload;
+import com.prefab.network.payloads.ConfigSyncPayload;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;

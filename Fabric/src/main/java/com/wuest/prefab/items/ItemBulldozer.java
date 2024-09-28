@@ -1,4 +1,4 @@
-package com.wuest.prefab.structures.items;
+package com.wuest.prefab.items;
 
 import com.prefab.Utils;
 import com.prefab.gui.GuiLangKeys;

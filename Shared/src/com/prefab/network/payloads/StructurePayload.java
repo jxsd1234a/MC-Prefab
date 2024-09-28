@@ -1,4 +1,4 @@
-package com.wuest.prefab.structures.messages;
+package com.prefab.network.payloads;
 
 import com.prefab.PrefabBase;
 import com.prefab.structures.messages.StructureTagMessage;

@@ -22,7 +22,7 @@ import net.neoforged.neoforge.event.tick.ServerTickEvent;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class ServerEvents {
+public class GameServerEvents {
     /**
      * Determines the affected blocks by redstone power.
      */

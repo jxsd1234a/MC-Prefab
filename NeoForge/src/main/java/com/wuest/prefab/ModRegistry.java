@@ -8,9 +8,12 @@ import com.prefab.blocks.BlockCustomWall;
 import com.prefab.blocks.BlockStructureScanner;
 import com.prefab.blocks.entities.LightSwitchBlockEntity;
 import com.prefab.blocks.entities.StructureScannerBlockEntity;
+import com.prefab.network.payloads.*;
 import com.prefab.structures.config.BasicStructureConfiguration;
 import com.wuest.prefab.items.ItemCompressedChest;
 import com.wuest.prefab.items.ItemSickle;
+import com.wuest.prefab.network.ClientPayloadHandler;
+import com.wuest.prefab.network.ServerPayloadHandler;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
@@ -20,6 +23,9 @@ import net.minecraft.world.item.*;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
+import net.neoforged.neoforge.network.handling.DirectionalPayloadHandler;
+import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.RegisterEvent;
 
@@ -29,6 +35,8 @@ import java.util.Objects;
 import static com.wuest.prefab.Prefab.CREATIVE_MODE_TABS;
 
 public class ModRegistry extends ModRegistryBase {
+    public PayloadRegistrar registrar;
+
     private static final ArrayList<Item> ModItems = new ArrayList<>();
 
     // Creates a creative tab with the id "examplemod:example_tab" for the example item, that is placed after the combat tab
@@ -113,6 +121,40 @@ public class ModRegistry extends ModRegistryBase {
 
             this.registerSounds();
         }
+    }
+
+    public void registerPayLoads(final RegisterPayloadHandlersEvent event) {
+        // Sets the current network version
+        // The version is always 1 as we are always version 1 of ourselves.
+        this.registrar = event.registrar("1");
+
+        registrar.playToServer(
+                ScannerConfigPayload.PACKET_TYPE,
+                ScannerConfigPayload.STREAM_CODEC,
+                ServerPayloadHandler::scannerConfigHandler
+        );
+
+        registrar.playToServer(
+                ScanShapePayload.PACKET_TYPE,
+                ScanShapePayload.STREAM_CODEC,
+                ServerPayloadHandler::scannerScanHandler
+        );
+
+        registrar.playToServer(
+                StructurePayload.PACKET_TYPE,
+                StructurePayload.STREAM_CODEC,
+                ServerPayloadHandler::structureBuilderHandler
+        );
+
+        registrar.playToClient(
+                PlayerConfigPayload.PACKET_TYPE,
+                PlayerConfigPayload.STREAM_CODEC,
+                ClientPayloadHandler::PlayerConfigHandler);
+
+        registrar.playToClient(
+                ConfigSyncPayload.PACKET_TYPE,
+                ConfigSyncPayload.STREAM_CODEC,
+                ClientPayloadHandler::ModConfigHandler);
     }
 
     private void registerSounds() {

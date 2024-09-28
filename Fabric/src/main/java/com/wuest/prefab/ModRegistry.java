@@ -7,16 +7,18 @@ import com.prefab.blocks.*;
 import com.prefab.blocks.entities.LightSwitchBlockEntity;
 import com.prefab.blocks.entities.StructureScannerBlockEntity;
 import com.prefab.config.StructureScannerConfig;
+import com.wuest.prefab.items.ItemBulldozer;
 import com.wuest.prefab.items.ItemCompressedChest;
 import com.wuest.prefab.items.ItemSickle;
-import com.wuest.prefab.network.message.ConfigSyncPayload;
-import com.wuest.prefab.network.message.PlayerConfigPayload;
-import com.wuest.prefab.network.message.ScanShapePayload;
-import com.wuest.prefab.network.message.ScannerConfigPayload;
+import com.prefab.network.payloads.ConfigSyncPayload;
+import com.prefab.network.payloads.PlayerConfigPayload;
+import com.prefab.network.payloads.ScanShapePayload;
+import com.prefab.network.payloads.ScannerConfigPayload;
 import com.prefab.structures.config.BasicStructureConfiguration;
 import com.prefab.structures.config.StructureConfiguration;
-import com.wuest.prefab.structures.messages.StructurePayload;
+import com.prefab.network.payloads.StructurePayload;
 import com.prefab.structures.messages.StructureTagMessage;
+import com.wuest.prefab.network.ServerPayloadHandler;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
@@ -92,8 +94,8 @@ public class ModRegistry extends ModRegistryBase {
     @Override
     public void initializeModLoaderBluePrintItems() {
         // Always make sure to fully qualify WHICH item we are creating...
-        ModRegistryBase.Bulldozer = new com.wuest.prefab.structures.items.ItemBulldozer();
-        ModRegistryBase.CreativeBulldozer = new com.wuest.prefab.structures.items.ItemBulldozer(true);
+        ModRegistryBase.Bulldozer = new ItemBulldozer();
+        ModRegistryBase.CreativeBulldozer = new ItemBulldozer(true);
     }
 
     public void registerModComponents() {
@@ -321,12 +323,9 @@ public class ModRegistry extends ModRegistryBase {
      * This is where the mod messages are registered.
      */
     private void RegisterClientToServerMessageHandlers() {
-
-        this.registerStructureBuilderMessageHandler();
-
-        this.registerStructureScannerMessageHandler();
-
-        this.registerStructureScannerActionMessageHandler();
+        ServerPlayNetworking.registerGlobalReceiver(StructurePayload.PACKET_TYPE, ServerPayloadHandler::structureBuilderHandler);
+        ServerPlayNetworking.registerGlobalReceiver(ScannerConfigPayload.PACKET_TYPE, ServerPayloadHandler::scannerConfigHandler);
+        ServerPlayNetworking.registerGlobalReceiver(ScanShapePayload.PACKET_TYPE, ServerPayloadHandler::scannerScanHandler);
     }
 
     private void RegisterRecipeSerializers() {
@@ -350,47 +349,5 @@ public class ModRegistry extends ModRegistryBase {
         PayloadTypeRegistry.playC2S().register(ScanShapePayload.PACKET_TYPE, ScanShapePayload.STREAM_CODEC);
         PayloadTypeRegistry.playS2C().register(ConfigSyncPayload.PACKET_TYPE, ConfigSyncPayload.STREAM_CODEC);
         PayloadTypeRegistry.playS2C().register(PlayerConfigPayload.PACKET_TYPE, PlayerConfigPayload.STREAM_CODEC);
-    }
-
-    private void registerStructureBuilderMessageHandler() {
-        ServerPlayNetworking.registerGlobalReceiver(StructurePayload.PACKET_TYPE, (payLoad, context) -> {
-            // Packet processor, data will already have been de-serialized.
-            // Can only access the "attachedData" on the "network thread" which is here.
-            StructureTagMessage.EnumStructureConfiguration structureConfig = payLoad.structureTagMessage().getStructureConfig();
-
-            context.player().getServer().execute(() -> {
-                // This is now on the "main" server thread and things can be done in the world!
-                StructureConfiguration configuration = structureConfig.structureConfig.ReadFromCompoundTag(payLoad.structureTagMessage().getMessageTag());
-
-                configuration.BuildStructure(context.player(), context.player().serverLevel());
-            });
-        });
-    }
-
-    private void registerStructureScannerMessageHandler() {
-        ServerPlayNetworking.registerGlobalReceiver(ScannerConfigPayload.PACKET_TYPE, (payLoad, context) -> {
-            // Packet processor, data will already have been de-serialized.
-            context.player().getServer().execute(() -> {
-                StructureScannerConfig config = payLoad.scannerInfo().ToConfig();
-
-                // The GUI always goes down 1 block for it's processing, so we have to make sure we go UP a block.
-                BlockEntity blockEntity = context.player().level().getBlockEntity(config.blockPos.above());
-
-                if (blockEntity instanceof StructureScannerBlockEntity actualEntity) {
-                    actualEntity.setConfig(config);
-                }
-            });
-        });
-    }
-
-    private void registerStructureScannerActionMessageHandler() {
-        ServerPlayNetworking.registerGlobalReceiver(ScanShapePayload.PACKET_TYPE, (payLoad, context) -> {
-            // Packet processor, data will already have been de-serialized.
-            context.player().getServer().execute(() -> {
-                StructureScannerConfig config = payLoad.scannerInfo().ToConfig();
-
-                StructureScannerBlockEntity.ScanShape(config, context.player(), context.player().serverLevel());
-            });
-        });
     }
 }
