@@ -18,12 +18,13 @@ on:
       - 'LICENSE'
       
 jobs:
-  build:
+  build-combined:
 
     runs-on: ubuntu-latest
     permissions:
       contents: read
-
+    if:
+      contains('refs/heads/main', github.ref)
     steps:
     - uses: actions/checkout@v4
     - name: Set up JDK 21
@@ -53,8 +54,7 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: Package
-        working-directory: ./Fabric
-        path: build/libs
+        path: ./Fabric/build/libs
         
     - name: Build NeoForge with Gradle
       working-directory: ./NeoForge
@@ -64,5 +64,29 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: Package
-        working-directory: ./NeoForge
-        path: build/libs
+        path: ./NeoForge/build/libs
+  
+  build-forge-20:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    if:
+      contains('refs/heads/1.20.6-Forge', github.ref)
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+      - name: Build with Gradle
+        run: ./gradlew build
+
+      - name: Publish artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: Package
+          path: build/libs
