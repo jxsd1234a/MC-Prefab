@@ -3,12 +3,20 @@ package com.wuest.prefab.events;
 import com.mojang.blaze3d.platform.InputConstants;
 import com.prefab.ClientModRegistryBase;
 import com.prefab.PrefabBase;
+import com.prefab.config.ModConfiguration;
+import com.prefab.config.RecipeMapGuiProvider;
+import com.prefab.config.StructureOptionGuiProvider;
+import me.shedaniel.autoconfig.AutoConfig;
+import me.shedaniel.autoconfig.gui.registry.GuiRegistry;
+import me.shedaniel.clothconfig2.ClothConfigDemo;
 import net.minecraft.client.KeyMapping;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.ModLoadingContext;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
+import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 import net.neoforged.neoforge.client.settings.KeyConflictContext;
 import net.neoforged.neoforge.client.settings.KeyModifier;
 
@@ -23,6 +31,17 @@ public class ModClientEvents {
     public static void onClientSetup(FMLClientSetupEvent event)
     {
         ClientModRegistryBase.RegisterGuis();
+
+        GuiRegistry registry = AutoConfig.getGuiRegistry(ModConfiguration.class);
+        RecipeMapGuiProvider providerMap = new RecipeMapGuiProvider();
+        StructureOptionGuiProvider structureOptionGuiProvider = new StructureOptionGuiProvider();
+
+        registry.registerPredicateProvider(providerMap, (field) -> field.getDeclaringClass() == ModConfiguration.class && field.getName().equals("recipes"));
+        registry.registerPredicateProvider(structureOptionGuiProvider, (field) -> field.getDeclaringClass() == ModConfiguration.class && field.getName().equals("structureOptions"));
+
+        ModLoadingContext.get().registerExtensionPoint(IConfigScreenFactory.class, () -> (container, parent) -> {
+            return AutoConfig.getConfigScreen(ModConfiguration.class, parent).get();
+        });
     }
 
     /**
