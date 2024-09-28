@@ -32,11 +32,13 @@ jobs:
         java-version: '21'
         distribution: 'temurin'
         
-    - name: Grant execute permission for gradlew
-      run: chmod +x ./Fabric/gradlew
+    - name: Grant execute permission for gradlew for Fabric
+      working-directory: ./Fabric
+      run: chmod +x gradlew
       
-    - name: Grant execute permission for gradlew
-      run: chmod +x ./NeoForge/gradlew
+    - name: Grant execute permission for gradlew for NeoForge
+      working-directory: ./NeoForge
+      run: chmod +x gradlew
 
     # Configure Gradle for optimal use in GitHub Actions, including caching of downloaded dependencies.
     # See: https://github.com/gradle/actions/blob/main/setup-gradle/README.md
@@ -44,19 +46,23 @@ jobs:
       uses: gradle/actions/setup-gradle@af1da67850ed9a4cedd57bfd976089dd991e2582 # v4.0.0
 
     - name: Build Fabric with Gradle
-      run: ./Fabric/gradlew build
+      working-directory: ./Fabric
+      run: gradlew build
 
     - name: Publish artifacts
       uses: actions/upload-artifact@v4
       with:
         name: Package
-        path: ./Fabric/build/libs
+        working-directory: ./Fabric
+        path: build/libs
         
     - name: Build NeoForge with Gradle
-      run: ./NeoForge/gradlew build
+      working-directory: ./NeoForge
+      run: gradlew build
 
     - name: Publish artifacts
       uses: actions/upload-artifact@v4
       with:
         name: Package
-        path: ./NeoForge/build/libs
+        working-directory: ./NeoForge
+        path: build/libs
