@@ -53,7 +53,7 @@ jobs:
     - name: Publish artifacts
       uses: actions/upload-artifact@v4
       with:
-        name: Package
+        name: Package-Fabric
         path: ./Fabric/build/libs
         
     - name: Build NeoForge with Gradle
@@ -63,7 +63,7 @@ jobs:
     - name: Publish artifacts
       uses: actions/upload-artifact@v4
       with:
-        name: Package
+        name: Package-NeoForge
         path: ./NeoForge/build/libs
   
   build-forge-20:
@@ -88,5 +88,5 @@ jobs:
       - name: Publish artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: Package
+          name: Package-Forge
           path: build/libs
