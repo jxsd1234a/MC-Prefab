@@ -3,20 +3,16 @@ package com.wuest.prefab;
 import com.mojang.blaze3d.platform.InputConstants;
 import com.prefab.ClientModRegistryBase;
 import com.prefab.ModRegistryBase;
-import com.prefab.PrefabBase;
-import com.prefab.config.EntityPlayerConfiguration;
 import com.prefab.network.payloads.PlayerConfigPayload;
 import com.prefab.network.payloads.ConfigSyncPayload;
+import com.wuest.prefab.network.ClientPayloadHandler;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.minecraft.client.KeyMapping;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderType;
 import org.lwjgl.glfw.GLFW;
-
-import java.util.UUID;
 
 public class ClientModRegistry {
     public static KeyMapping keyBinding;
@@ -32,25 +28,9 @@ public class ClientModRegistry {
     }
 
     private static void registerServerToClientMessageHandlers() {
-        ClientPlayNetworking.registerGlobalReceiver(ConfigSyncPayload.PACKET_TYPE,
-                (payload, context) -> {
-                    context.client().execute(() -> {
-                        // This is now on the "main" client thread and things can be done in the world!
-                        PrefabBase.serverConfiguration.readFromTag(payload.tagMessage().getMessageTag());
-                    });
-                }
-        );
+        ClientPlayNetworking.registerGlobalReceiver(ConfigSyncPayload.PACKET_TYPE, ClientPayloadHandler::ModConfigHandler);
 
-        ClientPlayNetworking.registerGlobalReceiver(PlayerConfigPayload.PACKET_TYPE, (payload, context) -> {
-            context.client().execute(() -> {
-                // This is now on the "main" client thread and things can be done in the world!
-                UUID playerUUID = Minecraft.getInstance().player.getUUID();
-
-                EntityPlayerConfiguration playerConfiguration = EntityPlayerConfiguration.loadFromTag(playerUUID, payload.tagMessage().getMessageTag());
-                ClientModRegistryBase.playerConfig.builtStarterHouse = playerConfiguration.builtStarterHouse;
-                ClientModRegistryBase.playerConfig.givenHouseBuilder = playerConfiguration.givenHouseBuilder;
-            });
-        });
+        ClientPlayNetworking.registerGlobalReceiver(PlayerConfigPayload.PACKET_TYPE, ClientPayloadHandler::PlayerConfigHandler);
     }
 
     private static void registerBlockLayers() {
