@@ -1,9 +1,9 @@
 package com.wuest.prefab.events;
 
 import com.mojang.blaze3d.platform.InputConstants;
+import com.prefab.ClientModRegistryBase;
 import com.prefab.PrefabBase;
 import net.minecraft.client.KeyMapping;
-import net.minecraft.client.Minecraft;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -22,6 +22,7 @@ public class ModClientEvents {
     @SubscribeEvent
     public static void onClientSetup(FMLClientSetupEvent event)
     {
+        ClientModRegistryBase.RegisterGuis();
     }
 
     /**
