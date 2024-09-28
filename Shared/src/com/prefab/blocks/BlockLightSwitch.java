@@ -117,6 +117,8 @@ public class BlockLightSwitch extends TileBlockBase<LightSwitchBlockEntity> {
 
     @Override
     public void onRemove(BlockState blockState, Level level, BlockPos blockPos, BlockState blockState2, boolean bl) {
+        super.onRemove(blockState, level, blockPos, blockState2, bl);
+
         if (!level.isClientSide) {
             // Check to see if the state is just changing.
             // if the state is just changing, don't remove it from the registry.
