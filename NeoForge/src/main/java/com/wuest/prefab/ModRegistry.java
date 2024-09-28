@@ -9,16 +9,16 @@ import com.prefab.blocks.BlockStructureScanner;
 import com.prefab.blocks.entities.LightSwitchBlockEntity;
 import com.prefab.blocks.entities.StructureScannerBlockEntity;
 import com.prefab.structures.config.BasicStructureConfiguration;
+import com.wuest.prefab.items.ItemCompressedChest;
+import com.wuest.prefab.items.ItemSickle;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.CreativeModeTabs;
-import net.minecraft.world.item.Item;
+import net.minecraft.world.item.*;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.RegisterEvent;
@@ -47,6 +47,44 @@ public class ModRegistry extends ModRegistryBase {
                     output.accept(item);
                 }
             }).build());
+
+    @Override
+    public void initializeModLoaderBlocks() {
+        // Always make sure to fully qualify WHICH block we are creating...
+        ModRegistryBase.Boundary = new com.wuest.prefab.blocks.BlockBoundary();
+        ModRegistryBase.GlassSlab = new com.wuest.prefab.blocks.BlockGlassSlab(Block.Properties.ofFullCopy(Blocks.GLASS));
+        ModRegistryBase.GlassStairs = new com.wuest.prefab.blocks.BlockGlassStairs(Blocks.GLASS.defaultBlockState(), Block.Properties.ofFullCopy(Blocks.GLASS));
+        ModRegistryBase.PaperLantern = new com.wuest.prefab.blocks.BlockPaperLantern();
+        ModRegistryBase.Phasic = new com.wuest.prefab.blocks.BlockPhasic();
+    }
+
+    @Override
+    public void initializeModLoaderBlockItems() {
+        // Always make sure do re-do the block item when replacing a block.
+        ModRegistryBase.BoundaryItem = new BlockItem(ModRegistryBase.Boundary, new Item.Properties());
+        ModRegistryBase.GlassSlabItem = new BlockItem(ModRegistryBase.GlassSlab, new Item.Properties());
+        ModRegistryBase.GlassStairsItem = new BlockItem(ModRegistryBase.GlassStairs, new Item.Properties());
+        ModRegistryBase.PaperLanternItem = new BlockItem(ModRegistryBase.PaperLantern, new Item.Properties());
+        ModRegistryBase.PhasicItem = new BlockItem(ModRegistryBase.Phasic, new Item.Properties());
+    }
+
+    @Override
+    public void initializeModLoaderItems() {
+        ModRegistryBase.CompressedChest = new ItemCompressedChest();
+        ModRegistryBase.SickleDiamond = new ItemSickle(Tiers.DIAMOND);
+        ModRegistryBase.SickleGold = new ItemSickle(Tiers.GOLD);
+        ModRegistryBase.SickleNetherite = new ItemSickle(Tiers.NETHERITE);
+        ModRegistryBase.SickleIron = new ItemSickle(Tiers.IRON);
+        ModRegistryBase.SickleStone = new ItemSickle(Tiers.STONE);
+        ModRegistryBase.SickleWood = new ItemSickle(Tiers.WOOD);
+    }
+
+    @Override
+    public void initializeModLoaderBluePrintItems() {
+        // Always make sure to fully qualify WHICH item we are creating...
+        ModRegistryBase.Bulldozer = new com.wuest.prefab.items.ItemBulldozer();
+        ModRegistryBase.CreativeBulldozer = new com.wuest.prefab.items.ItemBulldozer(true);
+    }
 
     public void register(RegisterEvent event) {
         // This event is called once for each type of registry.

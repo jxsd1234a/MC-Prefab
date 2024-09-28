@@ -5,6 +5,7 @@
         "mcstone": "prefab:block/block_light_switch_base",
         "particle": "prefab:block/block_light_switch_on"
     },
+    "render_type": "cutout",
     "display": {
         "gui": {
             "rotation": [ 30, 45, 0 ],

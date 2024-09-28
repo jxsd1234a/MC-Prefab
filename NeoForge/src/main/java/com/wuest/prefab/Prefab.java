@@ -2,6 +2,7 @@ package com.wuest.prefab;
 
 import com.prefab.PrefabBase;
 import com.prefab.config.ModConfiguration;
+import com.wuest.prefab.events.ServerEvents;
 import com.wuest.prefab.network.NetworkWrapper;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
@@ -21,6 +22,8 @@ public class Prefab
 {   // Create a Deferred Register to hold CreativeModeTabs which will all be registered under the "examplemod" namespace
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, PrefabBase.MODID);
 
+    public ServerEvents serverEvents;
+
     // The constructor for the mod class is the first code that is run when your mod is loaded.
     // FML will recognize some parameter types like IEventBus or ModContainer and pass them in automatically.
     public Prefab(IEventBus modEventBus, ModContainer modContainer)
@@ -28,11 +31,14 @@ public class Prefab
         ModRegistry registry = new ModRegistry();
         PrefabBase.eventCaller = new EventCaller();
         PrefabBase.networkWrapper = new NetworkWrapper();
+        this.serverEvents = new ServerEvents();
 
         // Register the commonSetup method for modloading
         modEventBus.addListener(this::commonSetup);
 
         modEventBus.addListener(registry::register);
+
+        NeoForge.EVENT_BUS.register(this.serverEvents);
 
         // Register the Deferred Register to the mod event bus so tabs get registered
         CREATIVE_MODE_TABS.register(modEventBus);

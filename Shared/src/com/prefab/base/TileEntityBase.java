@@ -25,6 +25,8 @@ public abstract class TileEntityBase<T extends BaseConfig> extends BlockEntity {
 
     protected TileEntityBase(BlockEntityType<?> tileEntityTypeIn, BlockPos pos, BlockState state) {
         super(tileEntityTypeIn, pos, state);
+
+        PrefabBase.logger.debug("Tile Entity State: {}", String.valueOf(state));
     }
 
     /**

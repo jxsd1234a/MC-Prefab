@@ -37,6 +37,7 @@
             "scale": [ 0.375, 0.375, 0.375 ]
         }
     },
+    "render_type": "cutout",
     "elements": [
         {
             "name": "Button",

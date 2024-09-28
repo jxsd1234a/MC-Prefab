@@ -1,6 +1,5 @@
 package com.wuest.prefab.events;
 
-import com.mojang.blaze3d.platform.InputConstants;
 import com.prefab.ClientModRegistryBase;
 import com.prefab.PrefabBase;
 import com.prefab.network.ClientToServerTypes;
@@ -16,47 +15,14 @@ import net.minecraft.world.item.ItemStack;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.InputEvent;
-import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
-import net.neoforged.neoforge.client.settings.KeyConflictContext;
-import net.neoforged.neoforge.client.settings.KeyModifier;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 
-import java.util.ArrayList;
-
-import static org.lwjgl.glfw.GLFW.GLFW_KEY_B;
-
-// You can use EventBusSubscriber to automatically register all static methods in the class annotated with @SubscribeEvent
-@EventBusSubscriber(modid = PrefabBase.MODID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
-public class ClientEvents {
-    @SubscribeEvent
-    public static void onClientSetup(FMLClientSetupEvent event)
-    {
-        // Some client setup code
-        PrefabBase.logger.warn("HELLO FROM CLIENT SETUP");
-        PrefabBase.logger.warn("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());
-    }
-
-    /**
-     * Contains the keybindings registered.
-     */
-    public static ArrayList<KeyMapping> keyBindings = new ArrayList<KeyMapping>();
-
-    @SubscribeEvent
-    public static void KeyBindRegistrationEvent(RegisterKeyMappingsEvent event) {
-        KeyMapping binding = new KeyMapping("Build Current Structure",
-                KeyConflictContext.IN_GAME, KeyModifier.ALT,
-                InputConstants.Type.KEYSYM, GLFW_KEY_B, "Prefab - Structure Preview");
-
-        event.register(binding);
-
-        ClientEvents.keyBindings.add(binding);
-    }
-
+@EventBusSubscriber(modid = PrefabBase.MODID, bus = EventBusSubscriber.Bus.GAME, value = Dist.CLIENT)
+public class GameClientEvents {
     @SubscribeEvent
     public static void KeyInput(InputEvent.Key event) {
-        for (KeyMapping binding : ClientEvents.keyBindings) {
+        for (KeyMapping binding : ModClientEvents.keyBindings) {
             if (binding.isDown()) {
                 if (StructureRenderHandler.currentStructure != null) {
                     ItemStack mainHandStack = Minecraft.getInstance().player.getMainHandItem();
@@ -68,12 +34,12 @@ public class ClientEvents {
 
                         if (mainHandStack != ItemStack.EMPTY && mainHandStack.getItem() instanceof StructureItem) {
                             // Check main hand.
-                            foundCorrectStructureItem = ClientEvents.checkIfStackIsCorrectGui(structureConfigurationEnum, mainHandStack);
+                            foundCorrectStructureItem = GameClientEvents.checkIfStackIsCorrectGui(structureConfigurationEnum, mainHandStack);
                         }
 
                         if (!foundCorrectStructureItem && offHandStack != ItemStack.EMPTY && offHandStack.getItem() instanceof StructureItem) {
                             // Main hand is not correct item; check off-hand
-                            foundCorrectStructureItem = ClientEvents.checkIfStackIsCorrectGui(structureConfigurationEnum, offHandStack);
+                            foundCorrectStructureItem = GameClientEvents.checkIfStackIsCorrectGui(structureConfigurationEnum, offHandStack);
                         }
                     }
 

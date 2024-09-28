@@ -10,38 +10,43 @@ import com.prefab.network.message.TagMessage;
 import com.prefab.registries.ModRegistries;
 import com.prefab.structures.base.StructureGenerator;
 import me.shedaniel.autoconfig.AutoConfig;
+import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
+import net.neoforged.neoforge.event.server.ServerAboutToStartEvent;
 import net.neoforged.neoforge.event.server.ServerStartedEvent;
-import net.neoforged.neoforge.event.server.ServerStartingEvent;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
-@EventBusSubscriber(modid = PrefabBase.MODID)
 public class ServerEvents {
+    /**
+     * Determines the affected blocks by redstone power.
+     */
+    public static ArrayList<BlockPos> RedstoneAffectedBlockPositions = new ArrayList<>();
+
     // You can use SubscribeEvent and let the Event Bus discover methods to call
     @SubscribeEvent
-    public static void onServerStarting(ServerStartingEvent event)
+    public void onServerAboutToStart(ServerAboutToStartEvent event)
     {
         ModRegistryBase.serverModRegistries = new ModRegistries();
-    }
-
-    @SubscribeEvent
-    public static void onServerStarted(ServerStartedEvent event) {
-        // Get the server configuration.
-        // This will be pushed to the player when they join the world.
-        PrefabBase.serverConfiguration = AutoConfig.getConfigHolder(ModConfiguration.class).getConfig();
 
         // Do this when the server starts so that all appropriate tags are used.
         ItemSickle.setEffectiveBlocks();
     }
 
     @SubscribeEvent
-    public static void playerJoinedServer(PlayerEvent.PlayerLoggedInEvent event) {
+    public void onServerStarted(ServerStartedEvent event) {
+        // Get the server configuration.
+        // This will be pushed to the player when they join the world.
+        PrefabBase.serverConfiguration = AutoConfig.getConfigHolder(ModConfiguration.class).getConfig();
+    }
+
+    @SubscribeEvent
+    public void playerJoinedServer(PlayerEvent.PlayerLoggedInEvent event) {
         if (!event.getEntity().level().isClientSide() && event.getEntity() instanceof ServerPlayer player) {
             TagMessage message = new TagMessage(PrefabBase.serverConfiguration.writeCompoundTag());
             PrefabBase.networkWrapper.sendToClient(ServerToClientTypes.MOD_CONFIG_SYNC, (ServerPlayer) event.getEntity(), message);
@@ -91,7 +96,7 @@ public class ServerEvents {
      * @param event The player clone event.
      */
     @SubscribeEvent
-    public static void onClone(PlayerEvent.Clone event) {
+    public void onClone(PlayerEvent.Clone event) {
         if (event.getEntity() instanceof ServerPlayer) {
             // TODO: See if this is needed.
             // We had this event in forge to copy the data tag from the old entity to the new entity
@@ -107,7 +112,7 @@ public class ServerEvents {
      * @param event The event object.
      */
     @SubscribeEvent
-    public static void onServerTick(ServerTickEvent.Pre event) {
+    public void onServerTick(ServerTickEvent.Pre event) {
         // This doesn't ACTUALLY generate a structure right away, it checks to see if one needs to be generated.
         StructureGenerator.CheckForStructureToBuildAndBuildIt();
     }

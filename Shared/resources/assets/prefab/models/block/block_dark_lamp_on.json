@@ -7,6 +7,7 @@
     "dll2on": "prefab:block/dll2on",
     "particle": "prefab:block/dll1on"
   },
+  "render_type": "cutout",
   "display": {
     "gui": {
       "rotation": [ 30, 45, 0 ],
