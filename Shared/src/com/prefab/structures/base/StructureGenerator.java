@@ -13,6 +13,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.decoration.HangingEntity;
 import net.minecraft.world.entity.decoration.ItemFrame;
 import net.minecraft.world.entity.decoration.Painting;
+import net.minecraft.world.entity.decoration.PaintingVariant;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.vehicle.AbstractMinecart;
 import net.minecraft.world.level.block.*;
@@ -324,8 +325,13 @@ public class StructureGenerator {
             facing = facing.getCounterClockWise();
         }
 
-        int paintingBlockWidth = (int) (entity.getBbWidth() / 16);
-        int paintingBlockHeight = (int) (entity.getBbHeight() / 16);
+        // Get the painting variant from the entity.
+        // This way we can get the width/height from it in blocks, so we know how to place it appropriately.
+        // This is needed as differently sized paintings need to be adjusted.
+        PaintingVariant paintingVariant = entity.getVariant().value();
+
+        int paintingBlockWidth = paintingVariant.width();
+        int paintingBlockHeight = paintingVariant.height();
 
         if ((paintingBlockHeight > paintingBlockWidth || paintingBlockHeight > 1)
                 && !(paintingBlockWidth == 4 && paintingBlockHeight == 3)) {
