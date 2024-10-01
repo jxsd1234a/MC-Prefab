@@ -22,13 +22,13 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "com.wuest.prefab.Prefab"
+      "com.prefab.fabric.Prefab"
     ],
     "client": [
-      "com.wuest.prefab.PrefabClient"
+      "com.prefab.fabric.PrefabClient"
     ],
     "modmenu": [
-      "com.wuest.prefab.config.PrefabModMenuIntegration"
+      "com.prefab.fabric.config.PrefabModMenuIntegration"
     ]
   },
   "accessWidener": "prefab.accesswidener",
