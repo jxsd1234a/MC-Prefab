@@ -1,4 +1,4 @@
-package com.wuest.prefab.blocks;
+package com.prefab.neoforge.blocks;
 
 import com.prefab.gui.GuiLangKeys;
 import net.minecraft.client.gui.screens.Screen;

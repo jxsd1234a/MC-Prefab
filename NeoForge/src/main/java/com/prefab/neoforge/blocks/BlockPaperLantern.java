@@ -1,4 +1,4 @@
-package com.wuest.prefab.blocks;
+package com.prefab.neoforge.blocks;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;

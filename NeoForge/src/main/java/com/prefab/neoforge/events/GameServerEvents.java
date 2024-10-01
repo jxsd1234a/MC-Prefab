@@ -1,4 +1,4 @@
-package com.wuest.prefab.events;
+package com.prefab.neoforge.events;
 
 import com.prefab.ModRegistryBase;
 import com.prefab.PrefabBase;

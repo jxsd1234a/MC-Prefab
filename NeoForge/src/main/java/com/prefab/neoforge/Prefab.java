@@ -1,9 +1,9 @@
-package com.wuest.prefab;
+package com.prefab.neoforge;
 
 import com.prefab.PrefabBase;
 import com.prefab.config.ModConfiguration;
-import com.wuest.prefab.events.GameServerEvents;
-import com.wuest.prefab.network.NetworkWrapper;
+import com.prefab.neoforge.events.GameServerEvents;
+import com.prefab.neoforge.network.NetworkWrapper;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
 import net.neoforged.neoforge.registries.*;

@@ -1,4 +1,4 @@
-package com.wuest.prefab.items;
+package com.prefab.neoforge.items;
 
 import com.prefab.gui.GuiLangKeys;
 import net.minecraft.network.chat.Component;

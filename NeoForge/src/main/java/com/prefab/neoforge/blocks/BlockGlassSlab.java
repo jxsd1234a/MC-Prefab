@@ -1,4 +1,4 @@
-package com.wuest.prefab.blocks;
+package com.prefab.neoforge.blocks;
 
 import com.prefab.Utils;
 import net.minecraft.core.Direction;

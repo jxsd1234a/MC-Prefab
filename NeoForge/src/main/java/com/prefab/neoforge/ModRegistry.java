@@ -1,4 +1,4 @@
-package com.wuest.prefab;
+package com.prefab.neoforge;
 
 import com.prefab.ModRegistryBase;
 import com.prefab.PrefabBase;
@@ -8,12 +8,14 @@ import com.prefab.blocks.BlockCustomWall;
 import com.prefab.blocks.BlockStructureScanner;
 import com.prefab.blocks.entities.LightSwitchBlockEntity;
 import com.prefab.blocks.entities.StructureScannerBlockEntity;
+import com.prefab.neoforge.blocks.*;
+import com.prefab.neoforge.items.ItemBulldozer;
 import com.prefab.network.payloads.*;
 import com.prefab.structures.config.BasicStructureConfiguration;
-import com.wuest.prefab.items.ItemCompressedChest;
-import com.wuest.prefab.items.ItemSickle;
-import com.wuest.prefab.network.ClientPayloadHandler;
-import com.wuest.prefab.network.ServerPayloadHandler;
+import com.prefab.neoforge.items.ItemCompressedChest;
+import com.prefab.neoforge.items.ItemSickle;
+import com.prefab.neoforge.network.ClientPayloadHandler;
+import com.prefab.neoforge.network.ServerPayloadHandler;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
@@ -24,7 +26,6 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
-import net.neoforged.neoforge.network.handling.DirectionalPayloadHandler;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.RegisterEvent;
@@ -32,7 +33,7 @@ import net.neoforged.neoforge.registries.RegisterEvent;
 import java.util.ArrayList;
 import java.util.Objects;
 
-import static com.wuest.prefab.Prefab.CREATIVE_MODE_TABS;
+import static com.prefab.neoforge.Prefab.CREATIVE_MODE_TABS;
 
 public class ModRegistry extends ModRegistryBase {
     public PayloadRegistrar registrar;
@@ -59,11 +60,11 @@ public class ModRegistry extends ModRegistryBase {
     @Override
     public void initializeModLoaderBlocks() {
         // Always make sure to fully qualify WHICH block we are creating...
-        ModRegistryBase.Boundary = new com.wuest.prefab.blocks.BlockBoundary();
-        ModRegistryBase.GlassSlab = new com.wuest.prefab.blocks.BlockGlassSlab(Block.Properties.ofFullCopy(Blocks.GLASS));
-        ModRegistryBase.GlassStairs = new com.wuest.prefab.blocks.BlockGlassStairs(Blocks.GLASS.defaultBlockState(), Block.Properties.ofFullCopy(Blocks.GLASS));
-        ModRegistryBase.PaperLantern = new com.wuest.prefab.blocks.BlockPaperLantern();
-        ModRegistryBase.Phasic = new com.wuest.prefab.blocks.BlockPhasic();
+        ModRegistryBase.Boundary = new BlockBoundary();
+        ModRegistryBase.GlassSlab = new BlockGlassSlab(Block.Properties.ofFullCopy(Blocks.GLASS));
+        ModRegistryBase.GlassStairs = new BlockGlassStairs(Blocks.GLASS.defaultBlockState(), Block.Properties.ofFullCopy(Blocks.GLASS));
+        ModRegistryBase.PaperLantern = new BlockPaperLantern();
+        ModRegistryBase.Phasic = new BlockPhasic();
     }
 
     @Override
@@ -90,8 +91,8 @@ public class ModRegistry extends ModRegistryBase {
     @Override
     public void initializeModLoaderBluePrintItems() {
         // Always make sure to fully qualify WHICH item we are creating...
-        ModRegistryBase.Bulldozer = new com.wuest.prefab.items.ItemBulldozer();
-        ModRegistryBase.CreativeBulldozer = new com.wuest.prefab.items.ItemBulldozer(true);
+        ModRegistryBase.Bulldozer = new ItemBulldozer();
+        ModRegistryBase.CreativeBulldozer = new ItemBulldozer(true);
     }
 
     public void register(RegisterEvent event) {

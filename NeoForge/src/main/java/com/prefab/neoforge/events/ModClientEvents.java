@@ -1,4 +1,4 @@
-package com.wuest.prefab.events;
+package com.prefab.neoforge.events;
 
 import com.mojang.blaze3d.platform.InputConstants;
 import com.prefab.ClientModRegistryBase;
@@ -8,7 +8,6 @@ import com.prefab.config.RecipeMapGuiProvider;
 import com.prefab.config.StructureOptionGuiProvider;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.gui.registry.GuiRegistry;
-import me.shedaniel.clothconfig2.ClothConfigDemo;
 import net.minecraft.client.KeyMapping;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;

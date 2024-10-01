@@ -1,4 +1,4 @@
-package com.wuest.prefab;
+package com.prefab.neoforge;
 
 import com.prefab.IEventCaller;
 import net.minecraft.core.BlockPos;

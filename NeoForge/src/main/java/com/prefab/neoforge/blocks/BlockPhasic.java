@@ -1,6 +1,6 @@
-package com.wuest.prefab.blocks;
+package com.prefab.neoforge.blocks;
 
-import com.wuest.prefab.events.GameServerEvents;
+import com.prefab.neoforge.events.GameServerEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
