@@ -16,6 +16,8 @@ bin
 /NeoForge/run
 
 # idea
+.idea
+
 Forge/out
 Forge/*.ipr
 Forge/*.iws
