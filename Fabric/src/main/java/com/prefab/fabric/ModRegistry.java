@@ -1,4 +1,4 @@
-package com.wuest.prefab;
+package com.prefab.fabric;
 
 import com.prefab.ModRegistryBase;
 import com.prefab.PrefabBase;
@@ -6,19 +6,21 @@ import com.prefab.Utils;
 import com.prefab.blocks.*;
 import com.prefab.blocks.entities.LightSwitchBlockEntity;
 import com.prefab.blocks.entities.StructureScannerBlockEntity;
-import com.prefab.config.StructureScannerConfig;
-import com.wuest.prefab.items.ItemBulldozer;
-import com.wuest.prefab.items.ItemCompressedChest;
-import com.wuest.prefab.items.ItemSickle;
+import com.prefab.fabric.blocks.BlockBoundary;
+import com.prefab.fabric.blocks.BlockGlassSlab;
+import com.prefab.fabric.blocks.BlockGlassStairs;
+import com.prefab.fabric.blocks.BlockPaperLantern;
+import com.prefab.fabric.blocks.BlockPhasic;
+import com.prefab.fabric.items.ItemBulldozer;
+import com.prefab.fabric.items.ItemCompressedChest;
+import com.prefab.fabric.items.ItemSickle;
 import com.prefab.network.payloads.ConfigSyncPayload;
 import com.prefab.network.payloads.PlayerConfigPayload;
 import com.prefab.network.payloads.ScanShapePayload;
 import com.prefab.network.payloads.ScannerConfigPayload;
 import com.prefab.structures.config.BasicStructureConfiguration;
-import com.prefab.structures.config.StructureConfiguration;
 import com.prefab.network.payloads.StructurePayload;
-import com.prefab.structures.messages.StructureTagMessage;
-import com.wuest.prefab.network.ServerPayloadHandler;
+import com.prefab.fabric.network.ServerPayloadHandler;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
@@ -27,7 +29,6 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.block.*;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 
 import java.util.ArrayList;
@@ -63,11 +64,11 @@ public class ModRegistry extends ModRegistryBase {
     @Override
     public void initializeModLoaderBlocks() {
         // Always make sure to fully qualify WHICH block we are creating...
-        ModRegistryBase.Boundary = new com.wuest.prefab.blocks.BlockBoundary();
-        ModRegistryBase.GlassSlab = new com.wuest.prefab.blocks.BlockGlassSlab(Block.Properties.ofFullCopy(Blocks.GLASS));
-        ModRegistryBase.GlassStairs = new com.wuest.prefab.blocks.BlockGlassStairs(Blocks.GLASS.defaultBlockState(), Block.Properties.ofFullCopy(Blocks.GLASS));
-        ModRegistryBase.PaperLantern = new com.wuest.prefab.blocks.BlockPaperLantern();
-        ModRegistryBase.Phasic = new com.wuest.prefab.blocks.BlockPhasic();
+        ModRegistryBase.Boundary = new BlockBoundary();
+        ModRegistryBase.GlassSlab = new BlockGlassSlab(Block.Properties.ofFullCopy(Blocks.GLASS));
+        ModRegistryBase.GlassStairs = new BlockGlassStairs(Blocks.GLASS.defaultBlockState(), Block.Properties.ofFullCopy(Blocks.GLASS));
+        ModRegistryBase.PaperLantern = new BlockPaperLantern();
+        ModRegistryBase.Phasic = new BlockPhasic();
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.wuest.prefab.items;
+package com.prefab.fabric.items;
 
 import com.prefab.gui.GuiLangKeys;
 import net.fabricmc.api.EnvType;

@@ -1,4 +1,4 @@
-package com.wuest.prefab.network;
+package com.prefab.fabric.network;
 
 import com.prefab.ClientModRegistryBase;
 import com.prefab.PrefabBase;

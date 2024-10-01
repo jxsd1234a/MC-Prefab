@@ -1,10 +1,10 @@
-package com.wuest.prefab;
+package com.prefab.fabric;
 
 import com.prefab.PrefabBase;
 import com.prefab.config.ModConfiguration;
 import com.prefab.config.RecipeMapGuiProvider;
 import com.prefab.config.StructureOptionGuiProvider;
-import com.wuest.prefab.events.ClientEvents;
+import com.prefab.fabric.events.ClientEvents;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.gui.registry.GuiRegistry;
 import net.fabricmc.api.ClientModInitializer;

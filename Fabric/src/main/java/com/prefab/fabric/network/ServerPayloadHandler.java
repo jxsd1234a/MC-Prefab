@@ -1,4 +1,4 @@
-package com.wuest.prefab.network;
+package com.prefab.fabric.network;
 
 import com.prefab.blocks.entities.StructureScannerBlockEntity;
 import com.prefab.config.StructureScannerConfig;

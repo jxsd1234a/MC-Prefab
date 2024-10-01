@@ -1,10 +1,10 @@
-package com.wuest.prefab.events;
+package com.prefab.fabric.events;
 
 import com.prefab.ClientModRegistryBase;
 import com.prefab.PrefabBase;
 import com.prefab.network.ClientToServerTypes;
 import com.prefab.structures.config.BasicStructureConfiguration;
-import com.wuest.prefab.ClientModRegistry;
+import com.prefab.fabric.ClientModRegistry;
 import com.prefab.structures.gui.GuiStructure;
 import com.prefab.structures.items.ItemBasicStructure;
 import com.prefab.structures.items.StructureItem;

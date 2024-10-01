@@ -1,4 +1,4 @@
-package com.wuest.prefab.config;
+package com.prefab.fabric.config;
 
 import com.prefab.config.ModConfiguration;
 import com.terraformersmc.modmenu.api.ConfigScreenFactory;

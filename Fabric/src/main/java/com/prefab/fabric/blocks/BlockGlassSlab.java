@@ -1,4 +1,4 @@
-package com.wuest.prefab.blocks;
+package com.prefab.fabric.blocks;
 
 import com.prefab.Utils;
 import net.fabricmc.api.EnvType;

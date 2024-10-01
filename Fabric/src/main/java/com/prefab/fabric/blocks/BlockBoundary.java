@@ -1,18 +1,22 @@
-package com.wuest.prefab.items;
+package com.prefab.fabric.blocks;
 
 import com.prefab.gui.GuiLangKeys;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.block.state.BlockState;
+
 import java.util.List;
 
-public class ItemSickle extends com.prefab.items.ItemSickle {
-    public ItemSickle(Tier toolMaterial) {
-        super(toolMaterial);
+public class BlockBoundary extends com.prefab.blocks.BlockBoundary {
+
+    public BlockBoundary() {
+        super();
     }
 
     /**
@@ -20,8 +24,7 @@ public class ItemSickle extends com.prefab.items.ItemSickle {
      */
     @Environment(EnvType.CLIENT)
     @Override
-    public void appendHoverText(ItemStack stack, TooltipContext tooltipContext, List<Component> tooltip,
-                                TooltipFlag advanced) {
+    public void appendHoverText(ItemStack stack, Item.TooltipContext tooltipContext, List<Component> tooltip, TooltipFlag advanced) {
         super.appendHoverText(stack, tooltipContext, tooltip, advanced);
 
         boolean advancedKeyDown = Screen.hasShiftDown();
@@ -29,7 +32,13 @@ public class ItemSickle extends com.prefab.items.ItemSickle {
         if (!advancedKeyDown) {
             tooltip.add(GuiLangKeys.translateToComponent(GuiLangKeys.SHIFT_TOOLTIP));
         } else {
-            tooltip.add(GuiLangKeys.translateToComponent(GuiLangKeys.SICKLE_DESC));
+            tooltip.add(GuiLangKeys.translateToComponent(GuiLangKeys.BOUNDARY_TOOLTIP));
         }
+    }
+
+    @Environment(EnvType.CLIENT)
+    @Override
+    public boolean skipRendering(BlockState state, BlockState adjacentBlockState, Direction side) {
+        return !state.getValue(Powered);
     }
 }

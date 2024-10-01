@@ -1,22 +1,18 @@
-package com.wuest.prefab.blocks;
+package com.prefab.fabric.items;
 
 import com.prefab.gui.GuiLangKeys;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.level.block.state.BlockState;
-
 import java.util.List;
 
-public class BlockBoundary extends com.prefab.blocks.BlockBoundary {
-
-    public BlockBoundary() {
-        super();
+public class ItemSickle extends com.prefab.items.ItemSickle {
+    public ItemSickle(Tier toolMaterial) {
+        super(toolMaterial);
     }
 
     /**
@@ -24,7 +20,8 @@ public class BlockBoundary extends com.prefab.blocks.BlockBoundary {
      */
     @Environment(EnvType.CLIENT)
     @Override
-    public void appendHoverText(ItemStack stack, Item.TooltipContext tooltipContext, List<Component> tooltip, TooltipFlag advanced) {
+    public void appendHoverText(ItemStack stack, TooltipContext tooltipContext, List<Component> tooltip,
+                                TooltipFlag advanced) {
         super.appendHoverText(stack, tooltipContext, tooltip, advanced);
 
         boolean advancedKeyDown = Screen.hasShiftDown();
@@ -32,13 +29,7 @@ public class BlockBoundary extends com.prefab.blocks.BlockBoundary {
         if (!advancedKeyDown) {
             tooltip.add(GuiLangKeys.translateToComponent(GuiLangKeys.SHIFT_TOOLTIP));
         } else {
-            tooltip.add(GuiLangKeys.translateToComponent(GuiLangKeys.BOUNDARY_TOOLTIP));
+            tooltip.add(GuiLangKeys.translateToComponent(GuiLangKeys.SICKLE_DESC));
         }
-    }
-
-    @Environment(EnvType.CLIENT)
-    @Override
-    public boolean skipRendering(BlockState state, BlockState adjacentBlockState, Direction side) {
-        return !state.getValue(Powered);
     }
 }

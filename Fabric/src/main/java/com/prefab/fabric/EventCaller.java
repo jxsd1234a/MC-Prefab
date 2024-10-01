@@ -1,4 +1,4 @@
-package com.wuest.prefab;
+package com.prefab.fabric;
 
 import com.prefab.IEventCaller;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;

@@ -1,11 +1,11 @@
-package com.wuest.prefab;
+package com.prefab.fabric;
 
 import com.mojang.blaze3d.platform.InputConstants;
 import com.prefab.ClientModRegistryBase;
 import com.prefab.ModRegistryBase;
 import com.prefab.network.payloads.PlayerConfigPayload;
 import com.prefab.network.payloads.ConfigSyncPayload;
-import com.wuest.prefab.network.ClientPayloadHandler;
+import com.prefab.fabric.network.ClientPayloadHandler;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;

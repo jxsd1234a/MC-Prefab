@@ -1,6 +1,6 @@
-package com.wuest.prefab.blocks;
+package com.prefab.fabric.blocks;
 
-import com.wuest.prefab.events.ServerEvents;
+import com.prefab.fabric.events.ServerEvents;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.core.BlockPos;

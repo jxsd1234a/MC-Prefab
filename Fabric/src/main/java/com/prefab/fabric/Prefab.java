@@ -1,9 +1,9 @@
-package com.wuest.prefab;
+package com.prefab.fabric;
 
 import com.prefab.PrefabBase;
 import com.prefab.config.ModConfiguration;
-import com.wuest.prefab.events.ServerEvents;
-import com.wuest.prefab.network.NetworkWrapper;
+import com.prefab.fabric.events.ServerEvents;
+import com.prefab.fabric.network.NetworkWrapper;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
 import net.fabricmc.api.ModInitializer;
