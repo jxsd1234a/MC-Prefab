@@ -31,8 +31,8 @@
     "1.19.2-recommended": "1.9.2.5",
     "1.19.3-latest": "1.9.3.0",
     "1.19.3-recommended": "1.9.3.0",
-    "1.20.6-latest": "2.0.0.0",
-    "1.20.6-recommended": "2.0.0.0"
+    "1.20.6-latest": "2.0.0.2",
+    "1.20.6-recommended": "2.0.0.2"
   },
   "1.10.2": {
     "1.1.1.10": "New Stuff: Added [Ender Gateway] structure. Added [Phasic Block] and [Boundary Block]\nSome buildings can now be generated in mod-created dimensions.",
@@ -197,6 +197,8 @@
     "1.9.3.0": "Initial release for 1.19.3. Added Finnish language"
   },
   "1.20.6": {
-    "2.0.0.0": "Initial release for 1.20.6."
+    "2.0.0.0": "Initial release for 1.20.6.",
+    "2.0.0.1": "Fixing shaped recipes, they just didn't work, don't ask how we didn't see that",
+    "2.0.0.2": "Fixing issue with connecting to servers with disabled recipes",
   }
 }
