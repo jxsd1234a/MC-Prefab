@@ -1,23 +1,35 @@
 package com.prefab.structures.render;
 
 import com.mojang.blaze3d.vertex.*;
+import com.mojang.text2speech.Narrator;
 import com.prefab.ClientModRegistryBase;
 import com.prefab.PrefabBase;
+import com.prefab.Triple;
 import com.prefab.blocks.BlockStructureScanner;
 import com.prefab.config.StructureScannerConfig;
+import com.prefab.gui.GuiLangKeys;
 import com.prefab.structures.base.BuildBlock;
 import com.prefab.structures.base.Structure;
 import com.prefab.structures.config.StructureConfiguration;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.block.BlockRenderDispatcher;
+import net.minecraft.client.renderer.block.ModelBlockRenderer;
+import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Vec3i;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.Style;
+import net.minecraft.util.FastColor;
+import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -27,24 +39,31 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.Shapes;
+import org.jetbrains.annotations.Nullable;
 import org.joml.Matrix4f;
-
+import org.joml.Vector3f;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * @author WuestMan
- * This class was derived from Botania's AstrolabePreviewHandler.
- * Most changes are for extra comments for myself as well as to use my blocks class structure.
- * http://botaniamod.net/license.php
+ * This class was inspired from Botania's AstrolabePreviewHandler.
+ * <a href="http://botaniamod.net/license.php">...</a>
  */
 @SuppressWarnings({"WeakerAccess", "ConstantConditions"})
 public class StructureRenderHandler {
     // player's overlapping on structures and other things.
     public static StructureConfiguration currentConfiguration;
     public static Structure currentStructure;
-    public static boolean rendering = false;
     public static boolean showedMessage = false;
     private static int dimension;
+    private static HashMap<Integer, Integer> stateColor;
+    private static HashMap<Integer, Triple<Float, Float, Float>> colorRGB;
+    private static Minecraft mcInstance;
+    private static final Direction[] DIRECTIONS = Direction.values();
+    private static long aggregatedTime = 0L;
+    private static HashMap<Integer, ArrayList<List<BakedQuad>>> blockModelQuads;
 
     /**
      * Resets the structure to show in the world.
@@ -56,11 +75,14 @@ public class StructureRenderHandler {
         StructureRenderHandler.currentStructure = structure;
         StructureRenderHandler.currentConfiguration = configuration;
         StructureRenderHandler.showedMessage = false;
+        StructureRenderHandler.stateColor = new HashMap<>(40000, 1);
+        StructureRenderHandler.colorRGB = new HashMap<>(40000, 1);
+        StructureRenderHandler.blockModelQuads = new HashMap<>(40000, 1);
 
-        Minecraft mc = Minecraft.getInstance();
+        StructureRenderHandler.mcInstance = Minecraft.getInstance();
 
-        if (mc.level != null) {
-            StructureRenderHandler.dimension = mc.level.dimensionType().logicalHeight();
+        if (StructureRenderHandler.mcInstance.level != null) {
+            StructureRenderHandler.dimension = StructureRenderHandler.mcInstance.level.dimensionType().logicalHeight();
         }
     }
 
@@ -102,7 +124,7 @@ public class StructureRenderHandler {
             int xLength,
             int zLength,
             int height) {
-        VertexConsumer bufferBuilder = multiBufferSource.getBuffer(RenderType.debugLineStrip(2.0));
+
         Matrix4f matrix4f = matrixStack.last().pose();
 
         float translatedX = blockXOffset - cameraX;
@@ -111,7 +133,7 @@ public class StructureRenderHandler {
         float translatedZ = blockZOffset - cameraZ;
 
         // Draw the verticals of the box.
-        bufferBuilder = multiBufferSource.getBuffer(RenderType.debugLineStrip(2.0));
+        VertexConsumer bufferBuilder = multiBufferSource.getBuffer(RenderType.debugLineStrip(2.0));
         bufferBuilder.addVertex(matrix4f, translatedX, translatedY, translatedZ).setColor(1.0F, 1.0F, 0.0F, 1.0F);
         bufferBuilder.addVertex(matrix4f, translatedX, translatedYEnd, translatedZ).setColor(1.0F, 1.0F, 0.0F, 1.0F);
 
@@ -167,8 +189,7 @@ public class StructureRenderHandler {
             StructureScannerConfig config = ClientModRegistryBase.structureScanners.get(i);
 
             BlockPos pos = config.blockPos;
-            boolean removeConfig = false;
-            removeConfig = pos == null;
+            boolean removeConfig = pos == null;
 
             // Make sure the block exists in the world at the block pos.
             if (pos != null) {
@@ -239,7 +260,7 @@ public class StructureRenderHandler {
         }
     }
 
-    public static void newRenderPlayerLook(Player player, PoseStack ms, VertexConsumer buffer, double cameraX, double cameraY, double cameraZ) {
+    public static void basicBlockRenderExample(Player player, PoseStack poseStack, BufferBuilder buffer, double cameraX, double cameraY, double cameraZ) {
         if (StructureRenderHandler.currentStructure != null
                 && StructureRenderHandler.dimension == player.level().dimensionType().logicalHeight()
                 && StructureRenderHandler.currentConfiguration != null
@@ -247,139 +268,316 @@ public class StructureRenderHandler {
 
             Level world = player.level();
 
-            Vec3 cameraPosition = new Vec3(cameraX, cameraY, cameraZ);
-            Direction playerViewDirection = player.getNearestViewDirection();
-            Vec3 playerViewVector = player.getViewVector(1.0F);
-            HashMap<Integer, BakedModel> modelMap = new HashMap<>();
-            HashMap<Integer, Integer> stateColor = new HashMap<>();
+            try {
+                BlockState state = Blocks.REDSTONE_BLOCK.defaultBlockState();
+                BlockPos blockPos = StructureRenderHandler.currentConfiguration.pos.relative(Direction.SOUTH, 2).above(2);
+                BlockRenderDispatcher brd = StructureRenderHandler.mcInstance.getBlockRenderer();
+                BakedModel blockModel = brd.getBlockModel(state);
+                ModelBlockRenderer modelBlockRenderer = brd.getModelRenderer();
+                int color = StructureRenderHandler.mcInstance.getBlockColors().getColor(state, null, null, 0);
+                float r = (float) (color >> 16 & 255) / 255.0F;
+                float g = (float) (color >> 8 & 255) / 255.0F;
+                float b = (float) (color & 255) / 255.0F;
 
-            for (BuildBlock buildBlock : StructureRenderHandler.currentStructure.getBlocks()) {
+                // Translate the pose properly...maybe
+                PoseStack.Pose originalPose = poseStack.poseStack.peekLast();
+                float scaleValue = blockPos.getY() + 1.3F;
+                PoseStack.Pose lastPose = new PoseStack.Pose(originalPose);
 
-                Block foundBlock = buildBlock.getBlockState() != null ? buildBlock.getBlockState().getBlock() : BuiltInRegistries.BLOCK.get(buildBlock.getResourceLocation());
+                lastPose.pose().translate((float) -cameraX, (float) -cameraY, (float) -cameraZ);
+                lastPose.pose().translate(blockPos.getX(), blockPos.getY(), blockPos.getZ());
 
-                if (foundBlock != null) {
-                    // In order to get the proper relative position I also need the structure's original facing.
-                    if (buildBlock.blockPos == null) {
-                        buildBlock.blockPos = buildBlock.getStartingPosition().getRelativePosition(
-                                StructureRenderHandler.currentConfiguration.pos,
-                                StructureRenderHandler.currentStructure.getClearSpace().getShape().getDirection(),
-                                StructureRenderHandler.currentConfiguration.houseFacing);
-                    }
-
-                    BlockPos buildBlockPos = buildBlock.blockPos;
-
-                    // Don't render this block if it's going to overlay a non-air/water block.
-                    BlockState targetBlock = world.getBlockState(buildBlockPos);
-
-                    if (targetBlock.getBlock() != Blocks.AIR && targetBlock.getBlock() != Blocks.WATER) {
-                        continue;
-                    }
-
-                    if (buildBlock.centerOfBlock == null) {
-                        buildBlock.centerOfBlock = Vec3.atCenterOf(buildBlockPos);
-                    }
-
-                    Vec3 vectorBetweenPlayerAndBlock = new Vec3(
-                            buildBlockPos.getX() - player.getX(),
-                            buildBlockPos.getY() - player.getEyeY(),
-                            buildBlockPos.getZ() - player.getZ());
-
-                    vectorBetweenPlayerAndBlock.normalize();
-
-                    BlockHitResult hitResult = Shapes.block().clip(cameraPosition, buildBlock.centerOfBlock, buildBlockPos);
-
-                    // Note: The hit direction is in reference to the "Block"'s point of view, not the player.
-                    if (hitResult == null || (hitResult.getDirection() != Direction.UP && hitResult.getDirection() != Direction.DOWN
-                            && hitResult.getDirection() == playerViewDirection)) {
-                        // Never hit the block in the first place or it's behind them so continue.
-                        continue;
-                    }
-
-                    // Calculate the "line" between the block and the player's view.
-                    // This is the same way that Endermen determine if a player is looking at them.
-                    // This avoids using "Frustum" as it's finicky and prone to change with Minecraft's rendering changes.
-                    double lineBetweenPlayerViewBlock = playerViewVector.normalize().dot(vectorBetweenPlayerAndBlock);
-                    double result = 1.0 - 0.025 / vectorBetweenPlayerAndBlock.length();
-                    boolean boolCheck = lineBetweenPlayerViewBlock > result;
-
-                    if (!boolCheck) {
-                        continue;
-                    }
-
-                    if (buildBlock.getBlockState() == null) {
-                        // Get the unique block state for this block.
-                        BlockState blockState = foundBlock.defaultBlockState();
-                        buildBlock = BuildBlock.SetBlockState(
-                                StructureRenderHandler.currentConfiguration,
-                                player.level(),
-                                StructureRenderHandler.currentConfiguration.pos,
-                                buildBlock,
-                                foundBlock,
-                                blockState,
-                                StructureRenderHandler.currentStructure);
-                    }
-
-                    StructureRenderHandler.renderBlockAt(ms, buffer, buildBlock.getBlockState(), buildBlockPos, buildBlock.hashCode(), modelMap, stateColor);
-
-                    // Render the sub-block if there is any.
-                    if (buildBlock.getSubBlock() != null) {
-                        BuildBlock subBuildBlock = buildBlock.getSubBlock();
-
-                        Block foundSubBlock = subBuildBlock.getBlockState() != null ? subBuildBlock.getBlockState().getBlock() : BuiltInRegistries.BLOCK.get(subBuildBlock.getResourceLocation());
-
-                        if (subBuildBlock.getBlockState() == null) {
-                            BlockState subBlockState = foundSubBlock.defaultBlockState();
-
-                            subBuildBlock = BuildBlock.SetBlockState(
-                                    StructureRenderHandler.currentConfiguration,
-                                    player.level(),
-                                    StructureRenderHandler.currentConfiguration.pos,
-                                    buildBlock.getSubBlock(),
-                                    foundSubBlock,
-                                    subBlockState,
-                                    StructureRenderHandler.currentStructure);
-                        }
-
-                        if (subBuildBlock.blockPos == null) {
-                            subBuildBlock.blockPos = subBuildBlock.getStartingPosition().getRelativePosition(
-                                    StructureRenderHandler.currentConfiguration.pos,
-                                    StructureRenderHandler.currentStructure.getClearSpace().getShape().getDirection(),
-                                    StructureRenderHandler.currentConfiguration.houseFacing);
-                        }
-
-                        StructureRenderHandler.renderBlockAt(ms, buffer, subBuildBlock.getBlockState(), subBuildBlock.blockPos, subBuildBlock.hashCode(), modelMap, stateColor);
-                    }
-                }
+                StructureRenderHandler.renderModel(lastPose, buffer, state, blockModel, r, g, b, 0xF000F0, OverlayTexture.NO_OVERLAY, state.hashCode());
+            } catch (Exception ex) {
+                PrefabBase.logger.error(ex);
             }
         }
     }
 
-    private static void renderBlockAt(PoseStack ms, VertexConsumer buffer, BlockState state, BlockPos pos, int buildBlockHash, HashMap<Integer, BakedModel> modelMap, HashMap<Integer, Integer> colorMap) {
-        if (state.getRenderShape() != RenderShape.INVISIBLE && state.getRenderShape() == RenderShape.MODEL) {
-            Minecraft minecraft = Minecraft.getInstance();
-            Camera camera = minecraft.getEntityRenderDispatcher().camera;
+    public static void newRenderPlayerLook(Player player, PoseStack poseStack, VertexConsumer buffer, double cameraX, double cameraY, double cameraZ) {
+        if (StructureRenderHandler.currentStructure != null
+                && StructureRenderHandler.dimension == player.level().dimensionType().logicalHeight()
+                && StructureRenderHandler.currentConfiguration != null
+                && PrefabBase.serverConfiguration.enableStructurePreview) {
+
+            long startTime = System.currentTimeMillis();
+            Level world = player.level();
+
+            Camera camera = StructureRenderHandler.mcInstance.getEntityRenderDispatcher().camera;
             double renderPosX = camera.getPosition().x();
             double renderPosY = camera.getPosition().y();
             double renderPosZ = camera.getPosition().z();
 
-            ms.pushPose();
-            ms.translate(-renderPosX, -renderPosY, -renderPosZ);
+            BlockRenderDispatcher brd = StructureRenderHandler.mcInstance.getBlockRenderer();
 
-            BlockRenderDispatcher brd = minecraft.getBlockRenderer();
-            ms.translate(pos.getX(), pos.getY(), pos.getZ());
+            Vec3 cameraPosition = new Vec3(cameraX, cameraY, cameraZ);
+            Direction playerViewDirection = player.getNearestViewDirection();
+            Vec3 playerViewVector = player.getViewVector(1.0F);
+
+            ArrayList<BuildBlock> buildBlocks = StructureRenderHandler.currentStructure.getBlocks();
+
+            PoseStack.Pose originalPose = poseStack.poseStack.peekLast();
+            try {
+                for (BuildBlock buildBlock : buildBlocks) {
+                    StructureRenderHandler.processBuildBlockForRendering(buildBlock, world, player, cameraPosition, playerViewDirection, playerViewVector, originalPose,
+                            renderPosX, renderPosY, renderPosZ, brd, buffer);
+                }
+
+                long endTime = System.currentTimeMillis();
+                System.out.println("That took " + (endTime - startTime) + " milliseconds");
+                System.out.println("Aggregated Time took: " + StructureRenderHandler.aggregatedTime + " milliseconds");
+                StructureRenderHandler.aggregatedTime = 0L;
+
+                if (!StructureRenderHandler.showedMessage) {
+                    Minecraft mc = Minecraft.getInstance();
+
+                    // Stop narrator from continuing narrating what was in the structure GUI
+                    Narrator.getNarrator().clear();
+
+                    MutableComponent message = Component.translatable(GuiLangKeys.GUI_PREVIEW_NOTICE);
+                    message.setStyle(Style.EMPTY.withColor(ChatFormatting.GREEN));
+
+                    mc.gui.getChat().addMessage(message);
+
+                    message = Component.translatable(GuiLangKeys.GUI_BLOCK_CLICKED);
+                    message.setStyle(Style.EMPTY.withColor(ChatFormatting.YELLOW));
+                    mc.gui.getChat().addMessage(message);
+
+                    StructureRenderHandler.showedMessage = true;
+                }
+            } catch (Exception ex) {
+                PrefabBase.logger.error(ex);
+            }
+        }
+    }
+
+    private static void processBuildBlockForRendering(
+            BuildBlock buildBlock,
+            Level world,
+            Player player,
+            Vec3 cameraPosition,
+            Direction playerViewDirection,
+            Vec3 playerViewVector,
+            PoseStack.Pose originalPose,
+            double renderPosX,
+            double renderPosY,
+            double renderPosZ,
+            BlockRenderDispatcher brd,
+            VertexConsumer buffer) {
+        Block foundBlock = buildBlock.getBlockState() != null ? buildBlock.getBlockState().getBlock() : BuiltInRegistries.BLOCK.get(buildBlock.getResourceLocation());
+
+        if (foundBlock != null) {
+            // In order to get the proper relative position I also need the structure's original facing.
+            if (buildBlock.blockPos == null) {
+                buildBlock.blockPos = buildBlock.getStartingPosition().getRelativePosition(
+                        StructureRenderHandler.currentConfiguration.pos,
+                        StructureRenderHandler.currentStructure.getClearSpace().getShape().getDirection(),
+                        StructureRenderHandler.currentConfiguration.houseFacing);
+            }
+
+            BlockPos buildBlockPos = buildBlock.blockPos;
+
+            // Don't render this block if it's going to overlay a non-air/water block.
+            BlockState targetBlock = world.getBlockState(buildBlockPos);
+
+            if (targetBlock.getBlock() != Blocks.AIR && targetBlock.getBlock() != Blocks.WATER) {
+                return;
+            }
+
+            if (buildBlock.centerOfBlock == null) {
+                buildBlock.centerOfBlock = Vec3.atCenterOf(buildBlockPos);
+            }
+
+            Vec3 vectorBetweenPlayerAndBlock = new Vec3(
+                    buildBlockPos.getX() - player.getX(),
+                    buildBlockPos.getY() - player.getEyeY(),
+                    buildBlockPos.getZ() - player.getZ());
+
+            vectorBetweenPlayerAndBlock.normalize();
+
+            BlockHitResult hitResult = Shapes.block().clip(cameraPosition, buildBlock.centerOfBlock, buildBlockPos);
+
+            // Note: The hit direction is in reference to the Block's point of view, not the player.
+            if (hitResult == null || (hitResult.getDirection() != Direction.UP && hitResult.getDirection() != Direction.DOWN
+                    && hitResult.getDirection() == playerViewDirection)) {
+                // Never hit the block in the first place, or it's behind them so continue.
+                return;
+            }
+
+            // Calculate the "line" between the block and the player's view.
+            // This is the same way that Ender men determine if a player is looking at them.
+            // This avoids using "Frustum" as it's finicky and prone to change with Minecraft's rendering changes.
+            double lineBetweenPlayerViewBlock = playerViewVector.normalize().dot(vectorBetweenPlayerAndBlock);
+            double result = 1.0 - 0.025 / vectorBetweenPlayerAndBlock.length();
+            boolean boolCheck = lineBetweenPlayerViewBlock > result;
+
+            if (!boolCheck) {
+                return;
+            }
+
+            if (buildBlock.getBlockState() == null) {
+                // Get the unique block state for this block.
+                BlockState blockState = foundBlock.defaultBlockState();
+                buildBlock = BuildBlock.SetBlockState(
+                        StructureRenderHandler.currentConfiguration,
+                        player.level(),
+                        StructureRenderHandler.currentConfiguration.pos,
+                        buildBlock,
+                        foundBlock,
+                        blockState,
+                        StructureRenderHandler.currentStructure);
+            }
+
+            StructureRenderHandler.renderBlockAt(originalPose, buffer, buildBlock.getBlockState(), buildBlockPos, buildBlock.hashCode(),
+                    renderPosX, renderPosY, renderPosZ, brd, world);
+
+            // Render the sub-block if there is any.
+            if (buildBlock.getSubBlock() != null) {
+                BuildBlock subBuildBlock = buildBlock.getSubBlock();
+
+                Block foundSubBlock = subBuildBlock.getBlockState() != null ? subBuildBlock.getBlockState().getBlock() : BuiltInRegistries.BLOCK.get(subBuildBlock.getResourceLocation());
+
+                if (subBuildBlock.getBlockState() == null) {
+                    BlockState subBlockState = foundSubBlock.defaultBlockState();
+
+                    subBuildBlock = BuildBlock.SetBlockState(
+                            StructureRenderHandler.currentConfiguration,
+                            player.level(),
+                            StructureRenderHandler.currentConfiguration.pos,
+                            buildBlock.getSubBlock(),
+                            foundSubBlock,
+                            subBlockState,
+                            StructureRenderHandler.currentStructure);
+                }
+
+                if (subBuildBlock.blockPos == null) {
+                    subBuildBlock.blockPos = subBuildBlock.getStartingPosition().getRelativePosition(
+                            StructureRenderHandler.currentConfiguration.pos,
+                            StructureRenderHandler.currentStructure.getClearSpace().getShape().getDirection(),
+                            StructureRenderHandler.currentConfiguration.houseFacing);
+                }
+
+                StructureRenderHandler.renderBlockAt(originalPose, buffer, subBuildBlock.getBlockState(), subBuildBlock.blockPos, subBuildBlock.hashCode(),
+                        renderPosX, renderPosY, renderPosZ, brd, world);
+            }
+        }
+    }
+
+    private static void renderBlockAt(PoseStack.Pose originalPose, VertexConsumer buffer, BlockState state, BlockPos pos, int buildBlockHash,
+                                      double renderPosX, double renderPosY, double renderPosZ, BlockRenderDispatcher brd, Level level) {
+        if (state.getRenderShape() != RenderShape.INVISIBLE && state.getRenderShape() == RenderShape.MODEL) {
+            PoseStack.Pose lastPose = new PoseStack.Pose(originalPose);
+            lastPose.pose().translate((float) -renderPosX, (float) -renderPosY, (float) -renderPosZ);
+            lastPose.pose().translate(pos.getX(), pos.getY(), pos.getZ());
 
             // Get these values out of the saved hashmaps if possible.
-            BakedModel model = modelMap.computeIfAbsent(buildBlockHash, x -> brd.getBlockModel(state));
-            int color = colorMap.computeIfAbsent(state.hashCode(), x -> minecraft.getBlockColors().getColor(state, null, null, 0));
+            int color;
+            Triple<Float, Float, Float> colorRGB;
 
-            float r = (float) (color >> 16 & 255) / 255.0F;
-            float g = (float) (color >> 8 & 255) / 255.0F;
-            float b = (float) (color & 255) / 255.0F;
+            ModelBlockRenderer modelBlockRenderer = brd.getModelRenderer();
+
+            // Don't get this out of a hashmap or anything like that, it's already in one.
+            BakedModel model = brd.getBlockModel(state);
+
+            int blockStateHash = state.hashCode();
+            color = StructureRenderHandler.stateColor.computeIfAbsent(blockStateHash, x -> StructureRenderHandler.mcInstance.getBlockColors().getColor(state, null, null, 0));
+            colorRGB = StructureRenderHandler.colorRGB.computeIfAbsent(blockStateHash, x -> {
+                float r = (float) (color >> 16 & 255) / 255.0F;
+                float g = (float) (color >> 8 & 255) / 255.0F;
+                float b = (float) (color & 255) / 255.0F;
+
+                return new Triple<>(r, g, b);
+            });
 
             // Always use entity translucent layer so blending is turned on
-            brd.getModelRenderer().renderModel(ms.last(), buffer, state, model, r, g, b, 0xF000F0, OverlayTexture.NO_OVERLAY);
+            try {
+                // Use our own rendering method because it's faster and allocates way less memory.
+                StructureRenderHandler.renderModel(lastPose, buffer, state, model, colorRGB.getFirst(), colorRGB.getSecond(), colorRGB.getThird(), 0xF000F0, OverlayTexture.NO_OVERLAY, blockStateHash);
+            } catch (Exception ex) {
+                System.out.println("System Exception: " + ex.getMessage());
+            }
+        }
+    }
 
-            ms.popPose();
+    public static void renderModel(PoseStack.Pose pose, VertexConsumer vertexConsumer, @Nullable BlockState blockState, BakedModel bakedModel, float f, float g, float h, int i, int j, int blockStateHash) {
+        RandomSource randomSource = RandomSource.create();
+        long l = 42L;
+
+        if (!StructureRenderHandler.blockModelQuads.containsKey(blockStateHash)) {
+            // Render the quads like normal then add them to the hash set for the next pass.
+            ArrayList<List<BakedQuad>> bakedQuads = new ArrayList<>();
+
+            for (Direction direction : DIRECTIONS) {
+                randomSource.setSeed(42L);
+
+                List<BakedQuad> quadList = bakedModel.getQuads(blockState, direction, randomSource);
+                StructureRenderHandler.renderQuadList(pose, vertexConsumer, f, g, h, quadList, i, j);
+                bakedQuads.add(quadList);
+            }
+
+            randomSource.setSeed(42L);
+
+            List<BakedQuad> quadList = bakedModel.getQuads(blockState, null, randomSource);
+            StructureRenderHandler.renderQuadList(pose, vertexConsumer, f, g, h, quadList, i, j);
+
+            bakedQuads.add(quadList);
+            StructureRenderHandler.blockModelQuads.put(blockStateHash, bakedQuads);
+
+            return;
+        }
+
+        // Render the cached baked quads.
+        ArrayList<List<BakedQuad>> bakedQuads = StructureRenderHandler.blockModelQuads.get(blockStateHash);
+
+        for (List<BakedQuad> quadList : bakedQuads) {
+            StructureRenderHandler.renderQuadList(pose, vertexConsumer, f, g, h, quadList, i, j);
+        }
+    }
+
+    private static void renderQuadList(PoseStack.Pose pose, VertexConsumer vertexConsumer, float f, float g, float h, List<BakedQuad> list, int i, int j) {
+        BakedQuad bakedQuad;
+        float k;
+        float l;
+        float m;
+
+        for (BakedQuad quad : list) {
+            if (quad.isTinted()) {
+                k = Mth.clamp(f, 0.0F, 1.0F);
+                l = Mth.clamp(g, 0.0F, 1.0F);
+                m = Mth.clamp(h, 0.0F, 1.0F);
+            } else {
+                k = 1.0F;
+                l = 1.0F;
+                m = 1.0F;
+            }
+
+            StructureRenderHandler.putBulkData(vertexConsumer, pose, quad, k, l, m, i, j);
+        }
+    }
+
+    private static void putBulkData(VertexConsumer vertexConsumer, PoseStack.Pose pose, BakedQuad bakedQuad, float k, float l, float m, int i, int j) {
+        int[] js = bakedQuad.getVertices();
+        Vec3i vec3i = bakedQuad.getDirection().getNormal();
+        Matrix4f matrix4f = pose.pose();
+        Vector3f vector3f = pose.transformNormal((float) vec3i.getX(), (float) vec3i.getY(), (float) vec3i.getZ(), new Vector3f());
+        int trimmedLength = js.length / 8;
+        int baseColor = (int) (255.0F);
+
+        for (int counter = 0; counter < trimmedLength; ++counter) {
+            float betterO = Float.intBitsToFloat(js[counter * 8]);
+            float betterP = Float.intBitsToFloat(js[(counter * 8) + 1]);
+            float betterQ = Float.intBitsToFloat(js[(counter * 8) + 2]);
+
+            float u = 1.0F * k * 255.0F;
+            float v = 1.0F * l * 255.0F;
+            float w = 1.0F * m * 255.0F;
+            float betterT = Float.intBitsToFloat(js[(counter * 8) + 4]);
+            float betterZ = Float.intBitsToFloat(js[(counter * 8) + 5]);
+
+            int x = FastColor.ARGB32.color(baseColor, (int) u, (int) v, (int) w);
+
+            Vector3f vector3f2 = matrix4f.transformPosition(betterO, betterP, betterQ, new Vector3f());
+            vertexConsumer.addVertex(vector3f2.x(), vector3f2.y(), vector3f2.z(), x, betterT, betterZ, j, i, vector3f.x(), vector3f.y(), vector3f.z());
         }
     }
 }
