@@ -62,7 +62,6 @@ public class StructureRenderHandler {
     private static HashMap<Integer, Triple<Float, Float, Float>> colorRGB;
     private static Minecraft mcInstance;
     private static final Direction[] DIRECTIONS = Direction.values();
-    private static long aggregatedTime = 0L;
     private static HashMap<Integer, ArrayList<List<BakedQuad>>> blockModelQuads;
 
     /**
@@ -300,7 +299,6 @@ public class StructureRenderHandler {
                 && StructureRenderHandler.currentConfiguration != null
                 && PrefabBase.serverConfiguration.enableStructurePreview) {
 
-            long startTime = System.currentTimeMillis();
             Level world = player.level();
 
             Camera camera = StructureRenderHandler.mcInstance.getEntityRenderDispatcher().camera;
@@ -322,11 +320,6 @@ public class StructureRenderHandler {
                     StructureRenderHandler.processBuildBlockForRendering(buildBlock, world, player, cameraPosition, playerViewDirection, playerViewVector, originalPose,
                             renderPosX, renderPosY, renderPosZ, brd, buffer);
                 }
-
-                long endTime = System.currentTimeMillis();
-                System.out.println("That took " + (endTime - startTime) + " milliseconds");
-                System.out.println("Aggregated Time took: " + StructureRenderHandler.aggregatedTime + " milliseconds");
-                StructureRenderHandler.aggregatedTime = 0L;
 
                 if (!StructureRenderHandler.showedMessage) {
                     Minecraft mc = Minecraft.getInstance();
